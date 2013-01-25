@@ -10,8 +10,12 @@
 class World
 {
 	private:
+		
 		Parallax m_background;
 		std::vector<WorldEntity> m_entities;
+
+		void updateEntities(float p_delta);
+		void renderEntities(sf::RenderWindow* p_window);
 
 	public:
 
@@ -21,11 +25,9 @@ class World
 		void initialize();
 
 		void update(float p_deltaTime);
-		void render(const sf::Window &p_window);
+		void render(sf::RenderWindow* p_window);
 
 		void addEntity(WorldEntity p_entity);
-		void updateEntities();
-		void renderEntities();
 };
 
 #endif

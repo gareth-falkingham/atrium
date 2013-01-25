@@ -1,11 +1,26 @@
 #include "atrium.hpp"
-#include "player.hpp"
 
-// constants
+// ----------------------------------------------------------------------
+// Constants
+// ----------------------------------------------------------------------
+
 const sf::Color Atrium::CLEAR_COLOR = sf::Color(127, 127, 127);
 
+// ----------------------------------------------------------------------
+// Constructor
+// ----------------------------------------------------------------------
+
 Atrium::Atrium(){}
+
+// ----------------------------------------------------------------------
+// Deconstructor
+// ----------------------------------------------------------------------
+
 Atrium::~Atrium(){}
+
+// ----------------------------------------------------------------------
+// Initialize Window
+// ----------------------------------------------------------------------
 
 void Atrium::initializeWindow()
 {
@@ -19,15 +34,23 @@ void Atrium::initializeWindow()
 	m_glContext.stencilBits = 8;
 
 	// create the window and set some limits
-	m_window.create(sf::VideoMode(800, 480, 32), "Atrium v1.0", sf::Style::Default, m_glContext);
+	m_window.create(sf::VideoMode(800, 480, 32), "Atrium v1.0", sf::Style::Titlebar | sf::Style::Close, m_glContext);
 	m_window.setFramerateLimit(60);
 	m_window.setVerticalSyncEnabled(true);
 }
+
+// ----------------------------------------------------------------------
+// Initialize World
+// ----------------------------------------------------------------------
 
 void Atrium::initializeWorld()
 {
 	m_world.initialize();
 }
+
+// ----------------------------------------------------------------------
+// Run the Application
+// ----------------------------------------------------------------------
 
 void Atrium::run()
 {
@@ -55,22 +78,38 @@ void Atrium::run()
 	}
 }
 
+// ----------------------------------------------------------------------
+// Handle Events
+// ----------------------------------------------------------------------
+
 void Atrium::handle_event(const sf::Event &p_event)
 {
 
 }
+
+// ----------------------------------------------------------------------
+// Update the Application
+// ----------------------------------------------------------------------
 
 void Atrium::update(float p_delta)
 {
 	m_world.update(p_delta);
 }
 
+// ----------------------------------------------------------------------
+// Render the Application
+// ----------------------------------------------------------------------
+
 void Atrium::render()
 {
 	m_window.clear(CLEAR_COLOR);
-	m_window.draw(m_world.render());
+	m_world.render(&m_window);
 	m_window.display();
 }
+
+// ----------------------------------------------------------------------
+// Shutdown the Application
+// ----------------------------------------------------------------------
 
 void Atrium::shutdown()
 {

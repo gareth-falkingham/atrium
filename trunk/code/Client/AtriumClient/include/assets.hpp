@@ -12,14 +12,16 @@
 class Assets
 {
 	private:
-		static std::map<std::string, sf::Image> m_images;
-		static std::map<std::string, sf::Texture> m_textures;
-
-	public:
+		std::map<std::string, sf::Image> m_images;
+		std::map<std::string, sf::Texture> m_textures;
+		static Assets* m_instance;
 		Assets();
 		~Assets();
-		static sf::Image* getImage(std::string p_file);
-		static sf::Texture* getTexture(std::string p_file);
+
+	public:
+		static Assets* getInstance(); 
+		sf::Image* getImage(std::string p_file);
+		sf::Texture* getTexture(std::string p_file);
 };
 
 #endif
