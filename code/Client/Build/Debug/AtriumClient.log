@@ -1,0 +1,24 @@
+﻿Build started 26/01/2013 11:01:55 a.m..
+     1>Project "C:\Work\Atrium\code\Client\AtriumClient\AtriumClient.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
+         Creating "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.unsuccessfulbuild" because "AlwaysCreate" was specified.
+       ClCompile:
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Work\Atrium\code\Client\\SFML-2.0\include" /IC:\Work\Atrium\code\Client\AtriumClient\\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Work\Atrium\code\Client\\Build\Debug\\" /Fd"C:\Work\Atrium\code\Client\\Build\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\assets.cpp src\atrium.cpp src\debug.cpp src\main.cpp src\player.cpp src\world.cpp src\world_entity.cpp
+         world_entity.cpp
+         world.cpp
+         player.cpp
+         main.cpp
+         debug.cpp
+         atrium.cpp
+     1>c:\work\atrium\code\client\atriumclient\src\atrium.cpp(29): error C2243: 'type cast' : conversion from 'Player *' to 'const WorldEntity &' exists, but is inaccessible
+     1>c:\work\atrium\code\client\atriumclient\src\atrium.cpp(65): error C2039: 'update' : is not a member of 'World'
+                 c:\work\atrium\code\client\atriumclient\include\world.hpp(10) : see declaration of 'World'
+     1>c:\work\atrium\code\client\atriumclient\src\atrium.cpp(72): error C2039: 'render' : is not a member of 'World'
+                 c:\work\atrium\code\client\atriumclient\include\world.hpp(10) : see declaration of 'World'
+         assets.cpp
+         Generating Code...
+     1>Done Building Project "C:\Work\Atrium\code\Client\AtriumClient\AtriumClient.vcxproj" (Build target(s)) -- FAILED.
+
+Build FAILED.
+
+Time Elapsed 00:00:05.05

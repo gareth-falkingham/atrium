@@ -1,0 +1,20 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2012
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "AtriumClient", "AtriumClient\AtriumClient.vcxproj", "{9C38110A-7C34-44C3-A60C-F74E80C02BCB}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{9C38110A-7C34-44C3-A60C-F74E80C02BCB}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9C38110A-7C34-44C3-A60C-F74E80C02BCB}.Debug|Win32.Build.0 = Debug|Win32
+		{9C38110A-7C34-44C3-A60C-F74E80C02BCB}.Release|Win32.ActiveCfg = Release|Win32
+		{9C38110A-7C34-44C3-A60C-F74E80C02BCB}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
