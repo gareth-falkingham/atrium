@@ -4,6 +4,8 @@
 
 #include <vector>
 #include "parallax_layer.hpp"
+#include <SFML/Window.hpp>
+#include <SFML/Graphics.hpp>
 
 class Parallax
 {
@@ -12,10 +14,13 @@ class Parallax
 		std::vector<ParallaxLayer> m_layers;
 
 	public:
+		
+		Parallax();
+		~Parallax();
 
-		void addLayer(const ParallaxLayer &p_layer);
+		void addLayer(ParallaxLayer p_layer);
 		void update(float p_delta, float p_speed);
-		void render(const sf::Window &p_window);
+		void render(sf::RenderWindow* p_window);
 };
 
 #endif

@@ -1,12 +1,34 @@
 #include "assets.hpp"
 
-std::map<std::string, sf::Texture> Assets::m_textures;
-std::map<std::string, sf::Image> Assets::m_images;
+// ----------------------------------------------------------------------
+// Texture and Image maps
+// ----------------------------------------------------------------------
+
+Assets* Assets::m_instance = 0;
+
+// ----------------------------------------------------------------------
+// Constructor
+// ----------------------------------------------------------------------
 
 Assets::Assets(){}
+
+// ----------------------------------------------------------------------
+// Deconstructor
+// ----------------------------------------------------------------------
+
 Assets::~Assets(){}
 
-sf::Texture* Assets::getTexture(std::string p_key)
+Assets* Assets::getInstance()
+{
+	if (m_instance == NULL){ m_instance = new Assets(); }
+	return m_instance;
+}
+
+// ----------------------------------------------------------------------
+// Get Texture ( load a texture file and cache the results )
+// ----------------------------------------------------------------------
+
+sf::Texture Assets::getTexture(std::string p_key)
 {
 	// attempt to find the resource key in the map
 	std::map<std::string, sf::Texture>::iterator it = m_textures.find(p_key);
@@ -14,26 +36,34 @@ sf::Texture* Assets::getTexture(std::string p_key)
 	// if it's found return it
 	if (it != m_textures.end())
 	{
-		return &it->second;
+		return it->second;
 	}
 	else
 	{
+		Debug::log(LogLevel::EXCEPTION, "Assets::getTexture", "Loading '%s'", p_key.c_str());
 		// load the texture from file and save it in the map
 		sf::Texture tex;
 		if (tex.loadFromFile(p_key))
 		{
+			Debug::log(LogLevel::EXCEPTION, "Assets::getTexture", "Loaded: Width: %d, Height:%d", tex.getSize().x, tex.getSize().y);
 			m_textures[p_key] = tex;
 			return getTexture(p_key); // do another search for it ?
 		}
 		else 
 		{
+			sf::Texture blank;
+			blank.create(1, 1);
 			Debug::log(LogLevel::EXCEPTION, "Assets::getTexture", "'%s' -> failed to load file", p_key.c_str());
-			return NULL;
+			return blank;
 		}
 	}
 }
 
-sf::Image* Assets::getImage(std::string p_key)
+// ----------------------------------------------------------------------
+// Get Image ( load an image file and cache the results )
+// ----------------------------------------------------------------------
+
+sf::Image Assets::getImage(std::string p_key)
 {
 	// attempt to find the resource key in the map
 	std::map<std::string, sf::Image>::iterator it = m_images.find(p_key);
@@ -41,7 +71,7 @@ sf::Image* Assets::getImage(std::string p_key)
 	// if it's found return it
 	if (it != m_images.end())
 	{
-		return &it->second;
+		return it->second;
 	}
 	else
 	{
@@ -55,7 +85,9 @@ sf::Image* Assets::getImage(std::string p_key)
 		else 
 		{
 			Debug::log(LogLevel::EXCEPTION, "Assets::getImage", "'%s' -> failed to load file", p_key.c_str());
-			return NULL;
+			sf::Image blank;
+			blank.create(1, 1);
+			return blank;
 		}
 	}
 }

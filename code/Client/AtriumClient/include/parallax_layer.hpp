@@ -12,6 +12,8 @@ class ParallaxLayer
 
 		float m_depth;
 		sf::Texture m_texture;
+		sf::Sprite m_sprite;
+		sf::Image image;
 
 	public:
 
@@ -22,6 +24,8 @@ class ParallaxLayer
 		void parallaxDepth(float p_number);
 		float parallaxDepth();
 
+		sf::Sprite sprite();
+		
 		void initialize(std::string p_filename);
 };
 

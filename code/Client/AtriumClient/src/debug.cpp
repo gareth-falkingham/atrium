@@ -1,6 +1,9 @@
 #include "debug.hpp"
 
-// Logs a printf formatted string
+// ----------------------------------------------------------------------
+// Log a simple message to the consol
+// ----------------------------------------------------------------------
+
 void Debug::log(LogLevel p_level, char* p_title, const char* p_messages, ...)
 {
 	char buffer[1024];

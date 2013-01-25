@@ -93,6 +93,8 @@
     <ClCompile Include="src\atrium.cpp" />
     <ClCompile Include="src\debug.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\parallax.cpp" />
+    <ClCompile Include="src\parallax_layer.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\world.cpp" />
     <ClCompile Include="src\world_entity.cpp" />
@@ -101,6 +103,8 @@
     <ClInclude Include="include\assets.hpp" />
     <ClInclude Include="include\atrium.hpp" />
     <ClInclude Include="include\debug.hpp" />
+    <ClInclude Include="include\parallax.hpp" />
+    <ClInclude Include="include\parallax_layer.hpp" />
     <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\world.hpp" />
     <ClInclude Include="include\world_entity.hpp" />

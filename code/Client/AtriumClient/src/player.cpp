@@ -1,11 +1,32 @@
 #include "player.hpp"
 
+// ----------------------------------------------------------------------
+// Constructor
+// ----------------------------------------------------------------------
+
 Player::Player() : WorldEntity()
 {
-	initializeSprite(0, 0 ,0);
+	initializeSprite(1, 1 ,1);
 }
 
+// ----------------------------------------------------------------------
+// Overloaded Constructor
+// ----------------------------------------------------------------------
+
+Player::Player(int p_head, int p_hair, int p_body) : WorldEntity()
+{
+	initializeSprite(p_head, p_hair, p_body);
+}
+
+// ----------------------------------------------------------------------
+// Deconstructor
+// ----------------------------------------------------------------------
+
 Player::~Player(){}
+
+// ----------------------------------------------------------------------
+// Build an asset path given a type (body, head, hair etc. ) and integer
+// ----------------------------------------------------------------------
 
 std::string Player::buildAssetPath(std::string p_type, int p_ext)
 {
@@ -15,17 +36,16 @@ std::string Player::buildAssetPath(std::string p_type, int p_ext)
 	return ss.str();
 }
 
-Player::Player(int p_head, int p_hair, int p_body) : WorldEntity()
-{
-	initializeSprite(p_head, p_hair, p_body);
-}
+// ----------------------------------------------------------------------
+// Initialize the Players Texture and Sprite 
+// ----------------------------------------------------------------------
 
 void Player::initializeSprite(int p_body, int p_head, int p_hair)
 {
 	// load the applicable images in
-	sf::Image bodyImage = *Assets::getImage(buildAssetPath("body", p_body));
-	sf::Image headImage = *Assets::getImage(buildAssetPath("head", p_head));
-	sf::Image hairImage = *Assets::getImage(buildAssetPath("hair", p_hair));
+	sf::Image bodyImage = Assets::getInstance()->getImage(buildAssetPath("body", p_body));
+	sf::Image headImage = Assets::getInstance()->getImage(buildAssetPath("head", p_head));
+	sf::Image hairImage = Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
 
 	// initialize the texture ( width * 2 to allow the flipped version )
 	m_texture.create(FRAME_WIDTH * 2, FRAMES * FRAME_HEIGHT);

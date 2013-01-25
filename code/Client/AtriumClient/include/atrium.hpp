@@ -8,6 +8,7 @@
 
 #include "debug.hpp"
 #include "world.hpp"
+#include "player.hpp"
 
 class Atrium
 {
