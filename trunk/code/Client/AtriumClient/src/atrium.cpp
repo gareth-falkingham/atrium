@@ -62,15 +62,13 @@ void Atrium::handle_event(const sf::Event &p_event)
 
 void Atrium::update(float p_delta)
 {
-	m_world.update();
+	m_world.update(p_delta);
 }
 
 void Atrium::render()
 {
 	m_window.clear(CLEAR_COLOR);
-
-	m_world.render();
-
+	m_window.draw(m_world.render());
 	m_window.display();
 }
 

@@ -20,6 +20,9 @@ class World
 
 		void initialize();
 
+		void update(float p_deltaTime);
+		void render(const sf::Window &p_window);
+
 		void addEntity(WorldEntity p_entity);
 		void updateEntities();
 		void renderEntities();

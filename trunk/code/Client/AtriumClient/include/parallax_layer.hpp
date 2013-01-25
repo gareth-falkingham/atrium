@@ -16,6 +16,7 @@ class ParallaxLayer
 	public:
 
 		ParallaxLayer();
+		ParallaxLayer(std::string p_filename, float p_depth);
 		~ParallaxLayer();
 
 		void parallaxDepth(float p_number);
