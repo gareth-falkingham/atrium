@@ -1,21 +1,10 @@
-﻿Build started 26/01/2013 12:53:09 p.m..
-     1>Project "C:\Work\Atrium\code\Client\AtriumClient\AtriumClient.vcxproj" on node 2 (Rebuild target(s)).
-     1>_PrepareForClean:
-         Deleting file "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.lastbuildstate".
-       InitializeBuildStatus:
+﻿Build started 26/01/2013 1:03:54 p.m..
+     1>Project "C:\Work\Atrium\code\Client\AtriumClient\AtriumClient.vcxproj" on node 2 (Build target(s)).
+     1>InitializeBuildStatus:
          Creating "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Work\Atrium\code\Client\\SFML-2.0\include" /IC:\Work\Atrium\code\Client\AtriumClient\\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Work\Atrium\code\Client\\Build\Debug\\" /Fd"C:\Work\Atrium\code\Client\\Build\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\assets.cpp src\atrium.cpp src\debug.cpp src\main.cpp src\parallax.cpp src\parallax_layer.cpp src\player.cpp src\world.cpp src\world_entity.cpp
-         world_entity.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Work\Atrium\code\Client\\SFML-2.0\include" /IC:\Work\Atrium\code\Client\AtriumClient\\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Work\Atrium\code\Client\\Build\Debug\\" /Fd"C:\Work\Atrium\code\Client\\Build\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\world.cpp
          world.cpp
-         player.cpp
-         parallax_layer.cpp
-         parallax.cpp
-         main.cpp
-         debug.cpp
-         atrium.cpp
-         assets.cpp
-         Generating Code...
        Link:
          C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Work\Atrium\code\Client\\SFML-2.0\lib" "sfml-main-d.lib" "sfml-audio-d.lib" "sfml-graphics-d.lib" "sfml-network-d.lib" "sfml-system-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.lib" /MACHINE:X86 C:\Work\Atrium\code\Client\\Build\Debug\assets.obj
          C:\Work\Atrium\code\Client\\Build\Debug\atrium.obj
@@ -49,8 +38,8 @@
        FinalizeBuildStatus:
          Deleting file "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.unsuccessfulbuild".
          Touching "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.lastbuildstate".
-     1>Done Building Project "C:\Work\Atrium\code\Client\AtriumClient\AtriumClient.vcxproj" (Rebuild target(s)).
+     1>Done Building Project "C:\Work\Atrium\code\Client\AtriumClient\AtriumClient.vcxproj" (Build target(s)).
 
 Build succeeded.
 
-Time Elapsed 00:00:06.46
+Time Elapsed 00:00:01.18

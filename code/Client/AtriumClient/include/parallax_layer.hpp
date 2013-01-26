@@ -11,9 +11,8 @@ class ParallaxLayer
 	private:
 
 		float m_depth;
-		sf::Texture m_texture;
+		sf::Texture* m_texture;
 		sf::Sprite m_sprite;
-		sf::Image image;
 
 	public:
 
