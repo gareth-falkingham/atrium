@@ -77,22 +77,39 @@ void TheRakMan::Update( const float _kfdt )
 {
 	RakNet::Packet *packet;
 	for (packet=m_pRakInterface->Receive(); packet; m_pRakInterface->DeallocatePacket(packet), packet=m_pRakInterface->Receive())
+	{
+		switch (packet->data[0])
 		{
-			switch (packet->data[0])
+		case ID_CONNECTION_REQUEST_ACCEPTED:
+			printf("Our connection request has been accepted. Sending Connection Packet.\n");
+			m_bEstablishedConnection = true;
+			m_pPrimaryPlayer->SendConnectionPacket();
+			break;					
+		case PLAYER_CONNECT:
+			{
+				TPlayerConnect pC;
+				memcpy(&pC, packet->data, sizeof( pC ) );
+				m_pPrimaryPlayer->ReceiveConnectionPacket( pC );
+
+				//Doth another player of equitable description exist?
+				if( m_mapPPlayers.find(pC.playerID) == m_mapPPlayers.end() )
 				{
-				case ID_CONNECTION_REQUEST_ACCEPTED:
-					printf("Our connection request has been accepted. Sending Connection Packet.\n");
-					m_bEstablishedConnection = true;
-					m_pPrimaryPlayer->SendConnectionPacket();
-					break;					
-				default:
-					printf("Message with identifier %i has arrived.\n", packet->data[0]);
-					break;
+
 				}
+
+				break;
+			}
+		default:
+			printf("Message with identifier %i has arrived.\n", packet->data[0]);
+			break;
 		}
+	}
 }
 
 void TheRakMan::SendPacket( const char* _pcData, const unsigned int _uLength )
 {
-	m_pRakInterface->Send(_pcData, _uLength, HIGH_PRIORITY, RELIABLE, 0, *m_hostAddress, true);
+	if( m_pRakInterface->Send(_pcData, _uLength, HIGH_PRIORITY, RELIABLE, 0, *m_hostAddress, false) == 0)
+	{
+		Debug::log( EXCEPTION, "TheRakMan::SendPacket", "Sending failed" );
+	}
 }
