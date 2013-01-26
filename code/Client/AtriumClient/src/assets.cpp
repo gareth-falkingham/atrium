@@ -28,7 +28,7 @@ Assets* Assets::getInstance()
 // Get Texture ( load a texture file and cache the results )
 // ----------------------------------------------------------------------
 
-sf::Texture Assets::getTexture(std::string p_key)
+sf::Texture* Assets::getTexture(std::string p_key)
 {
 	// attempt to find the resource key in the map
 	std::map<std::string, sf::Texture>::iterator it = m_textures.find(p_key);
@@ -36,7 +36,7 @@ sf::Texture Assets::getTexture(std::string p_key)
 	// if it's found return it
 	if (it != m_textures.end())
 	{
-		return it->second;
+		return &it->second;
 	}
 	else
 	{
@@ -51,10 +51,8 @@ sf::Texture Assets::getTexture(std::string p_key)
 		}
 		else 
 		{
-			sf::Texture blank;
-			blank.create(1, 1);
 			Debug::log(LogLevel::EXCEPTION, "Assets::getTexture", "'%s' -> failed to load file", p_key.c_str());
-			return blank;
+			return 0;
 		}
 	}
 }
@@ -63,7 +61,7 @@ sf::Texture Assets::getTexture(std::string p_key)
 // Get Image ( load an image file and cache the results )
 // ----------------------------------------------------------------------
 
-sf::Image Assets::getImage(std::string p_key)
+sf::Image* Assets::getImage(std::string p_key)
 {
 	// attempt to find the resource key in the map
 	std::map<std::string, sf::Image>::iterator it = m_images.find(p_key);
@@ -71,7 +69,7 @@ sf::Image Assets::getImage(std::string p_key)
 	// if it's found return it
 	if (it != m_images.end())
 	{
-		return it->second;
+		return &it->second;
 	}
 	else
 	{
@@ -85,9 +83,7 @@ sf::Image Assets::getImage(std::string p_key)
 		else 
 		{
 			Debug::log(LogLevel::EXCEPTION, "Assets::getImage", "'%s' -> failed to load file", p_key.c_str());
-			sf::Image blank;
-			blank.create(1, 1);
-			return blank;
+			return 0;
 		}
 	}
 }
