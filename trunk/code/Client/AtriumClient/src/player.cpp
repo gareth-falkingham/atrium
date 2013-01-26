@@ -43,9 +43,9 @@ std::string Player::buildAssetPath(std::string p_type, int p_ext)
 void Player::initializeSprite(int p_body, int p_head, int p_hair)
 {
 	// load the applicable images in
-	sf::Image bodyImage = Assets::getInstance()->getImage(buildAssetPath("body", p_body));
-	sf::Image headImage = Assets::getInstance()->getImage(buildAssetPath("head", p_head));
-	sf::Image hairImage = Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
+	sf::Image bodyImage = *Assets::getInstance()->getImage(buildAssetPath("body", p_body));
+	sf::Image headImage = *Assets::getInstance()->getImage(buildAssetPath("head", p_head));
+	sf::Image hairImage = *Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
 
 	// initialize the texture ( width * 2 to allow the flipped version )
 	m_texture.create(FRAME_WIDTH * 2, FRAMES * FRAME_HEIGHT);

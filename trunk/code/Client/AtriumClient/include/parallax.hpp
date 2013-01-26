@@ -18,7 +18,7 @@ class Parallax
 		Parallax();
 		~Parallax();
 
-		void addLayer(ParallaxLayer p_layer);
+		void addLayer(std::string p_filename, float p_depth);
 		void update(float p_delta, float p_speed);
 		void render(sf::RenderWindow* p_window);
 };

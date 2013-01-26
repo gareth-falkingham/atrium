@@ -45,5 +45,5 @@ sf::Sprite ParallaxLayer::sprite() { return m_sprite; }
 void ParallaxLayer::initialize(std::string p_filename)
 {
 	m_texture = Assets::getInstance()->getTexture(p_filename);
-	m_sprite.setTexture(m_texture, false);
+	m_sprite.setTexture((*m_texture), false);
 }
