@@ -11,6 +11,8 @@ class Parallax
 {
 	private:
 
+		static const float SCROLL_SPEED;
+
 		std::vector<ParallaxLayer> m_layers;
 
 	public:
@@ -18,8 +20,8 @@ class Parallax
 		Parallax();
 		~Parallax();
 
-		void addLayer(std::string p_filename, float p_depth);
-		void update(float p_delta, float p_speed);
+		void addLayer(std::string p_filename, float p_depth, float p_xOffset = 0.0f, float p_yOffset = 0.0f);
+		void update(float p_delta);
 		void render(sf::RenderWindow* p_window);
 };
 

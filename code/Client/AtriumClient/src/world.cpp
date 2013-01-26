@@ -25,6 +25,7 @@ void World::initialize()
 	m_background.addLayer("assets/images/parallax_04.png", 0.6f);
 	m_background.addLayer("assets/images/parallax_05.png", 0.7f);
 	m_background.addLayer("assets/images/parallax_06.png", 0.8f);
+	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
 }
 
 // ----------------------------------------------------------------------
@@ -33,6 +34,7 @@ void World::initialize()
 
 void World::update(float p_delta)
 {
+	m_background.update(p_delta);
 	updateEntities(p_delta);
 }
 

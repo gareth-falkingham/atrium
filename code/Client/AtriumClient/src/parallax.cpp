@@ -4,6 +4,12 @@
 // Constructor
 // ----------------------------------------------------------------------
 
+const float Parallax::SCROLL_SPEED = 20.0f;
+
+// ----------------------------------------------------------------------
+// Constructor
+// ----------------------------------------------------------------------
+
 Parallax::Parallax(){}
 
 // ----------------------------------------------------------------------
@@ -16,9 +22,9 @@ Parallax::~Parallax(){}
 // Add a new Parallax Layer
 // ----------------------------------------------------------------------
 
-void Parallax::addLayer(std::string p_filename, float p_depth)
+void Parallax::addLayer(std::string p_filename, float p_depth, float p_xOffset, float p_yOffset)
 {
-	ParallaxLayer p(p_filename, p_depth);
+	ParallaxLayer p(p_filename, p_depth, p_xOffset, p_yOffset);
 	m_layers.push_back(p);
 }
 
@@ -26,12 +32,12 @@ void Parallax::addLayer(std::string p_filename, float p_depth)
 // Update 
 // ----------------------------------------------------------------------
 
-void Parallax::update(float p_deltaTime, float p_speed)
+void Parallax::update(float p_deltaTime)
 {
 	ParallaxLayer currLayer;
 	for (size_t i = 0; i < m_layers.size(); i++)
 	{
-		//m_layers[i].scrollX(p_speed * currLayer.parallaxDepth() * (p_deltaTime * 20))
+		m_layers[i].scrollX(SCROLL_SPEED * currLayer.parallaxDepth() * (p_deltaTime * 20));
 	}
 }
 
