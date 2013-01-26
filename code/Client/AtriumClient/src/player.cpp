@@ -120,7 +120,7 @@ void Player::moveLeft()
 	else { m_animatedSprite->nextFrame(); }
 	m_speed += Const::PLAYER_ACCELERATION;
 	m_speed = std::min(m_speed, Const::PLAYER_MAX_SPEED);
-	m_position.x -= m_speed;
+	m_playerData.x -= m_speed;
 }
 
 // ----------------------------------------------------------------------
@@ -137,7 +137,7 @@ void Player::moveRight()
 	else { m_animatedSprite->nextFrame(); }
 	m_speed += Const::PLAYER_ACCELERATION;
 	m_speed = std::min(m_speed, Const::PLAYER_MAX_SPEED);
-	m_position.x += m_speed;
+	m_playerData.x += m_speed;
 }
 
 // ----------------------------------------------------------------------
@@ -161,16 +161,15 @@ void Player::moveNone()
 
 void Player::update(float p_delta)
 {
-	StoreOldData();
-
 	m_animatedSprite->update(p_delta);
-	m_position.y += Const::WORLD_GRAVITY;
-	if (m_position.y >= Const::GROUND_Y){ m_position.y = Const::GROUND_Y; }
-	m_sprite->setPosition(m_position);
+	m_playerData.y += Const::WORLD_GRAVITY;
+	if (m_playerData.y >= Const::GROUND_Y){ m_playerData.y = Const::GROUND_Y; }
+	m_sprite->setPosition( sf::Vector2f( m_playerData.x, m_playerData.y ) );
 	m_sprite->setOrigin(Const::PLAYER_FRAME_WIDTH * 0.5, Const::PLAYER_FRAME_HEIGHT * 0.5);
 
 	//RELIES on StoreOldData being called. Compares the old data with the current data and sends any changes to the server.
 	SendNewData();
+	StoreOldData();
 }
 
 // ----------------------------------------------------------------------

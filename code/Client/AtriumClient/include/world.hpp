@@ -27,6 +27,7 @@ class World
 		virtual ~World();
 
 		void initialize();
+		void Destroy();
 
 		Player& GetPrimaryPlayer();
 
@@ -34,6 +35,7 @@ class World
 		void render(sf::RenderWindow* p_window);
 
 		void addEntity(WorldEntity* p_entity);
+		void removeEntity(WorldEntity* _pEntity );
 
 		void handleKeypress();
 };

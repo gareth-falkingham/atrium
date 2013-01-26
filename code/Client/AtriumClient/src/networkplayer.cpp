@@ -38,19 +38,23 @@ void NetworkPlayer::StoreOldData()
 
 void NetworkPlayer::SendNewData()
 {
-	if( m_oldData.x != m_playerData.x || m_oldData.y != m_playerData.y )
+	if(TheRakMan::Get().m_bEstablishedConnection == true && TheRakMan::Get().IsPrimaryPlayer( m_playerData.playerID ))
 	{
-		SendPositionPacket();
-	}
+		if( m_oldData.x != m_playerData.x || m_oldData.y != m_playerData.y )
+		{
+			printf("position packet sent\n");
+			SendPositionPacket();
+		}
 
-	if( m_oldData.heartID != m_playerData.heartID )
-	{
-		SendHeartPacket();
-	}
+		if( m_oldData.heartID != m_playerData.heartID )
+		{
+			SendHeartPacket();
+		}
 
-	if( m_oldData.isInteracting != m_playerData.isInteracting )
-	{
-		SendInteractionPacket();
+		if( m_oldData.isInteracting != m_playerData.isInteracting )
+		{
+			SendInteractionPacket();
+		}
 	}
 }
 
@@ -94,11 +98,21 @@ NetworkPlayer::SendConnectionPacket()
 	packet.headID = m_playerData.headID;
 	packet.bodyID = m_playerData.bodyID;
 	packet.heartID = m_playerData.heartID;
+	packet.x = m_playerData.x;
+	packet.y = m_playerData.y;
 	packet.playerID = 0; //WE DO NOT HAVE A PLAYER ID YET.
 
-	//Send x and y.
-
 	TheRakMan::Get().SendPacket( (const char*)&packet, sizeof(packet) );
+}
+
+void 
+NetworkPlayer::SendDisconnectPacket()
+{
+	TPlayerDisconnect packet;
+	packet.packetType = PLAYER_DISCONNECT;
+	packet.playerID = m_playerData.playerID;
+
+	TheRakMan::Get().SendPacket( (const char*)&packet, sizeof(packet), true );
 }
 
 void 
@@ -107,8 +121,8 @@ NetworkPlayer::ReceiveConnectionPacket(TPlayerConnect& _packet)
 	m_playerData.playerID = _packet.playerID;
 
 	//Receive x and y.
-	m_playerData.x = 0;
-	m_playerData.y = 0;
+	m_playerData.x = _packet.x;
+	m_playerData.y = _packet.y;
 	m_playerData.bodyID = _packet.bodyID;
 	m_playerData.headID = _packet.headID;
 	m_playerData.hairID = _packet.bodyID;

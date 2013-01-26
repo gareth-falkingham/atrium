@@ -16,6 +16,7 @@
 
 // Library Includes
 #include <string>
+#include <map>
 
 // Local Includes
 
@@ -27,8 +28,10 @@
 namespace RakNet
 {
 	class RakPeerInterface;
+	struct SystemAddress;
 };
 class Player;
+class World;
 
 class TheRakMan
 {	
@@ -41,7 +44,8 @@ public:
 	static void Destroy();
 
 	void Update( const float _kfdt );
-	void SendPacket( const char* _pcData, const unsigned int _uLength );
+	void SendPacket( const char* _pcData, const unsigned int _uLength, bool _sendImmediate = false );
+	bool IsPrimaryPlayer( unsigned short _yourID );
 
 	//void SendPacket();
 
@@ -55,8 +59,8 @@ private:
 public:
 
 	bool m_bEstablishedConnection;
-	bool m_bSentPlayerInfo;
 	Player* m_pPrimaryPlayer;
+	World* m_pWorld;
 
 protected:
 
@@ -64,8 +68,9 @@ private:
 
 	static TheRakMan* m_RakMan;
 	RakNet::RakPeerInterface* m_pRakInterface;
+	RakNet::SystemAddress* m_hostAddress;
 
-	
+	std::map<unsigned short, Player*> m_mapPPlayers;
 
 	std::string m_strHostAddress;
 

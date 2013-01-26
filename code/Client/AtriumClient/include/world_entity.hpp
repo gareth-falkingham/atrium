@@ -14,15 +14,15 @@ class WorldEntity
 
 		sf::Texture* m_texture;
 		sf::Sprite* m_sprite;
-		sf::Vector2f m_position;
+		//sf::Vector2f m_position;
 
 	public:
 
 		WorldEntity();
 		virtual ~WorldEntity();
 
-		void position(sf::Vector2f p_value);
-		sf::Vector2f position();
+		//void position(sf::Vector2f p_value);
+		//sf::Vector2f position();
 
 		void sprite(sf::Sprite* p_value);
 		sf::Sprite* sprite();

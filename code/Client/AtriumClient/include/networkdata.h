@@ -21,6 +21,7 @@ struct TNetworkData
 	char headID;
 	char bodyID;
 	char heartID;
+	char isInteracting;
 	float x;
 	float y;
 };
