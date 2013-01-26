@@ -3,6 +3,8 @@
 
 #pragma once
 
+#include <ctime>
+
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
 

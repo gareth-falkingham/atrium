@@ -80,6 +80,8 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 // ----------------------------------------------------------------------
 void Player::update(float p_delta)
 {
+	m_position.y += Const::WORLD_GRAVITY;
+	if (m_position.y >= Const::GROUND_Y){ m_position.y = Const::GROUND_Y; }
 	m_sprite->setPosition(m_position);
 	m_sprite->setOrigin(Const::PLAYER_FRAME_WIDTH * 0.5, Const::PLAYER_FRAME_HEIGHT * 0.5);
 }

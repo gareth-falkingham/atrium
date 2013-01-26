@@ -13,6 +13,14 @@ namespace Const
 	static const float PLAYER_START_Y = 224;
 	
 	static const float SCROLL_SPEED = 0.0f;
+
+	static const float WORLD_GRAVITY = 9.8f;
+
+	static const float GROUND_Y = 420.0f;
+
+	static const unsigned int MAX_BODY_PIECES = 2;
+	static const unsigned int MAX_HEAD_PIECES = 3;
+	static const unsigned int MAX_HAIR_PIECES = 3;
 }
 
 #endif
