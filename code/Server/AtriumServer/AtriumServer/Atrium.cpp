@@ -80,8 +80,6 @@ void Atrium::processPackets()
 		if (packet != 0)
 		{
 			// Process
-			std::cout << packet->systemAddress.ToString() << std::endl;
-
 			packetType = (unsigned char)packet->data[0];
 			
 			switch (packetType)
@@ -89,17 +87,20 @@ void Atrium::processPackets()
 			case ID_CONNECTION_LOST:
 			case ID_DISCONNECTION_NOTIFICATION:
 				// User disconnected from internet drop
+				std::cout << "Client Lost Connection: - " << packet->systemAddress.ToString() << std::endl;
 				disconnectUser(*packet);
-				break;
-
-			case PLAYER_CONNECT:
-				// Client request
-				connectUser(*packet);
 				break;
 
 			case PLAYER_DISCONNECT:
 				// Client chose to disconnect
+				std::cout << "Client Disconected: - " << packet->systemAddress.ToString() << std::endl;
 				clientDisconnectUser(*packet);
+				break;
+
+			case PLAYER_CONNECT:
+				// Client request
+				std::cout << "New Client Connected: - " << packet->systemAddress.ToString() << std::endl;
+				connectUser(*packet);
 				break;
 
 			case PLAYER_INTERACT:
@@ -108,6 +109,14 @@ void Atrium::processPackets()
 
 			case PLAYER_MOVEMENT:
 				playerMove(*packet);
+				break;
+
+			case PLAYER_HEART:
+				onPlayerHeart(*packet);
+				break;
+
+			case ID_NEW_INCOMING_CONNECTION:
+				//std::cout << "New Client Connecting: - " << packet->systemAddress.ToString() << std::endl;
 				break;
 
 			default:
@@ -149,7 +158,6 @@ void Atrium::disconnectUser(Packet _packet)
 		oldUser = iterator->second;
 		if (oldUser->clientAddress == _packet.systemAddress)
 		{
-			std::cout << "Client disconnected remotely: " << _packet.systemAddress.ToString() << std::endl;
 			m_pUserMap.erase(iterator);
 			isFound = true;
 			break;
@@ -187,19 +195,18 @@ void Atrium::connectUser(Packet _packet)
 	TPlayerID playerIDPacket;
 	playerIDPacket.packetType = EPacketTypes::PLAYER_ID;
 	playerIDPacket.playerID = newUser->playerID;
-	const char* connectPacket = reinterpret_cast<const char*>(&playerIDPacket);
 
 	// Tell player their ID
-	m_pRakPeerInterface->Send(connectPacket, sizeof(TPlayerID), PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
+	m_pRakPeerInterface->Send((const char*)&playerIDPacket, sizeof(TPlayerID), PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
 
 	// Inform every client that a new player has joined
-	broadcastToClients(connectPacket, sizeof(TPlayerConnect), _packet.systemAddress);
+	broadcastToClients((const char*)&playerData, sizeof(TPlayerConnect), _packet.systemAddress);
 
 	// Inform the user of the curent state of things
 	User* otherUser = 0;
 	TPlayerConnect syncData;
 
-	// Delete user from map (based on ip/port)
+	// Send user info of all connected clients
 	for (UserMap::iterator iterator = m_pUserMap.begin(); iterator != m_pUserMap.end(); ++iterator)
 	{
 		otherUser = iterator->second;
@@ -207,15 +214,12 @@ void Atrium::connectUser(Packet _packet)
 		{
 			// Send all information to the new client
 			syncData = otherUser->getSyncPacket();
-			connectPacket = reinterpret_cast<const char*>(&syncData);
-			m_pRakPeerInterface->Send(connectPacket, sizeof(TPlayerConnect), PacketPriority::HIGH_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
-			delete connectPacket;
+			m_pRakPeerInterface->Send((const char*)&syncData, sizeof(TPlayerConnect), PacketPriority::HIGH_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
 		}
 	}
 
 	// Clear vars
 	otherUser = 0;
-	connectPacket = 0;
 	newUser = 0;
 }
 
@@ -233,28 +237,28 @@ void Atrium::playerMove(Packet _packet)
 	memcpy_s(&convertedPacket, sizeof(TPlayerUpdateMovement), _packet.data, sizeof(TPlayerUpdateMovement));
 
 	User* movedUser = m_pUserMap[convertedPacket.playerID];
-	movedUser->x = convertedPacket.x;
-	movedUser->y = convertedPacket.y;
+	if (movedUser != 0)
+	{
+		movedUser->x = convertedPacket.x;
+		movedUser->y = convertedPacket.y;
 
-	// Inform other users of the change
-	broadcastToClients((const char*)&convertedPacket, sizeof(TPlayerUpdateMovement), _packet.systemAddress);
+		// Inform other users of the change
+		broadcastToClients((const char*)&convertedPacket, sizeof(TPlayerUpdateMovement), _packet.systemAddress);
+	}
 }
 
-void Atrium::broadcastToClients(const char* _data, int _size, SystemAddress exclude)
+void Atrium::onPlayerHeart(Packet _packet)
 {
-	AddressOrGUID excludeAddress;
+	TPlayerUpdateHeart convertedPacket;
+	memcpy_s(&convertedPacket, sizeof(TPlayerUpdateHeart), _packet.data, sizeof(TPlayerUpdateHeart));
+	
+	std::cout << "Player Heart Message Recieved: player"  << convertedPacket.playerID << " has heart: " << convertedPacket.heartID << std::endl;
+}
 
-	if (exclude == 0)
-	{
-		excludeAddress = UNASSIGNED_RAKNET_GUID;
-	}
-	else
-	{
-		excludeAddress = exclude;
-	}
-
+void Atrium::broadcastToClients(const char* _data, int _size, AddressOrGUID exclude)
+{
 	// Send the packet to all clients
-	m_pRakPeerInterface->Send(_data, _size, PacketPriority::MEDIUM_PRIORITY, PacketReliability::RELIABLE, 0, excludeAddress, true);
+	m_pRakPeerInterface->Send(_data, _size, PacketPriority::MEDIUM_PRIORITY, PacketReliability::RELIABLE, 0, exclude, true);
 }
 
 User* Atrium::createNewUser(RakNet::Packet _packet)
