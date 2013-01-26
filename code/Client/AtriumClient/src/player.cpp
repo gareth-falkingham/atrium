@@ -55,7 +55,7 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 {
 	// constructors share this so use it to initialize members
 	m_speed = 0.0f;
-	m_worldX = 0.0f;
+	m_localX = m_localY = 0.0f;
 	m_playerState = PlayerState::STANDING;
 
 	// load the applicable images in
@@ -125,6 +125,13 @@ void Player::jump()
 }
 
 // ----------------------------------------------------------------------
+// Setters for the localX and localY
+// ----------------------------------------------------------------------
+
+void Player::localX(float p_value){ m_localX = p_value; }
+void Player::localY(float p_value){ m_localY = p_value; }
+
+// ----------------------------------------------------------------------
 // Move the Player Left 
 // ----------------------------------------------------------------------
 
@@ -138,13 +145,13 @@ void Player::moveLeft()
 	else { m_animatedSprite->nextFrame(); }
 	m_speed -= Const::PLAYER_ACCELERATION;
 	m_speed = std::max(m_speed, -Const::PLAYER_MAX_SPEED);
-	if (m_playerData.x <= Const::PLAYER_LEFT_BOUND || (m_playerData.x >= Const::PLAYER_RIGHT_BOUND && m_speed > 0.0f))
+	if (m_localX <= Const::PLAYER_LEFT_BOUND || (m_localX >= Const::PLAYER_RIGHT_BOUND && m_speed > 0.0f))
 	{
-		m_worldX += m_speed;
+		m_playerData.x += m_speed;
 	}
 	else
 	{
-		m_worldX += m_speed;
+		m_localX += m_speed;
 		m_playerData.x += m_speed;
 	}
 }
@@ -163,13 +170,13 @@ void Player::moveRight()
 	else { m_animatedSprite->nextFrame(); }
 	m_speed += Const::PLAYER_ACCELERATION;
 	m_speed = std::min(m_speed, Const::PLAYER_MAX_SPEED);
-	if (m_playerData.x >= Const::PLAYER_RIGHT_BOUND || (m_playerData.x <= Const::PLAYER_LEFT_BOUND && m_speed < 0.0f))
+	if (m_localX >= Const::PLAYER_RIGHT_BOUND || (m_localX <= Const::PLAYER_LEFT_BOUND && m_speed < 0.0f))
 	{
-		m_worldX += m_speed;
+		m_playerData.x += m_speed;
 	}
 	else
 	{
-		m_worldX += m_speed;
+		m_localX += m_speed;
 		m_playerData.x += m_speed;
 	}
 }
@@ -193,13 +200,13 @@ void Player::moveNone()
 			else
 			{
 				m_speed += Const::PLAYER_DECELERATION;
-				if (m_playerData.x <= Const::PLAYER_LEFT_BOUND)
+				if (m_localX <= Const::PLAYER_LEFT_BOUND)
 				{
-					m_worldX += m_speed;
+					m_playerData.x += m_speed;
 				}
 				else
 				{
-					m_worldX += m_speed;
+					m_localX += m_speed;
 					m_playerData.x += m_speed;
 				}
 			}
@@ -216,13 +223,13 @@ void Player::moveNone()
 			else
 			{
 				m_speed -= Const::PLAYER_DECELERATION;
-				if (m_playerData.x >= Const::PLAYER_RIGHT_BOUND)
+				if (m_localX >= Const::PLAYER_RIGHT_BOUND)
 				{
-					m_worldX += m_speed;
+					m_playerData.x += m_speed;
 				}
 				else
 				{
-					m_worldX += m_speed;
+					m_localX += m_speed;
 					m_playerData.x += m_speed;
 				}
 			}
@@ -237,12 +244,13 @@ void Player::moveNone()
 
 void Player::update(float p_delta)
 {
-	Debug::log(LogLevel::INFO, "PlayerX", "localX:%f, worldX:%f", m_playerData.x, m_worldX);
+	Debug::log(LogLevel::INFO, "PlayerX", "localX:%f, worldX:%f", m_localX, m_playerData.x);
 
 	m_animatedSprite->update(p_delta);
+	m_localY += Const::WORLD_GRAVITY;
 	m_playerData.y += Const::WORLD_GRAVITY;
-	if (m_playerData.y >= Const::GROUND_Y){ m_playerData.y = Const::GROUND_Y; }
-	m_sprite->setPosition( sf::Vector2f( m_playerData.x, m_playerData.y ) );
+	if (m_localY >= Const::GROUND_Y){ m_localY = m_playerData.y = Const::GROUND_Y; }
+	m_sprite->setPosition( sf::Vector2f( m_localX, m_localY ) );
 	m_sprite->setOrigin(Const::PLAYER_FRAME_WIDTH * 0.5, Const::PLAYER_FRAME_HEIGHT * 0.5);
 
 	//RELIES on StoreOldData being called. Compares the old data with the current data and sends any changes to the server.
