@@ -31,14 +31,14 @@ TheRakMan* TheRakMan::m_RakMan = 0;
 using namespace RakNet;
 
 TheRakMan::TheRakMan()
-	: m_bEstablishedConnection( false )
-	, m_bSentPlayerInfo (false)
+: m_bEstablishedConnection( false )
 {
-	m_strHostAddress = "192.168.1.70"; 
+	m_hostAddress = new RakNet::SystemAddress( "192.168.1.70", 7001 );
 }
 
 TheRakMan::~TheRakMan()
 {
+	delete m_hostAddress;
 }
 
 TheRakMan& TheRakMan::Get()
@@ -67,7 +67,7 @@ bool TheRakMan::Initialise()
 	if( startRes == RakNet::RAKNET_STARTED )
 	{
 		bSuccess = true;
-		RakNet::ConnectionAttemptResult conRes = m_pRakInterface->Connect( m_strHostAddress.c_str(), 7001, "MiniTaurus", strlen("MiniTaurus") );
+		RakNet::ConnectionAttemptResult conRes = m_pRakInterface->Connect( "192.168.1.70", 7001, "MiniTaurus", strlen("MiniTaurus") );
 	}
 
 	return bSuccess;
@@ -81,7 +81,7 @@ void TheRakMan::Update( const float _kfdt )
 			switch (packet->data[0])
 				{
 				case ID_CONNECTION_REQUEST_ACCEPTED:
-					printf("Our connection request has been accepted.\n");
+					printf("Our connection request has been accepted. Sending Connection Packet.\n");
 					m_bEstablishedConnection = true;
 					m_pPrimaryPlayer->SendConnectionPacket();
 					break;					
@@ -94,5 +94,5 @@ void TheRakMan::Update( const float _kfdt )
 
 void TheRakMan::SendPacket( const char* _pcData, const unsigned int _uLength )
 {
-	m_pRakInterface->Send(_pcData, _uLength, HIGH_PRIORITY, RELIABLE, 0, 0, true);
+	m_pRakInterface->Send(_pcData, _uLength, HIGH_PRIORITY, RELIABLE, 0, *m_hostAddress, true);
 }
