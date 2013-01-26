@@ -55,6 +55,7 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 {
 	// constructors share this so use it to initialize members
 	m_speed = 0.0f;
+	m_worldX = 0.0f;
 	m_playerState = PlayerState::STANDING;
 
 	// load the applicable images in
@@ -107,16 +108,20 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 }
 
 // ----------------------------------------------------------------------
+// Getter for the speed
+// ----------------------------------------------------------------------
+
+float Player::speed()
+{
+	return m_speed; 
+}
+
+// ----------------------------------------------------------------------
 // Jump
 // ----------------------------------------------------------------------
 
 void Player::jump()
 {
-	if (m_playerState != PlayerState::JUMPING)
-	{
-		m_playerState = PlayerState::JUMPING;
-
-	}
 }
 
 // ----------------------------------------------------------------------
@@ -131,9 +136,17 @@ void Player::moveLeft()
 		m_animatedSprite->changeAnimation("left_walk");
 	}
 	else { m_animatedSprite->nextFrame(); }
-	m_speed += Const::PLAYER_ACCELERATION;
-	m_speed = std::min(m_speed, Const::PLAYER_MAX_SPEED);
-	m_playerData.x -= m_speed;
+	m_speed -= Const::PLAYER_ACCELERATION;
+	m_speed = std::max(m_speed, -Const::PLAYER_MAX_SPEED);
+	if (m_playerData.x <= Const::PLAYER_LEFT_BOUND || (m_playerData.x >= Const::PLAYER_RIGHT_BOUND && m_speed > 0.0f))
+	{
+		m_worldX += m_speed;
+	}
+	else
+	{
+		m_worldX += m_speed;
+		m_playerData.x += m_speed;
+	}
 }
 
 // ----------------------------------------------------------------------
@@ -150,7 +163,15 @@ void Player::moveRight()
 	else { m_animatedSprite->nextFrame(); }
 	m_speed += Const::PLAYER_ACCELERATION;
 	m_speed = std::min(m_speed, Const::PLAYER_MAX_SPEED);
-	m_playerData.x += m_speed;
+	if (m_playerData.x >= Const::PLAYER_RIGHT_BOUND || (m_playerData.x <= Const::PLAYER_LEFT_BOUND && m_speed < 0.0f))
+	{
+		m_worldX += m_speed;
+	}
+	else
+	{
+		m_worldX += m_speed;
+		m_playerData.x += m_speed;
+	}
 }
 
 // ----------------------------------------------------------------------
@@ -159,13 +180,55 @@ void Player::moveRight()
 
 void Player::moveNone()
 {
-	m_speed = 0.0f;
 	switch(m_facing)
 	{
-		case Direction::LEFT: m_animatedSprite->changeAnimation("left_stand"); break;
-		case Direction::RIGHT: m_animatedSprite->changeAnimation("right_stand"); break;
+		case Direction::LEFT: 
+		{
+			if (m_speed >= 0.0f)
+			{
+				m_speed = 0.0f;
+				m_animatedSprite->changeAnimation("left_stand");
+				m_facing = Direction::NONE;
+			}
+			else
+			{
+				m_speed += Const::PLAYER_DECELERATION;
+				if (m_playerData.x <= Const::PLAYER_LEFT_BOUND)
+				{
+					m_worldX += m_speed;
+				}
+				else
+				{
+					m_worldX += m_speed;
+					m_playerData.x += m_speed;
+				}
+			}
+			break;
+		}
+		case Direction::RIGHT: 
+		{
+			if (m_speed <= 0.0f)
+			{
+				m_speed = 0.0f;
+				m_animatedSprite->changeAnimation("right_stand");
+				m_facing = Direction::NONE;
+			}
+			else
+			{
+				m_speed -= Const::PLAYER_DECELERATION;
+				if (m_playerData.x >= Const::PLAYER_RIGHT_BOUND)
+				{
+					m_worldX += m_speed;
+				}
+				else
+				{
+					m_worldX += m_speed;
+					m_playerData.x += m_speed;
+				}
+			}
+			break;
+		}
 	}
-	m_facing = Direction::NONE;
 }
 
 // ----------------------------------------------------------------------
@@ -174,6 +237,8 @@ void Player::moveNone()
 
 void Player::update(float p_delta)
 {
+	Debug::log(LogLevel::INFO, "PlayerX", "localX:%f, worldX:%f", m_playerData.x, m_worldX);
+
 	m_animatedSprite->update(p_delta);
 	m_playerData.y += Const::WORLD_GRAVITY;
 	if (m_playerData.y >= Const::GROUND_Y){ m_playerData.y = Const::GROUND_Y; }

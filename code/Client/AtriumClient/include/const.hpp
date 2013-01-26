@@ -13,9 +13,11 @@ namespace Const
 	static const float PLAYER_START_Y = 224;
 	
 	static const float PLAYER_ACCELERATION = 0.25f;
+	static const float PLAYER_DECELERATION = 0.25f;
 	static const float PLAYER_MAX_SPEED = 6.0f;
 
-	static const float SCROLL_SPEED = 0.0f;
+	static const int PLAYER_LEFT_BOUND = 200;
+	static const int PLAYER_RIGHT_BOUND = 600;
 
 	static const float WORLD_GRAVITY = 9.8f;
 

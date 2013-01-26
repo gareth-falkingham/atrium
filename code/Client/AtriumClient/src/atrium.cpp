@@ -41,6 +41,13 @@ void Atrium::initializeWindow()
 	m_window.create(sf::VideoMode(800, 480, 32), "Atrium v1.0", sf::Style::Titlebar | sf::Style::Close, m_glContext);
 	m_window.setFramerateLimit(60);
 	m_window.setVerticalSyncEnabled(true);
+
+	// add a loading frame as a preloader
+	m_preloadTex = Assets::getInstance()->getTexture("assets/images/loading.png");
+	m_preloadSpr = new sf::Sprite((*m_preloadTex));
+	m_window.clear(CLEAR_COLOR);
+	m_window.draw((*m_preloadSpr));
+	m_window.display();
 }
 
 // ----------------------------------------------------------------------
@@ -81,13 +88,12 @@ void Atrium::run()
 		sf::Event event;
 		while(m_window.pollEvent(event))
 		{
+			handle_event(event);
 			if (event.type == sf::Event::Closed){ shutdown(); }
-			else { handle_event(event); }
 		}
-	
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){ m_world->GetPrimaryPlayer().moveLeft(); }
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){ m_world->GetPrimaryPlayer().moveRight(); }
-		else { m_world->GetPrimaryPlayer().moveNone(); } 
+
+		// handle any non-event input
+		handle_input();
 
 		// update/render
 		update(clockTime.asSeconds());
@@ -96,11 +102,50 @@ void Atrium::run()
 
 	m_world->Destroy();
 
-	//KILL the Rak Man.
+	// KILL the Rak Man.
 	TheRakMan::Destroy();
 }
 
+// ----------------------------------------------------------------------
+// Handle the Events
+// ----------------------------------------------------------------------
 
+void Atrium::handle_event(const sf::Event &p_event)
+{
+	if (p_event.type == sf::Event::KeyPressed)
+	{
+		switch(p_event.key.code)
+		{
+			case sf::Keyboard::F1:
+			{
+				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
+				m_window.capture().saveToFile("screen.png");
+				break;
+			}
+		}
+	}
+}
+
+// ----------------------------------------------------------------------
+// Handle non-Event input
+// ----------------------------------------------------------------------
+
+void Atrium::handle_input()
+{
+	// check for non-event input
+	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+	{ 
+		m_world->GetPrimaryPlayer().moveLeft();
+	}
+	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+	{ 
+		m_world->GetPrimaryPlayer().moveRight();
+	}
+	else 
+	{ 
+		m_world->GetPrimaryPlayer().moveNone();
+	} 
+}
 
 // ----------------------------------------------------------------------
 // Update the Application
@@ -130,20 +175,4 @@ void Atrium::render()
 void Atrium::shutdown()
 {
 	m_window.close();
-}
-
-void Atrium::handle_event(const sf::Event &p_event)
-{
-	if (p_event.type == sf::Event::KeyPressed)
-	{
-		switch(p_event.key.code)
-		{
-			case sf::Keyboard::F1:
-			{
-				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
-				m_window.capture().saveToFile("screen.png");
-				break;
-			}
-		}
-	}
 }

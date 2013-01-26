@@ -11,6 +11,7 @@
 #include "debug.hpp"
 #include "world.hpp"
 #include "player.hpp"
+#include "assets.hpp"
 
 class Atrium
 {
@@ -22,6 +23,8 @@ class Atrium
 		// window variables
 		sf::RenderWindow m_window;
 		sf::ContextSettings m_glContext;
+		sf::Texture* m_preloadTex;
+		sf::Sprite* m_preloadSpr;
 
 		// timing stuff
 		sf::Clock m_clock;
@@ -34,6 +37,7 @@ class Atrium
 		void initializeWorld();
 
 		void handle_event(const sf::Event &p_event);
+		void handle_input();
 		void update(float p_delta);
 		void render();
 		void shutdown();

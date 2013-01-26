@@ -24,7 +24,7 @@ class ParallaxLayer
 	public:
 
 		ParallaxLayer();
-		ParallaxLayer(std::string p_filename, float p_depth, float p_xOffset, float p_yOffset);
+		ParallaxLayer(std::string p_filename, float p_depth, float p_xOffset, float p_yOffset, bool p_repeat = true);
 		~ParallaxLayer();
 
 		void parallaxDepth(float p_number);
@@ -41,7 +41,7 @@ class ParallaxLayer
 
 		sf::Sprite sprite();
 		
-		void initialize(std::string p_filename);
+		void initialize(std::string p_filename, bool p_repeat = true);
 };
 
 #endif
