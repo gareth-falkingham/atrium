@@ -11,7 +11,8 @@ enum EPacketTypes
 	PLAYER_DISCONNECT,
 	PLAYER_MOVEMENT,
 	PLAYER_INTERACT,
-	PLAYER_HEART
+	PLAYER_HEART,
+	PLAYER_ID
 };
 
 //Sent when a player connects.
@@ -24,6 +25,17 @@ struct TPlayerConnect
 	unsigned char headID;			//Id of the player's head.
 	unsigned char bodyID;			//Id of the player's body.
 	unsigned char heartID;			//Id of the player's heart.
+	float x;						//X Position of the player.
+	float y;						//Y Position of the player.
+	unsigned char isInteracting;	//Will be "1" if a player is interacting, or "0" if the player is not.
+};
+
+//Sent to give the user his/her id
+//RELIABLE, HIGH_PRIORITY
+struct TPlayerID
+{
+	EPacketTypes packetType;		//Type of the packet.
+	unsigned short playerID;		//Id of the player.
 };
 
 //Sent when a player disconnects.
