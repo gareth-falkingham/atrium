@@ -8,7 +8,20 @@ using namespace RakNet;
 Atrium::Atrium()
 	:m_nextUserID(0)
 {
-	int port = 7001;
+	std::cout << "Please enter a port: ";
+	int port;
+	while (!(std::cin >> port))
+	{
+		std::cout << "Invalid port! Enter a valid number: ";
+		std::cin.clear();
+		std::cin.ignore (1000, '\n');
+	}
+
+	if (port == 0)
+	{
+		std::cout << "Invalid port entered, defaulting to 7001" << std::endl;
+		port = 7001;
+	}
 
 	m_pRakPeerInterface = RakPeerInterface::GetInstance();
 
