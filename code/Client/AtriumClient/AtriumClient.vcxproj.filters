@@ -45,6 +45,9 @@
     <ClCompile Include="src\therakman.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\networkplayer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\atrium.hpp">
@@ -77,7 +80,13 @@
     <ClInclude Include="include\packets.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\therakman.h">
+    <ClInclude Include="include\networkplayer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\networkdata.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="include\therakman.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

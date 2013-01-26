@@ -12,12 +12,12 @@
 #include "const.hpp"
 #include "assets.hpp"
 #include "world_entity.hpp"
+#include "networkplayer.h"
 #include "animated_sprite.h"
 
 enum Direction { LEFT, RIGHT, UP, NONE };
 
-class Player : public WorldEntity
-{
+class Player : public WorldEntity, public NetworkPlayer{
 	private:
 
 		Direction m_facing;	

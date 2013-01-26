@@ -43,7 +43,7 @@
     <LinkIncremental>true</LinkIncremental>
     <OutDir>$(SolutionDir)\Deploy\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Build\$(Configuration)\</IntDir>
-    <IncludePath>..\..\RakNet\Source\;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\Common;..\..\RakNet\Source\;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\RakNet\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -100,6 +100,7 @@
     <ClCompile Include="src\atrium.cpp" />
     <ClCompile Include="src\debug.cpp" />
     <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\networkplayer.cpp" />
     <ClCompile Include="src\parallax.cpp" />
     <ClCompile Include="src\parallax_layer.cpp" />
     <ClCompile Include="src\player.cpp" />
@@ -119,7 +120,9 @@
     <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\world.hpp" />
     <ClInclude Include="include\world_entity.hpp" />
-    <ClInclude Include="src\therakman.h" />
+    <ClInclude Include="include\networkplayer.h" />
+    <ClInclude Include="include\networkdata.h" />
+    <ClInclude Include="include\therakman.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
