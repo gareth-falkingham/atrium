@@ -3,9 +3,11 @@
 
 #pragma once
 
+#include "MessageIdentifiers.h"
+
 enum EPacketTypes
 {
-	PLAYER_CONNECT = USERPACKET,
+	PLAYER_CONNECT = ID_USER_PACKET_ENUM,
 	PLAYER_DISCONNECT,
 	PLAYER_MOVEMENT,
 	PLAYER_INTERACT
