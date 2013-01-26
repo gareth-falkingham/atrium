@@ -24,6 +24,7 @@ class Player : public WorldEntity, public NetworkPlayer{
 		Direction m_facing;	
 		PlayerState m_playerState;
 		float m_speed;
+		float m_worldX;
 		AnimatedSprite* m_animatedSprite;
 		std::string buildAssetPath(std::string type, int p_ext);
 		void initializeSprite(int p_body, int p_head, int p_hair);
@@ -38,6 +39,10 @@ class Player : public WorldEntity, public NetworkPlayer{
 		void moveRight();
 		void moveNone();
 		void jump();
+
+		void setPlayerX(float p_amount);
+
+		float speed();
 
 		virtual void update(float p_delta);
 		virtual void render(sf::RenderWindow* p_window);

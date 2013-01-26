@@ -17,14 +17,15 @@ ParallaxLayer::ParallaxLayer()
 // Overloaded Constructor
 // ----------------------------------------------------------------------
 
-ParallaxLayer::ParallaxLayer(std::string p_filename, float p_depth, float p_xOffset, float p_yOffset)
+ParallaxLayer::ParallaxLayer(std::string p_filename, float p_depth, float p_xOffset, float p_yOffset, bool p_repeat)
 {
 	m_depth = p_depth;
 	m_xOffset = p_xOffset;
 	m_yOffset = p_yOffset;
 	m_xScroll = 0.0f;
 	m_yScroll = 0.0f;
-	initialize(p_filename);
+	initialize(p_filename, p_repeat);
+
 }
 
 // ----------------------------------------------------------------------
@@ -72,10 +73,10 @@ sf::Sprite ParallaxLayer::sprite() { return m_sprite; }
 // Initialize the Parallax Layer
 // ----------------------------------------------------------------------
 
-void ParallaxLayer::initialize(std::string p_filename)
+void ParallaxLayer::initialize(std::string p_filename, bool p_repeat)
 {
 	m_texture = Assets::getInstance()->getTexture(p_filename);
-	m_texture->setRepeated(true);
+	m_texture->setRepeated(p_repeat);
 	m_sprite.setTexture((*m_texture), false);
 	m_sprite.setPosition(m_xOffset, m_yOffset);
 }

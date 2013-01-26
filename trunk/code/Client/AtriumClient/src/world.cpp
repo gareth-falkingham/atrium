@@ -34,10 +34,10 @@ void World::initialize()
 	m_background.addLayer("assets/images/parallax_05.png", 0.7f);
 	m_background.addLayer("assets/images/parallax_06.png", 0.8f);
 	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
-	m_background.addLayer("assets/images/atrium.png", 0.0f, Const::ATRIUM_OFFSET_X, Const::ATRIUM_OFFSET_Y); 
+	m_background.addLayer("assets/images/atrium.png", 1.0f, 0.0f, 0.0f, false);
 
-	// initialize the foreground layers
-	m_foreground.addLayer("assets/images/atrium_front.png", 0.1f, Const::ATRIUM_OFFSET_X, Const::ATRIUM_OFFSET_Y);
+	// initialize the atrium building
+	m_foreground.addLayer("assets/images/atrium_front.png", 1.0f, 0.0f, 0.0f, false);
 
 	m_pPlayer = new Player(
 		(rand() % Const::MAX_BODY_PIECES) + 1, 
@@ -65,12 +65,17 @@ void World::Destroy()
 
 void World::update(float p_delta)
 {
+	// scroll the background based on player speed
+	m_background.scrollX(m_pPlayer->speed());
 	m_background.update(p_delta);
-	for (size_t i = 0; i < m_entities.size(); i++)
-	{
-		m_entities[i]->update(p_delta);
-	}
+
+	// update the player entities
+	for (size_t i = 0; i < m_entities.size(); i++){ m_entities[i]->update(p_delta); }
+
+	// scroll the foreground based on player speed
+	m_foreground.scrollX(m_pPlayer->speed());
 	m_foreground.update(p_delta);
+
 }
 
 // ----------------------------------------------------------------------
@@ -114,8 +119,7 @@ void World::addEntity(WorldEntity* p_entity)
 	m_entities.push_back((p_entity));
 }
 
-void 
-World::removeEntity(WorldEntity* _pEntity )
+void World::removeEntity(WorldEntity* _pEntity )
 {
 	if( m_entities.size() > 0 )
 	{
