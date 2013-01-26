@@ -79,14 +79,14 @@ void Atrium::initializeWorldEntities()
 
 void Atrium::run()
 {
-	// initialize the window
-	initializeWindow();
-
 	// initialize the world
 	initializeWorld();
 
 	// initialize world Entities
 	initializeWorldEntities();
+
+	// initialize the window
+	initializeWindow();
 
 	// keep track of delta time
 	sf::Time clockTime;
@@ -107,6 +107,10 @@ void Atrium::run()
 			if (event.type == sf::Event::Closed){ shutdown(); }
 			else { handle_event(event); }
 		}
+	
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){ m_player->moveLeft(); }
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){ m_player->moveRight(); }
+		else { m_player->moveNone(); } 
 
 		// update/render
 		update(clockTime.asSeconds());
@@ -123,10 +127,17 @@ void Atrium::run()
 
 void Atrium::handle_event(const sf::Event &p_event)
 {
-	if (p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::F1)
+	if (p_event.type == sf::Event::KeyPressed)
 	{
-		Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
-		m_window.capture().saveToFile("screen.png");
+		switch(p_event.key.code)
+		{
+			case sf::Keyboard::F1:
+			{
+				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
+				m_window.capture().saveToFile("screen.png");
+				break;
+			}
+		}
 	}
 }
 

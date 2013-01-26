@@ -26,6 +26,7 @@ void World::initialize()
 	m_background.addLayer("assets/images/parallax_05.png", 0.7f);
 	m_background.addLayer("assets/images/parallax_06.png", 0.8f);
 	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
+	m_background.addLayer("assets/images/atrium.png", 0.0f, Const::ATRIUM_OFFSET_X, Const::ATRIUM_OFFSET_Y); 
 }
 
 // ----------------------------------------------------------------------
