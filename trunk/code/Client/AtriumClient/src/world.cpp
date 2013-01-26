@@ -44,12 +44,19 @@ void World::initialize()
 		(rand() % Const::MAX_HEAD_PIECES) + 1, 
 		(rand() % Const::MAX_HAIR_PIECES) + 1 
 	);
-	m_pPlayer->position(sf::Vector2f(Const::PLAYER_START_X, Const::PLAYER_START_Y));
+	m_pPlayer->GetPlayerData().x = Const::PLAYER_START_X;
+	m_pPlayer->GetPlayerData().y = Const::PLAYER_START_Y;
+
 	addEntity( m_pPlayer );
 
 	//Start the Rak Man
 	TheRakMan::Get().m_pPrimaryPlayer = m_pPlayer;
 	TheRakMan::Get().m_pWorld = this;
+}
+
+void World::Destroy()
+{
+	m_pPlayer->SendDisconnectPacket();
 }
 
 // ----------------------------------------------------------------------
@@ -105,6 +112,23 @@ void World::render(sf::RenderWindow* m_window)
 void World::addEntity(WorldEntity* p_entity)
 {
 	m_entities.push_back((p_entity));
+}
+
+void 
+World::removeEntity(WorldEntity* _pEntity )
+{
+	if( m_entities.size() > 0 )
+	{
+		std::vector<WorldEntity*>::iterator iter;
+		for( iter = m_entities.begin() ; iter != m_entities.end() ; ++iter )
+		{
+			if( *iter == _pEntity )
+			{
+				m_entities.erase(iter);
+				break;
+			}
+		}
+	}
 }
 
 Player& World::GetPrimaryPlayer()

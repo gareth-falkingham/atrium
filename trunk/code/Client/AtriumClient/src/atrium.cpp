@@ -94,6 +94,8 @@ void Atrium::run()
 		render();
 	}
 
+	m_world->Destroy();
+
 	//KILL the Rak Man.
 	TheRakMan::Destroy();
 }
