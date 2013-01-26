@@ -72,9 +72,19 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	texImage.copy(bodyImage, Const::PLAYER_FRAME_WIDTH, 0);
 	bodyImage.flipHorizontally(); // reset it ( so that later access will be normal ? )
 
+	// right is default, flip the images
+	headImage.flipHorizontally();
+	hairImage.flipHorizontally();
+
 	int x, y;
 	for (x = 0; x < 2; x++)
 	{
+		// if on the second row, flip the head/hair images
+		if (x == 1)
+		{
+			headImage.flipHorizontally();
+			hairImage.flipHorizontally();
+		}
 		for (y = 0; y < Const::PLAYER_FRAME_COUNT; y++)
 		{
 			texImage.copy(headImage, x * Const::PLAYER_FRAME_WIDTH, y * Const::PLAYER_FRAME_HEIGHT, sf::IntRect(0, 0, 0, 0), true);
@@ -90,7 +100,7 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	m_animatedSprite = new AnimatedSprite(m_sprite, Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT);
 	m_animatedSprite->registerAnimation("left_stand", 0, 0, 1, 0, true);
 	m_animatedSprite->registerAnimation("right_stand", Const::PLAYER_FRAME_WIDTH, 0, 1, 0);
-	m_animatedSprite->registerAnimation("left_walk", 0, Const::PLAYER_FRAME_HEIGHT, 2, 1, 0.2f);
+	m_animatedSprite->registerAnimation("left_walk", 0, Const::PLAYER_FRAME_HEIGHT, 2, 0.2f);
 	m_animatedSprite->registerAnimation("right_walk", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT, 2, 0.2f);
 	m_animatedSprite->registerAnimation("left_jump", 0, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
 	m_animatedSprite->registerAnimation("right_jump", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
