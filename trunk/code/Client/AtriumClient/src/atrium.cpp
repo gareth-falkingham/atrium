@@ -20,7 +20,6 @@ Atrium::Atrium(){}
 Atrium::~Atrium()
 {
 	delete m_world;
-	delete m_player;
 }
 
 // ----------------------------------------------------------------------
@@ -58,41 +57,19 @@ void Atrium::initializeWorld()
 }
 
 // ----------------------------------------------------------------------
-// Initialize World Entities
-// ----------------------------------------------------------------------
-
-void Atrium::initializeWorldEntities()
-{
-	// create the local player and populate network entities
-	m_player = new Player(
-		(rand() % Const::MAX_BODY_PIECES) + 1, 
-		(rand() % Const::MAX_HEAD_PIECES) + 1, 
-		(rand() % Const::MAX_HAIR_PIECES) + 1 
-	);
-	m_player->position(sf::Vector2f(Const::PLAYER_START_X, Const::PLAYER_START_Y));
-	m_world->addEntity(m_player);
-}
-
-// ----------------------------------------------------------------------
 // Run the Application
 // ----------------------------------------------------------------------
 
 void Atrium::run()
 {
-	// initialize the world
-	initializeWorld();
-
-	// initialize world Entities
-	initializeWorldEntities();
-
 	// initialize the window
 	initializeWindow();
 
+	// initialize the world
+	initializeWorld();
+
 	// keep track of delta time
 	sf::Time clockTime;
-
-	//Start the Rak Man
-	TheRakMan::Get().m_pPrimaryPlayer = m_player;
 
 	// main loop - continue until window is closed
 	Debug::log(LogLevel::INFO, "Atrium.run", "Entering main loop");
@@ -108,9 +85,9 @@ void Atrium::run()
 			else { handle_event(event); }
 		}
 	
-		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){ m_player->moveLeft(); }
-		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){ m_player->moveRight(); }
-		else { m_player->moveNone(); } 
+		if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)){ m_world->GetPrimaryPlayer().moveLeft(); }
+		else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)){ m_world->GetPrimaryPlayer().moveRight(); }
+		else { m_world->GetPrimaryPlayer().moveNone(); } 
 
 		// update/render
 		update(clockTime.asSeconds());
@@ -121,25 +98,7 @@ void Atrium::run()
 	TheRakMan::Destroy();
 }
 
-// ----------------------------------------------------------------------
-// Handle Events
-// ----------------------------------------------------------------------
 
-void Atrium::handle_event(const sf::Event &p_event)
-{
-	if (p_event.type == sf::Event::KeyPressed)
-	{
-		switch(p_event.key.code)
-		{
-			case sf::Keyboard::F1:
-			{
-				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
-				m_window.capture().saveToFile("screen.png");
-				break;
-			}
-		}
-	}
-}
 
 // ----------------------------------------------------------------------
 // Update the Application
@@ -169,4 +128,20 @@ void Atrium::render()
 void Atrium::shutdown()
 {
 	m_window.close();
+}
+
+void Atrium::handle_event(const sf::Event &p_event)
+{
+	if (p_event.type == sf::Event::KeyPressed)
+	{
+		switch(p_event.key.code)
+		{
+			case sf::Keyboard::F1:
+			{
+				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
+				m_window.capture().saveToFile("screen.png");
+				break;
+			}
+		}
+	}
 }

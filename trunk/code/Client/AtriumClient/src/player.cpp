@@ -1,4 +1,5 @@
 #include "player.hpp"
+#include <cassert>
 
 // ----------------------------------------------------------------------
 // Constructor
@@ -7,9 +8,9 @@
 Player::Player() : WorldEntity()
 {
 	m_playerData.hairID = 1;
-	m_playerData.headID = 2;
-	m_playerData.bodyID = 3;
-	m_playerData.heartID = 4;
+	m_playerData.headID = 1;
+	m_playerData.bodyID = 1;
+	m_playerData.heartID = 1;
 	initializeSprite(m_playerData.bodyID, m_playerData.headID ,m_playerData.hairID);
 }
 
@@ -17,9 +18,13 @@ Player::Player() : WorldEntity()
 // Overloaded Constructor
 // ----------------------------------------------------------------------
 
-Player::Player(int p_head, int p_hair, int p_body) : WorldEntity()
+Player::Player(int p_body, int p_head, int p_hair) : WorldEntity()
 {
-	initializeSprite(p_head, p_hair, p_body);
+	m_playerData.hairID = p_hair;
+	m_playerData.headID = p_head;
+	m_playerData.bodyID = p_body;
+	m_playerData.heartID = 1;
+	initializeSprite(m_playerData.bodyID, m_playerData.headID, m_playerData.hairID);
 
 }
 
@@ -146,6 +151,8 @@ void Player::moveNone()
 
 void Player::update(float p_delta)
 {
+	StoreOldData();
+
 	m_animatedSprite->update(p_delta);
 	m_position.y += Const::WORLD_GRAVITY;
 	if (m_position.y >= Const::GROUND_Y){ m_position.y = Const::GROUND_Y; }

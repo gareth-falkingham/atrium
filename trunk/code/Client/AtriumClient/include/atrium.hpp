@@ -29,13 +29,9 @@ class Atrium
 		// world stuff
 		World* m_world;
 
-		// player
-		Player* m_player;
-
 		// initialization functions
 		void initializeWindow();
 		void initializeWorld();
-		void initializeWorldEntities();
 
 		void handle_event(const sf::Event &p_event);
 		void update(float p_delta);

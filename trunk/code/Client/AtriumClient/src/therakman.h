@@ -15,8 +15,10 @@
 #define __ATRIUM_GJ_THERAKMAN_H__
 
 // Library Includes
+#include <string>
 
 // Local Includes
+#include "world.hpp"
 
 // Types
 
@@ -26,7 +28,9 @@
 namespace RakNet
 {
 	class RakPeerInterface;
+	struct SystemAddress;
 };
+class Player;
 
 class TheRakMan
 {	
@@ -35,12 +39,12 @@ public:
 	TheRakMan();
 	~TheRakMan();
 
-	static const TheRakMan& Get();
+	static TheRakMan& Get();
 	static void Destroy();
 
-	const void Update( const float _kfdt ) const;
+	void Update( const float _kfdt );
 
-	void SendPacket();
+	void SendPacket( const char* _pcData, const unsigned int _uLength );
 
 	bool Initialise();
 
@@ -50,10 +54,15 @@ private:
 
 // Member Variables
 public:
+		
+	bool m_bEstablishedConnection;
+	Player* m_pPrimaryPlayer;
+	World* m_pWorld;
 
 protected:
 
 private:
+	RakNet::SystemAddress* m_hostAddress;
 
 	static TheRakMan* m_RakMan;
 	RakNet::RakPeerInterface* m_pRakInterface;

@@ -77,7 +77,7 @@ void AnimatedSprite::changeAnimation(std::string p_tag)
 
 void AnimatedSprite::nextFrame(int p_overrideFrame)
 {
-	Debug::log(LogLevel::INFO, "nextFrame", "%f of %f", m_frameTimer, m_currentAnimation->frameTime);
+	//Debug::log(LogLevel::INFO, "nextFrame", "%f of %f", m_frameTimer, m_currentAnimation->frameTime);
 	if (p_overrideFrame == -1 && (m_frameTimer >= m_currentAnimation->frameTime))
 	{
 		m_frameTimer = 0.0f;
