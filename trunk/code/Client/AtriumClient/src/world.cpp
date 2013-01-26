@@ -1,5 +1,6 @@
 #include "world.hpp"
 #include "therakman.h"
+#include "soundmanager.h"
 
 // ----------------------------------------------------------------------
 // Constructor
@@ -63,11 +64,14 @@ void World::initialize()
 	//Start the Rak Man
 	TheRakMan::Get().m_pPrimaryPlayer = m_pPlayer;
 	TheRakMan::Get().m_pWorld = this;
+
+	SoundManager::getInstance().initialise();
 }
 
 void World::Destroy()
 {
 	m_pPlayer->SendDisconnectPacket();
+	SoundManager::destroy();
 }
 
 // ----------------------------------------------------------------------

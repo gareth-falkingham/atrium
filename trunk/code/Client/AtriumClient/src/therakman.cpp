@@ -34,7 +34,7 @@ using namespace RakNet;
 TheRakMan::TheRakMan()
 : m_bEstablishedConnection( false )
 {
-	m_hostAddress = new RakNet::SystemAddress( "192.168.1.70", 7001 );
+	m_hostAddress = new RakNet::SystemAddress( "23.22.88.17", 7001 );
 }
 
 TheRakMan::~TheRakMan()
@@ -79,7 +79,9 @@ bool TheRakMan::Initialise()
 	if( startRes == RakNet::RAKNET_STARTED )
 	{
 		bSuccess = true;
-		RakNet::ConnectionAttemptResult conRes = m_pRakInterface->Connect( "192.168.1.70", 7001, "MiniTaurus", strlen("MiniTaurus") );
+		RakNet::ConnectionAttemptResult conRes = m_pRakInterface->Connect(m_hostAddress->ToString(false), m_hostAddress->GetPort(), "MiniTaurus", strlen("MiniTaurus") );
+
+		std::cout << conRes << std::endl;
 	}
 
 	return bSuccess;
