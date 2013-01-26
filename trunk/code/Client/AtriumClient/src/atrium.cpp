@@ -49,6 +49,8 @@ void Atrium::initializeWindow()
 
 void Atrium::initializeWorld()
 {
+	srand((unsigned)time(0)); 
+
 	// create the world object
 	m_world = new World();
 	m_world->initialize();
@@ -61,7 +63,11 @@ void Atrium::initializeWorld()
 void Atrium::initializeWorldEntities()
 {
 	// create the local player and populate network entities
-	m_player = new Player(1, 1, 1);
+	m_player = new Player(
+		(rand() % Const::MAX_BODY_PIECES) + 1, 
+		(rand() % Const::MAX_HEAD_PIECES) + 1, 
+		(rand() % Const::MAX_HAIR_PIECES) + 1 
+	);
 	m_player->position(sf::Vector2f(Const::PLAYER_START_X, Const::PLAYER_START_Y));
 	m_world->addEntity(m_player);
 }
@@ -110,6 +116,11 @@ void Atrium::run()
 
 void Atrium::handle_event(const sf::Event &p_event)
 {
+	if (p_event.type == sf::Event::KeyPressed && p_event.key.code == sf::Keyboard::F1)
+	{
+		Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
+		m_window.capture().saveToFile("screen.png");
+	}
 }
 
 // ----------------------------------------------------------------------
