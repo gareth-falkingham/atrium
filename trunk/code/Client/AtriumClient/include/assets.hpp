@@ -20,8 +20,8 @@ class Assets
 
 	public:
 		static Assets* getInstance(); 
-		sf::Image* getImage(std::string p_file);
-		sf::Texture* getTexture(std::string p_file);
+		sf::Image getImage(std::string p_file);
+		sf::Texture getTexture(std::string p_file);
 };
 
 #endif
