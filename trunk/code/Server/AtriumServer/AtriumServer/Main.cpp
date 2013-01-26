@@ -3,7 +3,9 @@
 #define WIN32_LEAN_AND_MEAN
 #include <windows.h>
 
+#ifdef _DEBUG
 //#include <vld.h>
+#endif
 
 #include "Atrium.h"
 

@@ -15,6 +15,7 @@
 
 // This Includes
 #include "User.h"
+#include "packets.h"
 
 // Static Variables
 
@@ -28,5 +29,24 @@ User::User()
 
 User::~User()
 {
+}
+
+TPlayerConnect User::getSyncPacket()
+{
+	TPlayerConnect syncPacket;
+
+	syncPacket.bodyID = bodyID;
+	syncPacket.hairID = hairID;
+	syncPacket.headID = headID;
+	syncPacket.heartID = heartID;
+
+	syncPacket.x = x;
+	syncPacket.y = y;
+
+	syncPacket.playerID = playerID;
+	syncPacket.packetType = PLAYER_CONNECT;
+	syncPacket.isInteracting = isInteracting;
+
+	return syncPacket;
 }
 
