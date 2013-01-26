@@ -34,7 +34,7 @@ using namespace RakNet;
 TheRakMan::TheRakMan()
 : m_bEstablishedConnection( false )
 {
-	m_hostAddress = new RakNet::SystemAddress( "23.22.88.17", 7001 );
+	m_hostAddress = new RakNet::SystemAddress( "192.168.1.70", 7001 );
 }
 
 TheRakMan::~TheRakMan()
@@ -113,9 +113,14 @@ void TheRakMan::Update( const float _kfdt )
 						//Create new player.
 						Player* tempPlayer = new Player();
 						tempPlayer->ReceiveConnectionPacket( pC );
+						tempPlayer->initializeSprite(	pC.bodyID,
+														pC.headID,
+														pC.hairID );
+
 						m_mapPPlayers[pC.playerID] = tempPlayer;
 						m_pWorld->addEntity(m_mapPPlayers[pC.playerID]);
-						printf("Received a new connection and dealt with it successfully.\n");
+						printf("Received a new connection (%i) and dealt with it successfully.\n", pC.playerID);
+						printf("Body: %i Head: %i Hair: %i .\n", pC.playerID, pC.bodyID, pC.headID, pC.hairID);
 					}
 					else
 					{
@@ -174,7 +179,7 @@ void TheRakMan::Update( const float _kfdt )
 				if( iter != m_mapPPlayers.end() )
 				{
 					iter->second->ReceivePositionPacket( movePack );
-					printf("Received a player movement message for player: %i\n", movePack.playerID);
+					//printf("Received a player movement message for player: %i\n", movePack.playerID);
 				}
 				else
 				{

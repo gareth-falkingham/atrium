@@ -47,6 +47,8 @@ public:
 	void SendInteractionPacket();
 	void SendHeartPacket();
 
+	virtual void UpdatePosition() = 0;
+
 	void ReceiveConnectionPacket(TPlayerConnect& _packet);
 	void ReceivePositionPacket(TPlayerUpdateMovement& _packet );
 	void ReceiveHeartPacket(TPlayerUpdateHeart& _packet );

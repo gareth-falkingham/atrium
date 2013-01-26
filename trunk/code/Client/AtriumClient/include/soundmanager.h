@@ -66,7 +66,6 @@ private:
 
 	SoundMap m_soundMap;
 	SoundBufferMap m_soundBufferMap;
-
 };
 
 #endif // __ATRIUM_GJ_SOUNDMANAGER_H__
