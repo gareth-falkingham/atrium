@@ -13,6 +13,7 @@ class World
 	private:
 		
 		Parallax m_background;
+		Parallax m_foreground;
 		std::vector<WorldEntity*> m_entities;
 		Player* m_pPlayer;
 

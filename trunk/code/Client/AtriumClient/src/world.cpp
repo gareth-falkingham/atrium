@@ -36,6 +36,9 @@ void World::initialize()
 	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
 	m_background.addLayer("assets/images/atrium.png", 0.0f, Const::ATRIUM_OFFSET_X, Const::ATRIUM_OFFSET_Y); 
 
+	// initialize the foreground layers
+	m_foreground.addLayer("assets/images/atrium_front.png", 0.1f, Const::ATRIUM_OFFSET_X, Const::ATRIUM_OFFSET_Y);
+
 	m_pPlayer = new Player(
 		(rand() % Const::MAX_BODY_PIECES) + 1, 
 		(rand() % Const::MAX_HEAD_PIECES) + 1, 
@@ -60,6 +63,7 @@ void World::update(float p_delta)
 	{
 		m_entities[i]->update(p_delta);
 	}
+	m_foreground.update(p_delta);
 }
 
 // ----------------------------------------------------------------------
@@ -91,6 +95,7 @@ void World::render(sf::RenderWindow* m_window)
 	{
 		m_entities[i]->render(m_window);
 	}
+	m_foreground.render(m_window);
 }
 
 // ----------------------------------------------------------------------
