@@ -47,7 +47,7 @@ void World::update(float p_delta)
 
 void World::render(sf::RenderWindow* m_window)
 {
-	//m_background.render(m_window);
+	m_background.render(m_window);
 	for (size_t i = 0; i < m_entities.size(); i++)
 	{
 		m_entities[i]->render(m_window);

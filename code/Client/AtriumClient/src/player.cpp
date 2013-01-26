@@ -50,23 +50,27 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	sf::Image hairImage = *Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
 
 	// initialize the texture ( width * 2 to allow the flipped version )
-	m_texture = new sf::Texture();
-	m_texture->create(Const::PLAYER_FRAME_WIDTH * 2, Const::PLAYER_FRAME_COUNT * Const::PLAYER_FRAME_HEIGHT);
+	sf::Image texImage;
+	texImage.create(Const::PLAYER_FRAME_WIDTH * 2, Const::PLAYER_FRAME_COUNT * Const::PLAYER_FRAME_HEIGHT);
 
 	// draw the 4 frames of body into the texture and mirror as well
-	m_texture->update(bodyImage, 0, 0);
+	texImage.copy(bodyImage, 0, 0);
 	bodyImage.flipHorizontally(); // flip it
-	m_texture->update(bodyImage, Const::PLAYER_FRAME_WIDTH, 0);
+	texImage.copy(bodyImage, Const::PLAYER_FRAME_WIDTH, 0);
 	bodyImage.flipHorizontally(); // reset it ( so that later access will be normal ? )
+
 	int x, y;
 	for (x = 0; x < 2; x++)
 	{
-		for (y = 0; y < Const::PLAYER_FRAME_HEIGHT; y++)
+		for (y = 0; y < Const::PLAYER_FRAME_COUNT; y++)
 		{
-			m_texture->update(headImage, x, y);
-			m_texture->update(hairImage, x, y);
+			texImage.copy(headImage, x * Const::PLAYER_FRAME_WIDTH, y * Const::PLAYER_FRAME_HEIGHT, sf::IntRect(0, 0, 0, 0), true);
+			texImage.copy(hairImage, x * Const::PLAYER_FRAME_WIDTH, y * Const::PLAYER_FRAME_HEIGHT, sf::IntRect(0, 0, 0, 0), true);
 		}
 	}
+
+	m_texture = new sf::Texture();
+	m_texture->loadFromImage(texImage);
 	m_sprite = new sf::Sprite((*m_texture));
 	m_sprite->setTextureRect(sf::IntRect(0, 0, Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT));
 }
@@ -77,6 +81,7 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 void Player::update(float p_delta)
 {
 	m_sprite->setPosition(m_position);
+	m_sprite->setOrigin(Const::PLAYER_FRAME_WIDTH * 0.5, Const::PLAYER_FRAME_HEIGHT * 0.5);
 }
 
 // ----------------------------------------------------------------------
@@ -86,6 +91,4 @@ void Player::update(float p_delta)
 void Player::render(sf::RenderWindow* p_window)
 {
 	p_window->draw((*m_sprite));
-	sf::Sprite s((*m_texture));
-	p_window->draw(s);
 }
