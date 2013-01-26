@@ -60,6 +60,8 @@ void Atrium::run()
 	// initialize the world
 	initializeWorld();
 
+	// initialize world Entities
+
 	// keep track of delta time
 	sf::Time clockTime;
 
@@ -78,7 +80,7 @@ void Atrium::run()
 		}
 
 		// update/render
-		update(clockTime.asMilliseconds());
+		update(clockTime.asSeconds());
 		render();
 	}
 }

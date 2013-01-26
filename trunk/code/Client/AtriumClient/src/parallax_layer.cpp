@@ -22,6 +22,8 @@ ParallaxLayer::ParallaxLayer(std::string p_filename, float p_depth, float p_xOff
 	m_depth = p_depth;
 	m_xOffset = p_xOffset;
 	m_yOffset = p_yOffset;
+	m_xScroll = 0.0f;
+	m_yScroll = 0.0f;
 	initialize(p_filename);
 }
 
@@ -85,8 +87,8 @@ void ParallaxLayer::initialize(std::string p_filename)
 void ParallaxLayer::scrollX(float p_amount)
 {
 	m_xScroll += p_amount;
-	sf::IntRect rect = m_sprite.getTextureRect();
-	rect.left += 1;
-	rect.width += 1;
+	sf::IntRect texRect = m_sprite.getTextureRect();
+	sf::IntRect rect(texRect.left, texRect.top, texRect.width, texRect.height);
+	rect.left = m_xScroll;
 	m_sprite.setTextureRect(rect);
 }
