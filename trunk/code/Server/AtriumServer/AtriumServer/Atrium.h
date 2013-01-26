@@ -29,7 +29,8 @@ private:
 	void connectUser(RakNet::Packet _packet);
 	void playerInteract(RakNet::Packet _packet);
 	void playerMove(RakNet::Packet _packet);
-	void broadcastToClients(const char* _data, int _size, RakNet::SystemAddress exclude = 0);
+	void onPlayerHeart(RakNet::Packet _packet);
+	void broadcastToClients(const char* _data, int _size, RakNet::AddressOrGUID exclude = RakNet::UNASSIGNED_RAKNET_GUID);
 
 	User* createNewUser(RakNet::Packet _packet);
 
