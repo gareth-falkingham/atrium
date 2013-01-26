@@ -6,7 +6,11 @@
 
 Player::Player() : WorldEntity()
 {
-	initializeSprite(1, 1 ,1);
+	m_playerData.hairID = 1;
+	m_playerData.headID = 2;
+	m_playerData.bodyID = 3;
+	m_playerData.heartID = 4;
+	initializeSprite(m_playerData.bodyID, m_playerData.headID ,m_playerData.hairID);
 }
 
 // ----------------------------------------------------------------------
@@ -16,6 +20,7 @@ Player::Player() : WorldEntity()
 Player::Player(int p_head, int p_hair, int p_body) : WorldEntity()
 {
 	initializeSprite(p_head, p_hair, p_body);
+
 }
 
 // ----------------------------------------------------------------------
@@ -146,6 +151,9 @@ void Player::update(float p_delta)
 	if (m_position.y >= Const::GROUND_Y){ m_position.y = Const::GROUND_Y; }
 	m_sprite->setPosition(m_position);
 	m_sprite->setOrigin(Const::PLAYER_FRAME_WIDTH * 0.5, Const::PLAYER_FRAME_HEIGHT * 0.5);
+
+	//RELIES on StoreOldData being called. Compares the old data with the current data and sends any changes to the server.
+	SendNewData();
 }
 
 // ----------------------------------------------------------------------

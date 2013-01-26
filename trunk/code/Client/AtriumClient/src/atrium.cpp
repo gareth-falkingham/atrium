@@ -92,7 +92,7 @@ void Atrium::run()
 	sf::Time clockTime;
 
 	//Start the Rak Man
-	TheRakMan::Get();
+	TheRakMan::Get().m_pPrimaryPlayer = m_player;
 
 	// main loop - continue until window is closed
 	Debug::log(LogLevel::INFO, "Atrium.run", "Entering main loop");
