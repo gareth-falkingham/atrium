@@ -44,6 +44,9 @@ std::string Player::buildAssetPath(std::string p_type, int p_ext)
 
 void Player::initializeSprite(int p_body, int p_head, int p_hair)
 {
+	// constructors share this so use it to initialize members
+	m_speed = 0.0f;
+
 	// load the applicable images in
 	sf::Image bodyImage = *Assets::getInstance()->getImage(buildAssetPath("body", p_body));
 	sf::Image headImage = *Assets::getInstance()->getImage(buildAssetPath("head", p_head));
@@ -73,13 +76,72 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	m_texture->loadFromImage(texImage);
 	m_sprite = new sf::Sprite((*m_texture));
 	m_sprite->setTextureRect(sf::IntRect(0, 0, Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT));
+	
+	m_animatedSprite = new AnimatedSprite(m_sprite, Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT);
+	m_animatedSprite->registerAnimation("left_stand", 0, 0, 1, 0, true);
+	m_animatedSprite->registerAnimation("right_stand", Const::PLAYER_FRAME_WIDTH, 0, 1, 0);
+	m_animatedSprite->registerAnimation("left_walk", 0, Const::PLAYER_FRAME_HEIGHT, 2, 1, 0.2f);
+	m_animatedSprite->registerAnimation("right_walk", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT, 2, 0.2f);
+	m_animatedSprite->registerAnimation("left_jump", 0, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
+	m_animatedSprite->registerAnimation("right_jump", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
+}
+
+// ----------------------------------------------------------------------
+// Move the Player Left 
+// ----------------------------------------------------------------------
+
+void Player::moveLeft()
+{
+	if (m_facing != Direction::LEFT)
+	{
+		m_facing = Direction::LEFT;
+		m_animatedSprite->changeAnimation("left_walk");
+	}
+	else { m_animatedSprite->nextFrame(); }
+	m_speed += Const::PLAYER_ACCELERATION;
+	m_speed = std::min(m_speed, Const::PLAYER_MAX_SPEED);
+	m_position.x -= m_speed;
+}
+
+// ----------------------------------------------------------------------
+// Move the Player Right 
+// ----------------------------------------------------------------------
+
+void Player::moveRight()
+{
+	if (m_facing != Direction::RIGHT)
+	{
+		m_facing = Direction::RIGHT;
+		m_animatedSprite->changeAnimation("right_walk");
+	}
+	else { m_animatedSprite->nextFrame(); }
+	m_speed += Const::PLAYER_ACCELERATION;
+	m_speed = std::min(m_speed, Const::PLAYER_MAX_SPEED);
+	m_position.x += m_speed;
+}
+
+// ----------------------------------------------------------------------
+// Move the Player Slowly to a stop
+// ----------------------------------------------------------------------
+
+void Player::moveNone()
+{
+	m_speed = 0.0f;
+	switch(m_facing)
+	{
+		case Direction::LEFT: m_animatedSprite->changeAnimation("left_stand"); break;
+		case Direction::RIGHT: m_animatedSprite->changeAnimation("right_stand"); break;
+	}
+	m_facing = Direction::NONE;
 }
 
 // ----------------------------------------------------------------------
 // Update the Player Sprite 
 // ----------------------------------------------------------------------
+
 void Player::update(float p_delta)
 {
+	m_animatedSprite->update(p_delta);
 	m_position.y += Const::WORLD_GRAVITY;
 	if (m_position.y >= Const::GROUND_Y){ m_position.y = Const::GROUND_Y; }
 	m_sprite->setPosition(m_position);

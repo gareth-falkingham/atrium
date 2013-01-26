@@ -1,12 +1,14 @@
-﻿Build started 26/01/2013 4:49:55 p.m..
+﻿Build started 26/01/2013 6:51:37 p.m..
      1>Project "C:\Work\Atrium\code\Client\AtriumClient\AtriumClient.vcxproj" on node 2 (Build target(s)).
      1>InitializeBuildStatus:
          Creating "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.unsuccessfulbuild" because "AlwaysCreate" was specified.
        ClCompile:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Work\Atrium\code\Client\\SFML-2.0\include" /IC:\Work\Atrium\code\Client\AtriumClient\\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Work\Atrium\code\Client\\Build\Debug\\" /Fd"C:\Work\Atrium\code\Client\\Build\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\atrium.cpp
-         atrium.cpp
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\CL.exe /c /I"C:\Work\Atrium\code\Client\\SFML-2.0\include" /IC:\Work\Atrium\code\Client\AtriumClient\\include /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"C:\Work\Atrium\code\Client\\Build\Debug\\" /Fd"C:\Work\Atrium\code\Client\\Build\Debug\vc110.pdb" /Gd /TP /analyze- /errorReport:prompt src\player.cpp
+         player.cpp
+     1>c:\work\atrium\code\client\atriumclient\src\player.cpp(83): warning C4305: 'argument' : truncation from 'float' to 'bool'
        Link:
-         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Work\Atrium\code\Client\\SFML-2.0\lib" "sfml-main-d.lib" "sfml-audio-d.lib" "sfml-graphics-d.lib" "sfml-network-d.lib" "sfml-system-d.lib" "sfml-window-d.lib" kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.lib" /MACHINE:X86 C:\Work\Atrium\code\Client\\Build\Debug\assets.obj
+         C:\Program Files (x86)\Microsoft Visual Studio 11.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.exe" /INCREMENTAL /NOLOGO /LIBPATH:"C:\Work\Atrium\code\Client\\SFML-2.0\lib" "sfml-main-d.lib" "sfml-audio-d.lib" "sfml-graphics-d.lib" "sfml-network-d.lib" "sfml-system-d.lib" "sfml-window-d.lib" RakNet_LibStatic_Debug_Win32.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.lib" /MACHINE:X86 C:\Work\Atrium\code\Client\\Build\Debug\animated_sprite.obj
+         C:\Work\Atrium\code\Client\\Build\Debug\assets.obj
          C:\Work\Atrium\code\Client\\Build\Debug\atrium.obj
          C:\Work\Atrium\code\Client\\Build\Debug\debug.obj
          C:\Work\Atrium\code\Client\\Build\Debug\main.obj
@@ -18,8 +20,8 @@
          AtriumClient.vcxproj -> C:\Work\Atrium\code\Client\\Deploy\Debug\AtriumClient.exe
        PostBuildEvent:
          xcopy /y /e "C:\Work\Atrium\code\Client\AtriumClient\/assets" "C:\Work\Atrium\code\Client\\Build\Debug\assets\"
-         xcopy /y /e "C:\Work\Atrium\code\Client\AtriumClient\/assets" "C:\Work\Atrium\code\Client\\Deploy\Debug\assets\"
          :VCEnd
+         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\atrium.png
          C:\Work\Atrium\code\Client\AtriumClient\/assets\images\body_001.png
          C:\Work\Atrium\code\Client\AtriumClient\/assets\images\body_002.png
          C:\Work\Atrium\code\Client\AtriumClient\/assets\images\hair_001.png
@@ -36,24 +38,7 @@
          C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_05.png
          C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_06.png
          C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_07.png
-         16 File(s) copied
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\body_001.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\body_002.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\hair_001.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\hair_002.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\hair_003.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\hair_004.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\head_001.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\head_002.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\head_003.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_01.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_02.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_03.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_04.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_05.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_06.png
-         C:\Work\Atrium\code\Client\AtriumClient\/assets\images\parallax_07.png
-         16 File(s) copied
+         17 File(s) copied
        FinalizeBuildStatus:
          Deleting file "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.unsuccessfulbuild".
          Touching "C:\Work\Atrium\code\Client\\Build\Debug\AtriumClient.lastbuildstate".
@@ -61,4 +46,4 @@
 
 Build succeeded.
 
-Time Elapsed 00:00:01.26
+Time Elapsed 00:00:01.35
