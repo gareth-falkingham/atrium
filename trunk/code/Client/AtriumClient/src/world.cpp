@@ -33,7 +33,15 @@ void World::initialize()
 	m_background.addLayer("assets/images/parallax_04.png", 0.6f);
 	m_background.addLayer("assets/images/parallax_05.png", 0.7f);
 	m_background.addLayer("assets/images/parallax_06.png", 0.8f);
+
+	// add in the upgrade layers based on the number of matches
+	m_background.addLayer("assets/images/uparallax_01.png", 0.9f);
+	//m_background.addLayer("assets/images/uparallax_02.png", 0.9);
+
+	// ground
 	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
+
+
 	m_background.addLayer("assets/images/atrium.png", 1.0f, 0.0f, 0.0f, false);
 
 	// initialize the atrium building
@@ -44,8 +52,11 @@ void World::initialize()
 		(rand() % Const::MAX_HEAD_PIECES) + 1, 
 		(rand() % Const::MAX_HAIR_PIECES) + 1 
 	);
-	m_pPlayer->GetPlayerData().x = Const::PLAYER_START_X;
-	m_pPlayer->GetPlayerData().y = Const::PLAYER_START_Y;
+	m_pPlayer->GetPlayerData().x = 0.0f; // worldX starts at 0
+	m_pPlayer->GetPlayerData().y = Const::PLAYER_START_Y; // worldY starts at normal start y
+
+	m_pPlayer->localX(Const::PLAYER_START_X);
+	m_pPlayer->localY(Const::PLAYER_START_Y);
 
 	addEntity( m_pPlayer );
 

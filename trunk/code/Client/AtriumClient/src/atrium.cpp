@@ -122,6 +122,10 @@ void Atrium::handle_event(const sf::Event &p_event)
 				m_window.capture().saveToFile("screen.png");
 				break;
 			}
+			case sf::Keyboard::Space:
+			{
+				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Attempting Interaction");
+			}
 		}
 	}
 }
