@@ -89,6 +89,6 @@ void ParallaxLayer::scrollX(float p_amount)
 	m_xScroll += p_amount;
 	sf::IntRect texRect = m_sprite.getTextureRect();
 	sf::IntRect rect(texRect.left, texRect.top, texRect.width, texRect.height);
-	rect.left = m_xScroll;
+	rect.left = (int)m_xScroll;
 	m_sprite.setTextureRect(rect);
 }

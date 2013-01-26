@@ -1,4 +1,5 @@
 #include "atrium.hpp"
+#include "therakman.h"
 
 // ----------------------------------------------------------------------
 // Constants
@@ -90,6 +91,9 @@ void Atrium::run()
 	// keep track of delta time
 	sf::Time clockTime;
 
+	//Start the Rak Man
+	TheRakMan::Get();
+
 	// main loop - continue until window is closed
 	Debug::log(LogLevel::INFO, "Atrium.run", "Entering main loop");
 	while(m_window.isOpen())
@@ -108,6 +112,9 @@ void Atrium::run()
 		update(clockTime.asSeconds());
 		render();
 	}
+
+	//KILL the Rak Man.
+	TheRakMan::Destroy();
 }
 
 // ----------------------------------------------------------------------
@@ -130,6 +137,7 @@ void Atrium::handle_event(const sf::Event &p_event)
 void Atrium::update(float p_delta)
 {
 	m_world->update(p_delta);
+	TheRakMan::Get().Update( p_delta );
 }
 
 // ----------------------------------------------------------------------
