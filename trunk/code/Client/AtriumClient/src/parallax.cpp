@@ -4,12 +4,6 @@
 // Constructor
 // ----------------------------------------------------------------------
 
-const float Parallax::SCROLL_SPEED = 20.0f;
-
-// ----------------------------------------------------------------------
-// Constructor
-// ----------------------------------------------------------------------
-
 Parallax::Parallax(){}
 
 // ----------------------------------------------------------------------
@@ -37,7 +31,7 @@ void Parallax::update(float p_deltaTime)
 	for (size_t i = 0; i < m_layers.size(); i++)
 	{
 		ParallaxLayer& currLayer = m_layers[i];
-		currLayer.scrollX(SCROLL_SPEED * currLayer.parallaxDepth() * (p_deltaTime * 20));
+		currLayer.scrollX(Const::SCROLL_SPEED * currLayer.parallaxDepth() * (p_deltaTime * 20));
 	}
 }
 

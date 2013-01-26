@@ -40,12 +40,12 @@ sf::Texture* Assets::getTexture(std::string p_key)
 	}
 	else
 	{
-		Debug::log(LogLevel::EXCEPTION, "Assets::getTexture", "Loading '%s'", p_key.c_str());
+		Debug::log(LogLevel::INFO, "Assets::getTexture", "Loading '%s'", p_key.c_str());
 		// load the texture from file and save it in the map
 		sf::Texture tex;
 		if (tex.loadFromFile(p_key))
 		{
-			Debug::log(LogLevel::EXCEPTION, "Assets::getTexture", "Loaded: Width: %d, Height:%d", tex.getSize().x, tex.getSize().y);
+			Debug::log(LogLevel::INFO, "Assets::getTexture", "Loaded: Width: %d, Height:%d", tex.getSize().x, tex.getSize().y);
 			m_textures[p_key] = tex;
 			return getTexture(p_key); // do another search for it ?
 		}
@@ -73,10 +73,12 @@ sf::Image* Assets::getImage(std::string p_key)
 	}
 	else
 	{
+		Debug::log(LogLevel::INFO, "Assets::getImage", "Loading '%s'", p_key.c_str());
 		// load the texture from file and save it in the map
 		sf::Image img;
 		if (img.loadFromFile(p_key))
 		{
+			Debug::log(LogLevel::INFO, "Assets::getImage", "Loaded: Width: %d, Height:%d", img.getSize().x, img.getSize().y);
 			m_images[p_key] = img;
 			return getImage(p_key); // do another search for it ?
 		}

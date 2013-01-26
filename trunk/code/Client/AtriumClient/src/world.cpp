@@ -35,7 +35,10 @@ void World::initialize()
 void World::update(float p_delta)
 {
 	m_background.update(p_delta);
-	updateEntities(p_delta);
+	for (size_t i = 0; i < m_entities.size(); i++)
+	{
+		m_entities[i]->update(p_delta);
+	}
 }
 
 // ----------------------------------------------------------------------
@@ -44,32 +47,18 @@ void World::update(float p_delta)
 
 void World::render(sf::RenderWindow* m_window)
 {
-	m_background.render(m_window);
+	//m_background.render(m_window);
+	for (size_t i = 0; i < m_entities.size(); i++)
+	{
+		m_entities[i]->render(m_window);
+	}
 }
 
 // ----------------------------------------------------------------------
 // Add a World Entity
 // ----------------------------------------------------------------------
 
-void World::addEntity(WorldEntity p_entity)
+void World::addEntity(WorldEntity* p_entity)
 {
-	m_entities.push_back(p_entity);
-}
-
-// ----------------------------------------------------------------------
-// Update the Entity list
-// ----------------------------------------------------------------------
-
-void World::updateEntities(float p_delta)
-{
-	// move all the peoples
-}
-
-// ----------------------------------------------------------------------
-// Render the Entity list
-// ----------------------------------------------------------------------
-
-void World::renderEntities(sf::RenderWindow* p_window)
-{
-	// render all the peoples
+	m_entities.push_back((p_entity));
 }

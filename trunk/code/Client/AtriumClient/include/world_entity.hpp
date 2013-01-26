@@ -6,13 +6,15 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "debug.hpp"
+
 class WorldEntity
 {
 	protected:
 
+		sf::Texture* m_texture;
+		sf::Sprite* m_sprite;
 		sf::Vector2f m_position;
-		sf::Sprite m_sprite;
-		sf::Texture m_texture;
 
 	public:
 
@@ -22,8 +24,11 @@ class WorldEntity
 		void position(sf::Vector2f p_value);
 		sf::Vector2f position();
 
-		void sprite(sf::Sprite p_value);
-		sf::Sprite sprite();
+		void sprite(sf::Sprite* p_value);
+		sf::Sprite* sprite();
+
+		virtual void update(float p_delta);
+		virtual void render(sf::RenderWindow* p_window);
 };
 
 #endif

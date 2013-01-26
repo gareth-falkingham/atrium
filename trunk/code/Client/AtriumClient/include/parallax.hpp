@@ -3,15 +3,14 @@
 #pragma once
 
 #include <vector>
-#include "parallax_layer.hpp"
 #include <SFML/Window.hpp>
 #include <SFML/Graphics.hpp>
+#include "const.hpp"
+#include "parallax_layer.hpp"
 
 class Parallax
 {
 	private:
-
-		static const float SCROLL_SPEED;
 
 		std::vector<ParallaxLayer> m_layers;
 

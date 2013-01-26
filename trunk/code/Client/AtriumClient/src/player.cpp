@@ -31,8 +31,10 @@ Player::~Player(){}
 std::string Player::buildAssetPath(std::string p_type, int p_ext)
 {
 	std::ostringstream ss;
+	ss << "assets/images/";
 	ss << p_type << "_";
 	ss << std::setw(3) << std::setfill('0') << p_ext;
+	ss << ".png";
 	return ss.str();
 }
 
@@ -48,22 +50,42 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	sf::Image hairImage = *Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
 
 	// initialize the texture ( width * 2 to allow the flipped version )
-	m_texture.create(FRAME_WIDTH * 2, FRAMES * FRAME_HEIGHT);
+	m_texture = new sf::Texture();
+	m_texture->create(Const::PLAYER_FRAME_WIDTH * 2, Const::PLAYER_FRAME_COUNT * Const::PLAYER_FRAME_HEIGHT);
 
 	// draw the 4 frames of body into the texture and mirror as well
-	m_texture.update(bodyImage, 0, 0);
+	m_texture->update(bodyImage, 0, 0);
 	bodyImage.flipHorizontally(); // flip it
-	m_texture.update(bodyImage, FRAME_WIDTH, 0);
+	m_texture->update(bodyImage, Const::PLAYER_FRAME_WIDTH, 0);
 	bodyImage.flipHorizontally(); // reset it ( so that later access will be normal ? )
 	int x, y;
 	for (x = 0; x < 2; x++)
 	{
-		for (y = 0; y < FRAME_HEIGHT; y++)
+		for (y = 0; y < Const::PLAYER_FRAME_HEIGHT; y++)
 		{
-			m_texture.update(headImage, x, y);
-			m_texture.update(hairImage, x, y);
+			m_texture->update(headImage, x, y);
+			m_texture->update(hairImage, x, y);
 		}
 	}
-	m_sprite.setTexture(m_texture);
-	m_sprite.setTextureRect(sf::IntRect(0, 0, FRAME_WIDTH, FRAME_HEIGHT));
+	m_sprite = new sf::Sprite((*m_texture));
+	m_sprite->setTextureRect(sf::IntRect(0, 0, Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT));
+}
+
+// ----------------------------------------------------------------------
+// Update the Player Sprite 
+// ----------------------------------------------------------------------
+void Player::update(float p_delta)
+{
+	m_sprite->setPosition(m_position);
+}
+
+// ----------------------------------------------------------------------
+// Render the Player Sprite 
+// ----------------------------------------------------------------------
+
+void Player::render(sf::RenderWindow* p_window)
+{
+	p_window->draw((*m_sprite));
+	sf::Sprite s((*m_texture));
+	p_window->draw(s);
 }
