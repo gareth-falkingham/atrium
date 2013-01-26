@@ -16,11 +16,13 @@
 #include "animated_sprite.h"
 
 enum Direction { LEFT, RIGHT, UP, NONE };
+enum PlayerState { STANDING, WALKING, JUMPING };
 
 class Player : public WorldEntity, public NetworkPlayer{
 	private:
 
 		Direction m_facing;	
+		PlayerState m_playerState;
 		float m_speed;
 		AnimatedSprite* m_animatedSprite;
 		std::string buildAssetPath(std::string type, int p_ext);
@@ -35,6 +37,7 @@ class Player : public WorldEntity, public NetworkPlayer{
 		void moveLeft();
 		void moveRight();
 		void moveNone();
+		void jump();
 
 		virtual void update(float p_delta);
 		virtual void render(sf::RenderWindow* p_window);

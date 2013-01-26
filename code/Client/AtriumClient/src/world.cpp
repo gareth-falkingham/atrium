@@ -79,7 +79,7 @@ void World::update(float p_delta)
 
 void World::handle_event(const sf::Event &p_event)
 {
-	if (p_event.type == sf::Event::KeyPressed)
+	/*if (p_event.type == sf::Event::KeyPressed)
 	{
 		switch(p_event.key.code)
 		{
@@ -88,7 +88,7 @@ void World::handle_event(const sf::Event &p_event)
 				break;
 			}
 		}
-	}
+	}*/
 }
 
 // ----------------------------------------------------------------------

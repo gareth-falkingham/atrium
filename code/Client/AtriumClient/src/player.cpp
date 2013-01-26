@@ -25,7 +25,6 @@ Player::Player(int p_body, int p_head, int p_hair) : WorldEntity()
 	m_playerData.bodyID = p_body;
 	m_playerData.heartID = 1;
 	initializeSprite(m_playerData.bodyID, m_playerData.headID, m_playerData.hairID);
-
 }
 
 // ----------------------------------------------------------------------
@@ -56,6 +55,7 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 {
 	// constructors share this so use it to initialize members
 	m_speed = 0.0f;
+	m_playerState = PlayerState::STANDING;
 
 	// load the applicable images in
 	sf::Image bodyImage = *Assets::getInstance()->getImage(buildAssetPath("body", p_body));
@@ -104,6 +104,19 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	m_animatedSprite->registerAnimation("right_walk", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT, 2, 0.2f);
 	m_animatedSprite->registerAnimation("left_jump", 0, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
 	m_animatedSprite->registerAnimation("right_jump", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
+}
+
+// ----------------------------------------------------------------------
+// Jump
+// ----------------------------------------------------------------------
+
+void Player::jump()
+{
+	if (m_playerState != PlayerState::JUMPING)
+	{
+		m_playerState = PlayerState::JUMPING;
+
+	}
 }
 
 // ----------------------------------------------------------------------

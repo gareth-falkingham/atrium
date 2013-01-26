@@ -19,14 +19,14 @@ namespace Const
 
 	static const float WORLD_GRAVITY = 9.8f;
 
-	static const float GROUND_Y = 420.0f;
+	static const float GROUND_Y = 435.0f;
 
 	static const float ATRIUM_OFFSET_X = 273;
 	static const float ATRIUM_OFFSET_Y = 105;
 
-	static const unsigned int MAX_BODY_PIECES = 2;
-	static const unsigned int MAX_HEAD_PIECES = 3;
-	static const unsigned int MAX_HAIR_PIECES = 3;
+	static const unsigned int MAX_BODY_PIECES = 6;
+	static const unsigned int MAX_HEAD_PIECES = 4;
+	static const unsigned int MAX_HAIR_PIECES = 6;
 }
 
 #endif
