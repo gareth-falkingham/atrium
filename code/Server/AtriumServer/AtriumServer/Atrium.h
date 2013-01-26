@@ -3,9 +3,11 @@
 
 #include "RakPeer.h"
 #include "User.h"
+#include "packets.h"
+#include "MessageIdentifiers.h"
 #include <unordered_map>
 
-typedef std::unordered_map <int, User> UserMap;
+typedef std::unordered_map <int, User*> UserMap;
 
 class Atrium
 {
@@ -18,9 +20,18 @@ public:
 private:
 	RakNet::RakPeerInterface* m_pRakPeerInterface;
 	UserMap m_pUserMap;
+	unsigned short m_nextUserID;
 
-	int m_nextUserID;
 	void processPackets();
+
+	void clientDisconnectUser(RakNet::Packet _packet);
+	void disconnectUser(RakNet::Packet _packet);
+	void connectUser(RakNet::Packet _packet);
+	void playerInteract(RakNet::Packet _packet);
+	void playerMove(RakNet::Packet _packet);
+	void broadcastToClients(const char* _data, int _size, RakNet::SystemAddress exclude = 0);
+
+	User* createNewUser(RakNet::Packet _packet);
 
 };
 
