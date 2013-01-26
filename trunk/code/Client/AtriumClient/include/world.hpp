@@ -28,6 +28,8 @@ class World
 		void render(sf::RenderWindow* p_window);
 
 		void addEntity(WorldEntity p_entity);
+
+		void handleKeypress();
 };
 
 #endif

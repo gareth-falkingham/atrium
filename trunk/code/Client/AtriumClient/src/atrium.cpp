@@ -60,10 +60,15 @@ void Atrium::run()
 	// initialize the world
 	initializeWorld();
 
+	// keep track of delta time
+	sf::Time clockTime;
+
 	// main loop - continue until window is closed
 	Debug::log(LogLevel::INFO, "Atrium.run", "Entering main loop");
 	while(m_window.isOpen())
 	{
+		clockTime = m_clock.restart();
+				
 		// poll the events
 		sf::Event event;
 		while(m_window.pollEvent(event))
@@ -73,7 +78,7 @@ void Atrium::run()
 		}
 
 		// update/render
-		update(0.0f);
+		update(clockTime.asMilliseconds());
 		render();
 	}
 }
@@ -84,7 +89,6 @@ void Atrium::run()
 
 void Atrium::handle_event(const sf::Event &p_event)
 {
-
 }
 
 // ----------------------------------------------------------------------

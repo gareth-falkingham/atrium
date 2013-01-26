@@ -21,6 +21,9 @@ class Atrium
 		sf::RenderWindow m_window;
 		sf::ContextSettings m_glContext;
 
+		// timing stuff
+		sf::Clock m_clock;
+
 		// world stuff
 		World m_world;
 
