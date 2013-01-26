@@ -16,7 +16,11 @@ Atrium::Atrium(){}
 // Deconstructor
 // ----------------------------------------------------------------------
 
-Atrium::~Atrium(){}
+Atrium::~Atrium()
+{
+	delete m_world;
+	delete m_player;
+}
 
 // ----------------------------------------------------------------------
 // Initialize Window
@@ -45,7 +49,21 @@ void Atrium::initializeWindow()
 
 void Atrium::initializeWorld()
 {
-	m_world.initialize();
+	// create the world object
+	m_world = new World();
+	m_world->initialize();
+}
+
+// ----------------------------------------------------------------------
+// Initialize World Entities
+// ----------------------------------------------------------------------
+
+void Atrium::initializeWorldEntities()
+{
+	// create the local player and populate network entities
+	m_player = new Player(1, 1, 1);
+	m_player->position(sf::Vector2f(Const::PLAYER_START_X, Const::PLAYER_START_Y));
+	m_world->addEntity(m_player);
 }
 
 // ----------------------------------------------------------------------
@@ -61,6 +79,7 @@ void Atrium::run()
 	initializeWorld();
 
 	// initialize world Entities
+	initializeWorldEntities();
 
 	// keep track of delta time
 	sf::Time clockTime;
@@ -99,7 +118,7 @@ void Atrium::handle_event(const sf::Event &p_event)
 
 void Atrium::update(float p_delta)
 {
-	m_world.update(p_delta);
+	m_world->update(p_delta);
 }
 
 // ----------------------------------------------------------------------
@@ -109,7 +128,7 @@ void Atrium::update(float p_delta)
 void Atrium::render()
 {
 	m_window.clear(CLEAR_COLOR);
-	m_world.render(&m_window);
+	m_world->render(&m_window);
 	m_window.display();
 }
 

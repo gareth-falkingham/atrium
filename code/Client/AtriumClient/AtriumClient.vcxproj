@@ -103,6 +103,7 @@ xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\asset
   <ItemGroup>
     <ClInclude Include="include\assets.hpp" />
     <ClInclude Include="include\atrium.hpp" />
+    <ClInclude Include="include\const.hpp" />
     <ClInclude Include="include\debug.hpp" />
     <ClInclude Include="include\parallax.hpp" />
     <ClInclude Include="include\parallax_layer.hpp" />
