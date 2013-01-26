@@ -27,7 +27,7 @@ namespace Const
 	static const float ATRIUM_OFFSET_Y = 105;
 
 	static const unsigned int MAX_BODY_PIECES = 6;
-	static const unsigned int MAX_HEAD_PIECES = 4;
+	static const unsigned int MAX_HEAD_PIECES = 6;
 	static const unsigned int MAX_HAIR_PIECES = 6;
 }
 
