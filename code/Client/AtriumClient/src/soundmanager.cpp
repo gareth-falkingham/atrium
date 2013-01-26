@@ -47,6 +47,24 @@ SoundManager::SoundManager()
 
 SoundManager::~SoundManager()
 {
+	SoundMap::iterator iter1;
+	SoundBufferMap::iterator iter2;
+
+	//Delete Sounds
+	//for( iter1 = m_soundMap.begin() ; iter1 != m_soundMap.end() ; ++iter1 )
+	//{
+	//	iter1->second->stop();
+	//	delete iter1->second;
+	//	iter1->second = 0;
+	//}
+
+	////Delete Buffers.
+	//for( iter2 = m_soundBufferMap.begin() ; iter2 != m_soundBufferMap.end() ; ++iter2 )
+	//{
+	//	delete iter2->second;
+	//	iter2->second = 0;
+	//}
+
 	m_soundMap.clear();
 	m_soundBufferMap.clear();
 }
@@ -58,29 +76,39 @@ void SoundManager::initialise()
 
 void SoundManager::playSound(ESounds _sound)
 {
-	SoundMap::iterator it = m_soundMap.find(_sound);
+	//SoundMap::iterator it = m_soundMap.find(_sound);
 
-	if (it != m_soundMap.end())
-	{
-		// Valid sound, is in map
-		it->second->play();
-	}
-	else
-	{
-		// Create sound, then play
-		SoundBuffer* buffer = new SoundBuffer();
-		if (buffer->loadFromFile("assets/sounds/Test.wav"))
-		{
-			Sound* sound = new Sound(*buffer);
+	//if (it != m_soundMap.end())
+	//{
+	//	// Valid sound, is in map
+	//	it->second->play();
+	//}
+	//else
+	//{
+	//	m_buff.loadFromFile( "assets/sounds/Test.wav" );
+	//	m_sound.setBuffer(m_buff);
+	//	m_sound.play();
 
-			m_soundBufferMap[_sound] = buffer;
-			m_soundMap[_sound] = sound;
+	//	// Create sound, then play
+	//	SoundBuffer* buffer = new SoundBuffer();
+	//	if (buffer->loadFromFile("assets/sounds/Test.wav"))
+	//	{
+	//		Sound* sound = new Sound;
+	//		sound->setBuffer( *buffer );
 
-			sound->play();
-			sound = 0;
-		}
-		buffer = 0;
-	}
+	//		m_soundBufferMap[_sound] = buffer;
+	//		m_soundMap[_sound] = sound;
+
+	//		sound->play();
+	//		//sound = 0;
+	//	}
+	//	else
+	//	{
+	//		delete buffer;
+	//	}
+
+	//	//buffer = 0;
+	//}
 }
 
 void SoundManager::stopSound(ESounds _sound)

@@ -28,7 +28,10 @@ class Player : public WorldEntity, public NetworkPlayer{
 		float m_localY;
 		AnimatedSprite* m_animatedSprite;
 		std::string buildAssetPath(std::string type, int p_ext);
-		void initializeSprite(int p_body, int p_head, int p_hair);
+
+		static float sm_playerLocalX;
+		static float sm_playerWorldX;
+		
 
 	public:
 	
@@ -36,6 +39,8 @@ class Player : public WorldEntity, public NetworkPlayer{
 		Player(int p_head, int p_hair, int p_body);
 		virtual ~Player();
 
+		void initializeSprite(int p_body, int p_head, int p_hair);
+		virtual void UpdatePosition();
 		void moveLeft();
 		void moveRight();
 		void moveNone();

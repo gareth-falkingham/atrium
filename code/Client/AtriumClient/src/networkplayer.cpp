@@ -42,7 +42,7 @@ void NetworkPlayer::SendNewData()
 	{
 		if( m_oldData.x != m_playerData.x || m_oldData.y != m_playerData.y )
 		{
-			printf("position packet sent\n");
+			//printf("position packet sent\n");
 			SendPositionPacket();
 		}
 
@@ -123,6 +123,8 @@ NetworkPlayer::ReceiveConnectionPacket(TPlayerConnect& _packet)
 	//Receive x and y.
 	m_playerData.x = _packet.x;
 	m_playerData.y = _packet.y;
+	UpdatePosition();
+
 	m_playerData.bodyID = _packet.bodyID;
 	m_playerData.headID = _packet.headID;
 	m_playerData.hairID = _packet.bodyID;
@@ -135,6 +137,7 @@ NetworkPlayer::ReceivePositionPacket(TPlayerUpdateMovement& _packet )
 {
 	m_playerData.x = _packet.x;
 	m_playerData.y = _packet.y;
+	UpdatePosition();
 }
 
 void 

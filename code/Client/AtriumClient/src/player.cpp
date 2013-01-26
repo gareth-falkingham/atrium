@@ -1,7 +1,12 @@
 #include "player.hpp"
 #include <cassert>
+#include "const.hpp"
+#include "therakman.h"
 
 #include "soundmanager.h"
+
+float Player::sm_playerLocalX = 0.0f;
+float Player::sm_playerWorldX = 0.0f;
 
 // ----------------------------------------------------------------------
 // Constructor
@@ -9,11 +14,7 @@
 
 Player::Player() : WorldEntity()
 {
-	m_playerData.hairID = 1;
-	m_playerData.headID = 1;
-	m_playerData.bodyID = 1;
-	m_playerData.heartID = 1;
-	initializeSprite(m_playerData.bodyID, m_playerData.headID ,m_playerData.hairID);
+	memset(&m_playerData, 0, sizeof(m_playerData));
 }
 
 // ----------------------------------------------------------------------
@@ -22,11 +23,8 @@ Player::Player() : WorldEntity()
 
 Player::Player(int p_body, int p_head, int p_hair) : WorldEntity()
 {
-	m_playerData.hairID = p_hair;
-	m_playerData.headID = p_head;
-	m_playerData.bodyID = p_body;
-	m_playerData.heartID = 1;
-	initializeSprite(m_playerData.bodyID, m_playerData.headID, m_playerData.hairID);
+	memset(&m_playerData, 0, sizeof(m_playerData));
+	initializeSprite(p_body, p_head, p_hair);
 }
 
 // ----------------------------------------------------------------------
@@ -61,9 +59,21 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	m_playerState = PlayerState::STANDING;
 
 	// load the applicable images in
+	if( p_body > Const::MAX_BODY_PIECES )
+		p_body = Const::MAX_BODY_PIECES-1;
+	if( p_head > Const::MAX_HEAD_PIECES )
+		p_head = Const::MAX_HEAD_PIECES-1;
+	if( p_hair > Const::MAX_HAIR_PIECES )
+		p_hair = Const::MAX_HAIR_PIECES-1;
+
 	sf::Image bodyImage = *Assets::getInstance()->getImage(buildAssetPath("body", p_body));
 	sf::Image headImage = *Assets::getInstance()->getImage(buildAssetPath("head", p_head));
 	sf::Image hairImage = *Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
+
+	m_playerData.hairID = p_hair;
+	m_playerData.headID = p_head;
+	m_playerData.bodyID = p_body;
+	m_playerData.heartID = 1;
 
 	// initialize the texture ( width * 2 to allow the flipped version )
 	sf::Image texImage;
@@ -135,6 +145,12 @@ void Player::jump()
 
 void Player::localX(float p_value){ m_localX = p_value; }
 void Player::localY(float p_value){ m_localY = p_value; }
+
+void 
+Player::UpdatePosition()
+{
+	//blah
+}
 
 // ----------------------------------------------------------------------
 // Move the Player Left 
@@ -255,7 +271,18 @@ void Player::update(float p_delta)
 	m_localY += Const::WORLD_GRAVITY;
 	m_playerData.y += Const::WORLD_GRAVITY;
 	if (m_localY >= Const::GROUND_Y){ m_localY = m_playerData.y = Const::GROUND_Y; }
-	m_sprite->setPosition( sf::Vector2f( m_localX, m_localY ) );
+
+	if( TheRakMan::Get().IsPrimaryPlayer( m_playerData.playerID ) )
+	{
+		sm_playerLocalX = m_localX;
+		sm_playerWorldX = m_playerData.x;
+		m_sprite->setPosition( sf::Vector2f( m_localX, m_localY ) );
+	}
+	else
+	{
+		m_sprite->setPosition( sm_playerLocalX+(m_playerData.x-sm_playerWorldX), m_localY );
+	}
+
 	m_sprite->setOrigin(Const::PLAYER_FRAME_WIDTH * 0.5, Const::PLAYER_FRAME_HEIGHT * 0.5);
 
 	//RELIES on StoreOldData being called. Compares the old data with the current data and sends any changes to the server.

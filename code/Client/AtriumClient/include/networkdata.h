@@ -17,11 +17,11 @@
 struct TNetworkData
 {
 	unsigned short playerID;
-	char hairID;
-	char headID;
-	char bodyID;
-	char heartID;
-	char isInteracting;
+	unsigned char hairID;
+	unsigned char headID;
+	unsigned char bodyID;
+	unsigned char heartID;
+	unsigned char isInteracting;
 	float x;
 	float y;
 };
