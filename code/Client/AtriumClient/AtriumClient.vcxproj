@@ -70,8 +70,7 @@
       <AdditionalDependencies>sfml-main-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;RakNet_LibStatic_Debug_Win32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"
-xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\assets\"</Command>
+      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,10 +93,6 @@ xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\asset
       <AdditionalLibraryDirectories>$(SolutionDir)\SFML-2.0\lib</AdditionalLibraryDirectories>
       <AdditionalDependencies>sfml-main-d.lib;sfml-audio.lib;sfml-graphics.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;RakNet_LibStatic_Release_Win32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <PostBuildEvent>
-      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"
-xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\assets\"</Command>
-    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\animated_sprite.cpp" />
@@ -110,7 +105,6 @@ xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\asset
     <ClCompile Include="src\parallax_layer.cpp" />
     <ClCompile Include="src\player.cpp" />
     <ClCompile Include="src\preloader.cpp" />
-    <ClCompile Include="src\soundmanager.cpp" />
     <ClCompile Include="src\therakman.cpp" />
     <ClCompile Include="src\world.cpp" />
     <ClCompile Include="src\world_entity.cpp" />
@@ -126,7 +120,6 @@ xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\asset
     <ClInclude Include="include\parallax_layer.hpp" />
     <ClInclude Include="include\player.hpp" />
     <ClInclude Include="include\preloader.hpp" />
-    <ClInclude Include="include\soundmanager.h" />
     <ClInclude Include="include\world.hpp" />
     <ClInclude Include="include\world_entity.hpp" />
     <ClInclude Include="include\networkplayer.h" />
