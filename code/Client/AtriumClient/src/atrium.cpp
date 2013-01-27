@@ -70,21 +70,20 @@ void Atrium::run()
 
 	// new up the preloader and display it
 	m_preloader = new Preloader(this);
-	//m_preloader->show();
+	m_preloader->show(m_window);
 
 	// initialize the world
 	initializeWorld();
 
 	// loading finished show the continue button
-	//m_preloader->showContinue();
-	startGame();
+	m_preloader->showContinue(m_window);
 }
 
 void Atrium::startGame()
 {
-	//m_preloader->dispose();
-	//delete m_preloader;
-	//m_preloader = 0;
+	m_preloader->dispose();
+	delete m_preloader;
+	m_preloader = 0;
 
 	// keep track of delta time
 	sf::Time clockTime;

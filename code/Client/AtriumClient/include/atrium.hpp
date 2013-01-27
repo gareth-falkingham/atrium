@@ -14,6 +14,8 @@
 #include "assets.hpp"
 #include "preloader.hpp"
 
+typedef void (Atrium::*CB_StartGame)(void);
+
 class Atrium
 {
 	private:
