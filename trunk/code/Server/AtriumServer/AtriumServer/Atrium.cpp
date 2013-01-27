@@ -169,7 +169,7 @@ void Atrium::disconnectUser(Packet _packet)
 	for (UserMap::iterator iterator = m_pUserMap.begin(); iterator != m_pUserMap.end(); ++iterator)
 	{
 		oldUser = iterator->second;
-		if (oldUser->clientAddress == _packet.systemAddress)
+		if (oldUser != 0 && oldUser->clientAddress == _packet.systemAddress)
 		{
 			m_pUserMap.erase(iterator);
 			isFound = true;
@@ -204,6 +204,20 @@ void Atrium::connectUser(Packet _packet)
 	memcpy_s(&playerData, sizeof(TPlayerConnect), _packet.data, sizeof(TPlayerConnect));
 	playerData.playerID = newUser->playerID;
 	
+	newUser->bodyID = playerData.bodyID;
+	newUser->headID = playerData.headID;
+	newUser->hairID = playerData.hairID;
+	newUser->heartID = playerData.heartID;
+	newUser->isInteracting = playerData.isInteracting;
+	newUser->x = playerData.x;
+	newUser->y = playerData.y;
+
+	/*std::cout << "New Player Connected:" << std::endl;
+	std::cout << "Body : " << static_cast<unsigned int>(playerData.bodyID) << std::endl;
+	std::cout << "Head : " << static_cast<unsigned int>(playerData.headID) << std::endl;
+	std::cout << "Hair : " << static_cast<unsigned int>(playerData.hairID) << std::endl;
+	std::cout << "Heart : " << static_cast<unsigned int>(playerData.heartID) << std::endl;*/
+
 	// Create packet to inform user of their ID
 	TPlayerID playerIDPacket;
 	playerIDPacket.packetType = EPacketTypes::PLAYER_ID;
@@ -223,7 +237,7 @@ void Atrium::connectUser(Packet _packet)
 	for (UserMap::iterator iterator = m_pUserMap.begin(); iterator != m_pUserMap.end(); ++iterator)
 	{
 		otherUser = iterator->second;
-		if (otherUser != newUser)
+		if (otherUser != 0 && otherUser != newUser)
 		{
 			// Send all information to the new client
 			syncData = otherUser->getSyncPacket();
@@ -239,8 +253,11 @@ void Atrium::connectUser(Packet _packet)
 void Atrium::playerInteract(Packet _packet)
 {
 	// Update player pointer in map
+	TPlayerUpdateInteract convertedPacket;
+	memcpy_s(&convertedPacket, sizeof(TPlayerUpdateInteract), _packet.data, sizeof(TPlayerUpdateInteract));
 
 	// Inform other users of the change
+	broadcastToClients((const char*)&convertedPacket, sizeof(TPlayerUpdateInteract), _packet.systemAddress);
 }
 
 void Atrium::playerMove(Packet _packet)
@@ -265,7 +282,8 @@ void Atrium::onPlayerHeart(Packet _packet)
 	TPlayerUpdateHeart convertedPacket;
 	memcpy_s(&convertedPacket, sizeof(TPlayerUpdateHeart), _packet.data, sizeof(TPlayerUpdateHeart));
 	
-	std::cout << "Player Heart Message Recieved: player"  << convertedPacket.playerID << " has heart: " << convertedPacket.heartID << std::endl;
+	// Inform other users of the change
+	broadcastToClients((const char*)&convertedPacket, sizeof(TPlayerUpdateHeart), _packet.systemAddress);
 }
 
 void Atrium::broadcastToClients(const char* _data, int _size, AddressOrGUID exclude)
