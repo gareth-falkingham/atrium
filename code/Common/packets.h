@@ -12,6 +12,7 @@ enum EPacketTypes
 	PLAYER_MOVEMENT,
 	PLAYER_INTERACT,
 	PLAYER_HEART,
+	PLAYER_WON,
 	PLAYER_ID
 };
 
@@ -73,5 +74,13 @@ struct TPlayerUpdateHeart
 	unsigned short playerID;		//Id of the player.
 	unsigned char heartID;			//Id of the player's NEW heart.
 };
+
+//PlayerWon.
+struct TPlayerWon
+{
+	EPacketTypes packetType;
+	unsigned short playerID;
+	unsigned short numMatches;
+}
 
 #endif //__ATRIUM_PACKETS_H__
