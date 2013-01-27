@@ -25,6 +25,11 @@ void Parallax::addLayer(std::string p_filename, float p_depth, float p_xOffset, 
 	m_layers.push_back(p);
 }
 
+void Parallax::clearLayers()
+{
+	m_layers.clear();
+}
+
 // ----------------------------------------------------------------------
 // Set the scrollX for the parallax
 // ----------------------------------------------------------------------
