@@ -81,6 +81,6 @@ struct TPlayerWon
 	EPacketTypes packetType;
 	unsigned short playerID;
 	unsigned short numMatches;
-}
+};
 
 #endif //__ATRIUM_PACKETS_H__
