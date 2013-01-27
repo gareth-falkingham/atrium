@@ -57,6 +57,8 @@ void World::initialize()
 	m_pPlayer->GetPlayerData().x = 0.0f; // worldX starts at 0
 	m_pPlayer->GetPlayerData().y = Const::PLAYER_START_Y; // worldY starts at normal start y
 
+	m_pPlayer->generateHeart();
+
 	m_pPlayer->GetPlayerData().x = (Const::PLAYER_START_X);
 	m_pPlayer->GetPlayerData().y = (Const::PLAYER_START_Y);
 
