@@ -46,6 +46,16 @@ std::string Player::buildAssetPath(std::string p_type, int p_ext)
 }
 
 // ----------------------------------------------------------------------
+// Randomly generate the heart, find its texture etc
+// ----------------------------------------------------------------------
+
+void Player::generateHeart()
+{
+	m_heart.generateHeart();
+	m_playerData.heartID = m_heart.getHeartID();
+}
+
+// ----------------------------------------------------------------------
 // Initialize the Players Texture and Sprite 
 // ----------------------------------------------------------------------
 

@@ -14,6 +14,7 @@
 #include "world_entity.hpp"
 #include "networkplayer.h"
 #include "animated_sprite.h"
+#include "heart.h"
 
 enum Direction { LEFT, RIGHT, UP, NONE };
 enum PlayerState { STANDING, WALKING, JUMPING };
@@ -21,6 +22,7 @@ enum PlayerState { STANDING, WALKING, JUMPING };
 class Player : public WorldEntity, public NetworkPlayer{
 	private:
 
+		Heart m_heart;
 		Direction m_facing;	
 		PlayerState m_playerState;
 		float m_speed;
@@ -45,6 +47,8 @@ class Player : public WorldEntity, public NetworkPlayer{
 		void moveRight(float fDT);
 		void moveNone(float fDT);
 		void jump();
+		
+		void generateHeart();
 
 		//void localX(float p_value);
 		//void localY(float p_value);

@@ -99,6 +99,7 @@
     <ClCompile Include="src\assets.cpp" />
     <ClCompile Include="src\atrium.cpp" />
     <ClCompile Include="src\debug.cpp" />
+    <ClCompile Include="src\heart.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\networkplayer.cpp" />
     <ClCompile Include="src\parallax.cpp" />
@@ -115,6 +116,7 @@
     <ClInclude Include="include\atrium.hpp" />
     <ClInclude Include="include\const.hpp" />
     <ClInclude Include="include\debug.hpp" />
+    <ClInclude Include="include\heart.h" />
     <ClInclude Include="include\packets.h" />
     <ClInclude Include="include\parallax.hpp" />
     <ClInclude Include="include\parallax_layer.hpp" />
