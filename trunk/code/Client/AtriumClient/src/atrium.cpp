@@ -103,10 +103,12 @@ void Atrium::startGame()
 		}
 
 		// handle any non-event input
-		handle_input();
+		float fDT = clockTime.asSeconds();
+
+		handle_input(fDT);
 
 		// update/render
-		update(clockTime.asSeconds());
+		update(fDT);
 		render();
 	}
 
@@ -144,20 +146,20 @@ void Atrium::handle_event(const sf::Event &p_event)
 // Handle non-Event input
 // ----------------------------------------------------------------------
 
-void Atrium::handle_input()
+void Atrium::handle_input(float fDT)
 {
 	// check for non-event input
 	if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
 	{ 
-		m_world->GetPrimaryPlayer().moveLeft();
+		m_world->GetPrimaryPlayer().moveLeft(fDT);
 	}
 	else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
 	{ 
-		m_world->GetPrimaryPlayer().moveRight();
+		m_world->GetPrimaryPlayer().moveRight(fDT);
 	}
 	else 
 	{ 
-		m_world->GetPrimaryPlayer().moveNone();
+		m_world->GetPrimaryPlayer().moveNone(fDT);
 	} 
 }
 

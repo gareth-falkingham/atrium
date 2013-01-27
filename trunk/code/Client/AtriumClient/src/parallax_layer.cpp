@@ -87,7 +87,7 @@ void ParallaxLayer::initialize(std::string p_filename, bool p_repeat)
 
 void ParallaxLayer::scrollX(float p_amount)
 {
-	m_xScroll += p_amount;
+	m_xScroll = p_amount;
 	sf::IntRect texRect = m_sprite.getTextureRect();
 	sf::IntRect rect(texRect.left, texRect.top, texRect.width, texRect.height);
 	rect.left = (int)m_xScroll;
