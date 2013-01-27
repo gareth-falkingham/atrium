@@ -117,6 +117,7 @@ void TheRakMan::Update( const float _kfdt )
 						tempPlayer->initializeSprite(	pC.bodyID,
 														pC.headID,
 														pC.hairID );
+						tempPlayer->generateHeart(pC.heartID);
 
 						m_mapPPlayers[pC.playerID] = tempPlayer;
 						m_pWorld->addEntity(m_mapPPlayers[pC.playerID]);

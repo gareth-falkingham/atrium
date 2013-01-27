@@ -33,6 +33,7 @@ class World
 		Player& GetPrimaryPlayer();
 
 		void update(float p_deltaTime);
+		void updateInteraction( float p_deltaTime );
 		void render(sf::RenderWindow* p_window);
 
 		void addEntity(WorldEntity* p_entity);

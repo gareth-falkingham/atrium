@@ -15,11 +15,16 @@ class WorldEntity
 		sf::Texture* m_texture;
 		sf::Sprite* m_sprite;
 		//sf::Vector2f m_position;
+		float m_fInteractionTime;
 
 	public:
 
 		WorldEntity();
 		virtual ~WorldEntity();
+
+		float GetInteractionTime(){ return m_fInteractionTime; }
+		virtual float GetXPosition() = 0;
+		virtual unsigned int GetHeartID() = 0;
 
 		//void position(sf::Vector2f p_value);
 		//sf::Vector2f position();

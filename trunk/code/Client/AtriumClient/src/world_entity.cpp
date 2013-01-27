@@ -5,6 +5,7 @@
 // ----------------------------------------------------------------------
 
 WorldEntity::WorldEntity()
+: m_fInteractionTime(0.0f)
 {
 	m_texture = 0;
 	m_sprite = 0;

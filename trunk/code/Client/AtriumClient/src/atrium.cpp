@@ -113,6 +113,8 @@ void Atrium::startGame()
 	}
 
 	m_world->Destroy();
+	delete Heart::sm_pTexture;
+	Heart::sm_pTexture = 0;
 
 	// KILL the Rak Man.
 	TheRakMan::Destroy();
@@ -136,7 +138,12 @@ void Atrium::handle_event(const sf::Event &p_event)
 			}
 			case sf::Keyboard::Space:
 			{
-				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Attempting Interaction");
+				if( m_world->GetPrimaryPlayer().GetXPosition() > 330 && 
+					m_world->GetPrimaryPlayer().GetXPosition() < 490 )
+				{
+					m_world->GetPrimaryPlayer().generateHeart();
+				}
+				break;
 			}
 		}
 	}
@@ -161,6 +168,19 @@ void Atrium::handle_input(float fDT)
 	{ 
 		m_world->GetPrimaryPlayer().moveNone(fDT);
 	} 
+
+	if( sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+	{
+ 		if( m_world->GetPrimaryPlayer().GetXPosition() <= 330 || 
+			m_world->GetPrimaryPlayer().GetXPosition() >= 490 )
+		{
+			m_world->GetPrimaryPlayer().GetPlayerData().isInteracting = true;
+		}
+	}
+	else
+	{
+		m_world->GetPrimaryPlayer().GetPlayerData().isInteracting = false;
+	}
 }
 
 // ----------------------------------------------------------------------
