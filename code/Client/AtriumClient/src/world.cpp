@@ -8,6 +8,7 @@
 
 World::World(): 
 m_pPlayer(0)
+, m_bWon (false )
 {
 }
 
@@ -105,6 +106,14 @@ void World::updateInteraction( float p_deltaTime )
 					{
 						//YOU HAVE INTERACTED. CONGRATULATION, YOU WIN THE GAME.
 						Debug::log(INFO,"updateInteraction", "YOU WON THE FREAKIN GAME" );
+						m_bWon=true;
+
+						TPlayerWon pack;
+						pack.packetType = PLAYER_WON;
+						pack.playerID	= m_pPlayer->GetPlayerData().playerID;
+						pack.numMatches = 1;
+
+						TheRakMan::Get().SendPacket( (const char*)&pack, sizeof( pack ) );
 					}
 					else
 					{
