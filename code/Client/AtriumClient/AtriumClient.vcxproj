@@ -70,7 +70,8 @@
       <AdditionalDependencies>sfml-main-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;RakNet_LibStatic_Debug_Win32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"</Command>
+      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"
+xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\assets\"</Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -94,6 +95,10 @@
       <AdditionalDependencies>sfml-main.lib;sfml-audio.lib;sfml-graphics.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;RakNet_LibStatic_Release_Win32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/NODEFAULTLIB:msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
     </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"
+xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\assets\"</Command>
+    </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="src\aiplayer.cpp" />
