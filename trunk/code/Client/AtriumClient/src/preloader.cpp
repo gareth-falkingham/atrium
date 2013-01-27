@@ -4,17 +4,13 @@
 Preloader::Preloader(Atrium* p_atrium)
 {
 	m_texture = Assets::getInstance()->getTexture("assets/images/loading.png");
-	m_sprite = new sf::Sprite((*m_texture));
+	m_bgSprite = new sf::Sprite((*m_texture));
 	m_atrium = p_atrium;
 
-	m_font = new sf::Font();
-	m_font->loadFromFile("assets/fonts/GILLUBCD.ttf");
-	m_loadingText = new sf::Text("Loading...", (*m_font), 36);
-	m_loadingText->setPosition(640.0f, 373.0f);
-	m_loadingText->setColor(sf::Color(211, 211, 216));
-	m_continueText = new sf::Text("Click to Continue", (*m_font), 36);
-	m_continueText->setPosition(526.0f, 373.0f);
-	m_continueText->setColor(sf::Color(211, 211, 216));
+	m_loadingTexture = Assets::getInstance()->getTexture("assets/images/loading_text.png");
+	m_continueTexture = Assets::getInstance()->getTexture("assets/images/continue_text.png");
+	m_infoSprite = new sf::Sprite((*m_loadingTexture));
+	m_infoSprite->setPosition(640.0f, 381.0f);
 }
 
 Preloader::~Preloader()
@@ -24,32 +20,32 @@ Preloader::~Preloader()
 
 void Preloader::dispose()
 {
-	delete m_sprite;
-	m_sprite = 0;
+	delete m_bgSprite;
+	m_bgSprite = 0;
+	delete m_infoSprite;
+	m_infoSprite = 0;
+//	delete m_loadingTexture;
+	m_loadingTexture = 0;
+//	delete m_continueTexture;
+	m_continueTexture = 0;
 	m_atrium = 0;
-
-	// this crashes stuff ??
-	//delete m_loadingText;
-	//m_loadingText = 0;
-	//delete m_continueText;
-	//m_continueText = 0;
-	//delete m_font;
-	//m_font = 0;
 }
 
 void Preloader::show(sf::RenderWindow* p_window)
 {
 	p_window->clear(Const::CLEAR_COLOR);
-	p_window->draw((*m_sprite));
-	p_window->draw((*m_loadingText));
+	p_window->draw((*m_bgSprite));
+	p_window->draw((*m_infoSprite));
 	p_window->display();
 }
 
 void Preloader::showContinue(sf::RenderWindow* p_window)
 {
+	m_infoSprite->setPosition(520.0f, 381.0f);
+	m_infoSprite->setTexture((*m_continueTexture), true);
 	p_window->clear(Const::CLEAR_COLOR);
-	p_window->draw((*m_sprite));
-	p_window->draw((*m_continueText));
+	p_window->draw((*m_bgSprite));
+	p_window->draw((*m_infoSprite));
 	p_window->display();
 
 	bool clicked = false;
