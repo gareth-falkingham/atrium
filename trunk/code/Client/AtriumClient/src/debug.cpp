@@ -9,7 +9,12 @@ void Debug::log(LogLevel p_level, char* p_title, const char* p_messages, ...)
 	char buffer[1024];
 	va_list args;
 	va_start(args, p_messages);
+#if defined(HACKY_LINUX_HACK)
+    // TODO: no vsprintf_s in gcc?
+	vsprintf(buffer, p_messages, args);
+#else
 	vsprintf_s(buffer, p_messages, args);
+#endif
 	switch(p_level)
 	{
 		case LogLevel::INFO:

@@ -41,7 +41,11 @@ void Atrium::initializeWindow()
 
 	// create the window and set some limits
 	m_window = new sf::RenderWindow();
+#if defined(HACKY_LINUX_HACK)
+	m_window->create(sf::VideoMode(800, 480, 32), "Atrium v1.0");
+#else
 	m_window->create(sf::VideoMode(800, 480, 32), "Atrium v1.0", sf::Style::Titlebar | sf::Style::Close, (*m_glContext));
+#endif
 	m_window->setFramerateLimit(60);
 	m_window->setVerticalSyncEnabled(true);
 }
