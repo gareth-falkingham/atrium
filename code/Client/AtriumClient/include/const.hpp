@@ -14,9 +14,9 @@ namespace Const
 	static const float PLAYER_START_X = 400;
 	static const float PLAYER_START_Y = 224;
 	
-	static const float PLAYER_ACCELERATION = 0.25f;
-	static const float PLAYER_DECELERATION = 0.25f;
-	static const float PLAYER_MAX_SPEED = 6.0f;
+	static const float PLAYER_ACCELERATION = 100.0f;
+	//static const float PLAYER_DECELERATION = 10.0f;
+	static const float PLAYER_MAX_SPEED = 200.0f;
 
 	static const float PARALLAX_LAYER_1_DEPTH = 0.3f;
 	static const float PARALLAX_LAYER_2_DEPTH = 0.4f;

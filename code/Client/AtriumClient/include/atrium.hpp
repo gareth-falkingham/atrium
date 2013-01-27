@@ -37,7 +37,7 @@ class Atrium
 		void initializeWorld();
 
 		void handle_event(const sf::Event &p_event);
-		void handle_input();
+		void handle_input(float fDT);
 		void update(float p_delta);
 		void render();
 		void shutdown();

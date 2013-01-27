@@ -57,8 +57,8 @@ void World::initialize()
 	m_pPlayer->GetPlayerData().x = 0.0f; // worldX starts at 0
 	m_pPlayer->GetPlayerData().y = Const::PLAYER_START_Y; // worldY starts at normal start y
 
-	m_pPlayer->localX(Const::PLAYER_START_X);
-	m_pPlayer->localY(Const::PLAYER_START_Y);
+	m_pPlayer->GetPlayerData().x = (Const::PLAYER_START_X);
+	m_pPlayer->GetPlayerData().y = (Const::PLAYER_START_Y);
 
 	addEntity( m_pPlayer );
 
@@ -79,14 +79,16 @@ void World::Destroy()
 void World::update(float p_delta)
 {
 	// scroll the background based on player speed
-	m_background.scrollX(m_pPlayer->speed());
+	float scrollValue = (0.1f*(m_pPlayer->GetPlayerData().x-400.0f));
+
+	m_background.scrollX(scrollValue);
 	m_background.update(p_delta);
 
 	// update the player entities
 	for (size_t i = 0; i < m_entities.size(); i++){ m_entities[i]->update(p_delta); }
 
 	// scroll the foreground based on player speed
-	m_foreground.scrollX(m_pPlayer->speed());
+	m_foreground.scrollX(scrollValue);
 	m_foreground.update(p_delta);
 
 }
