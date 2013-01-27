@@ -16,6 +16,7 @@ class World
 		Parallax m_foreground;
 		std::vector<WorldEntity*> m_entities;
 		Player* m_pPlayer;
+		bool m_bWon;
 
 		std::string buildParallaxPath(std::string p_name, int p_upgrade);
 		void handle_event(const sf::Event &p_event);

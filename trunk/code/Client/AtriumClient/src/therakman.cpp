@@ -101,6 +101,7 @@ void TheRakMan::Update( const float _kfdt )
 		case ID_CONNECTION_REQUEST_ACCEPTED:
 			{
 				printf("Our connection request has been accepted. Sending Connection Packet.\n");
+				//m_pPrimaryPlayer->generateHeart();
 				m_pPrimaryPlayer->SendConnectionPacket();
 				break;					
 			}
@@ -206,7 +207,7 @@ void TheRakMan::Update( const float _kfdt )
 				}
 				else
 				{
-					printf("Received a player interaction message for a player that doesn't exist.\n");
+					printf("Received a player interaction message for a player that doesn't exist (%i).\n", interactPacket.playerID);
 				}
 				break;
 			}
@@ -224,8 +225,19 @@ void TheRakMan::Update( const float _kfdt )
 				}
 				else
 				{
-					printf("Received a player heart message for a player that doesn't exist.\n");
+					printf("Received a player heart message for a player that doesn't exist (%i).\n", heartPacket.playerID);
 				}
+				break;
+			}
+		case PLAYER_WON:
+			{
+				TPlayerWon wonPack;
+				memcpy( &wonPack, packet->data, sizeof( wonPack ) );
+
+				Const::COMPLETE_HEARTS = wonPack.numMatches;
+				m_pWorld->resetParallaxLayers();
+				printf("Received a player won message. Num matches: %i.\n", wonPack.numMatches);
+
 				break;
 			}
 		default:

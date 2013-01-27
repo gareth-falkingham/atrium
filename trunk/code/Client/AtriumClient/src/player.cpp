@@ -15,7 +15,7 @@ Player::Player() : WorldEntity()
 {
 	m_showHeartTimer = 0.0f;
 	memset(&m_playerData, 0, sizeof(m_playerData));
-	m_heart.Initialise();
+	generateHeart();
 }
 
 // ----------------------------------------------------------------------
@@ -28,6 +28,7 @@ Player::Player(int p_body, int p_head, int p_hair, int p_heart) : WorldEntity()
 	memset(&m_playerData, 0, sizeof(m_playerData));
 	initializeSprite(p_body, p_head, p_hair);
 	m_heart.Initialise( p_heart );
+	m_playerData.heartID = p_heart;
 }
 
 // ----------------------------------------------------------------------
@@ -94,7 +95,6 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	m_playerData.hairID = p_hair;
 	m_playerData.headID = p_head;
 	m_playerData.bodyID = p_body;
-	m_playerData.heartID = 1;
 
 	// initialize the texture ( width * 2 to allow the flipped version )
 	sf::Image texImage;
