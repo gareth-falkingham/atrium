@@ -35,6 +35,7 @@ TheRakMan::TheRakMan()
 : m_bEstablishedConnection( false )
 {
 	m_hostAddress = new RakNet::SystemAddress( "192.168.1.70", 7001 );
+	//m_hostAddress = new RakNet::SystemAddress( "23.22.88.17", 7001 );
 }
 
 TheRakMan::~TheRakMan()

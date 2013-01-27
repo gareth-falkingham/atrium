@@ -3,8 +3,6 @@
 #include "const.hpp"
 #include "therakman.h"
 
-#include "soundmanager.h"
-
 float Player::sm_playerLocalX = 0.0f;
 float Player::sm_playerWorldX = 0.0f;
 
@@ -117,9 +115,6 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	m_animatedSprite->registerAnimation("right_walk", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT, 2, 0.2f);
 	m_animatedSprite->registerAnimation("left_jump", 0, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
 	m_animatedSprite->registerAnimation("right_jump", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
-
-	std::cout << "Sound play!" <<std::endl;
-	SoundManager::getInstance().playSound(ESounds::JUMP);
 }
 
 // ----------------------------------------------------------------------
