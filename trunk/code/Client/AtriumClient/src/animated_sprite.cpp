@@ -31,14 +31,15 @@ AnimatedSprite::AnimatedSprite(sf::Sprite* p_sprite, int p_frameWidth, int p_fra
 
 AnimatedSprite::~AnimatedSprite()
 {
-	delete m_sprite;
+	//delete m_sprite;
 	m_sprite = 0;
-	delete m_currentAnimation;
+	//delete m_currentAnimation;
 	m_currentAnimation = 0;
 
 	std::map<std::string, AnimationInfo*>::iterator i = m_animations.begin();
 	for(; i != m_animations.end(); ++i )
 	{
+		//m_animations.erase(i);
 		delete i->second;
 		i->second = 0;
 	}

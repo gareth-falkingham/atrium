@@ -23,9 +23,7 @@ class Player : public WorldEntity, public NetworkPlayer{
 	private:
 
 		Heart m_heart;
-		Direction m_facing;	
 		PlayerState m_playerState;
-		float m_speed;
 		float m_showHeartTimer;
 		//float m_localX;
 		//float m_localY;
@@ -34,15 +32,23 @@ class Player : public WorldEntity, public NetworkPlayer{
 
 		static float sm_playerLocalX;
 		static float sm_playerWorldX;
-		
+	
+	protected:
+		Direction m_facing;	
+		float m_speed;
+
+		void regenCharacter();	// Dispose current images, create new body/head/hair combo, re-create sprites
+
 
 	public:
 	
 		Player();
 		Player(int p_head, int p_hair, int p_body, int p_heart);
 		virtual ~Player();
-
+		
+		void randomiseBody();
 		void initializeSprite(int p_body, int p_head, int p_hair);
+
 		virtual void UpdatePosition();
 		void moveLeft(float fDT);
 		void moveRight(float fDT);
@@ -58,6 +64,7 @@ class Player : public WorldEntity, public NetworkPlayer{
 
 		virtual void update(float p_delta);
 		virtual void render(sf::RenderWindow* p_window);
+
 };
 
 #endif

@@ -35,6 +35,13 @@ Player::Player(int p_body, int p_head, int p_hair, int p_heart) : WorldEntity()
 
 Player::~Player(){}
 
+void Player::randomiseBody()
+{
+	initializeSprite((rand() % Const::MAX_BODY_PIECES) + 1,
+					 (rand() % Const::MAX_HEAD_PIECES) + 1,
+					 (rand() % Const::MAX_HAIR_PIECES) + 1);
+}
+
 // ----------------------------------------------------------------------
 // Build an asset path given a type (body, head, hair etc. ) and integer
 // ----------------------------------------------------------------------
@@ -130,6 +137,20 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 	m_animatedSprite->registerAnimation("right_walk", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT, 2, 0.2f);
 	m_animatedSprite->registerAnimation("left_jump", 0, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
 	m_animatedSprite->registerAnimation("right_jump", Const::PLAYER_FRAME_WIDTH, Const::PLAYER_FRAME_HEIGHT * 3, 1, 0);
+}
+
+void Player::regenCharacter()
+{
+	delete m_animatedSprite;
+	delete m_sprite;
+	//delete m_texture;
+
+	m_animatedSprite = 0;
+	m_sprite = 0;
+	m_texture = 0;
+
+	randomiseBody();
+
 }
 
 // ----------------------------------------------------------------------

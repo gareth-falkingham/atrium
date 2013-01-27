@@ -1,5 +1,6 @@
 #include "world.hpp"
 #include "therakman.h"
+#include "aiplayer.h"
 
 // ----------------------------------------------------------------------
 // Constructor
@@ -49,12 +50,8 @@ void World::initialize()
 	// initialize the atrium building
 	m_foreground.addLayer("assets/images/atrium_front.png", 1.0f, 0.0f, 0.0f, false);
 
-	m_pPlayer = new Player(
-		(rand() % Const::MAX_BODY_PIECES) + 1, 
-		(rand() % Const::MAX_HEAD_PIECES) + 1, 
-		(rand() % Const::MAX_HAIR_PIECES) + 1, 
-		-1 );
-
+	m_pPlayer = new Player();
+	m_pPlayer->randomiseBody();
 	m_pPlayer->GetPlayerData().x = 0.0f; // worldX starts at 0
 	m_pPlayer->GetPlayerData().y = Const::PLAYER_START_Y; // worldY starts at normal start y
 
@@ -68,6 +65,20 @@ void World::initialize()
 	//Start the Rak Man
 	TheRakMan::Get().m_pPrimaryPlayer = m_pPlayer;
 	TheRakMan::Get().m_pWorld = this;
+
+	AIPlayer* npc;
+	int i = 0;
+	while (i < 10)
+	{
+		npc = new AIPlayer();
+		npc->randomiseBody();
+		npc->GetPlayerData().x = static_cast<float>(rand() % 800);
+		std::cout << "NPC spawn at x = " << npc->GetPlayerData().x  << std::endl;
+		npc->GetPlayerData().y = (Const::PLAYER_START_Y);
+		addEntity(npc);
+
+		i++;
+	}
 }
 
 void World::Destroy()
