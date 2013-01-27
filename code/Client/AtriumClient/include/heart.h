@@ -24,7 +24,7 @@
 // Constants
 // Hearts range from 0 - 9 (10 hearts, 5 pairs) (0&1, 2&3)
 // A matching heart = if (odd) -1, else +1;
-static const int MAX_HEARTS = 9;	
+static const int MAX_HEARTS = 10;	
 
 // Prototypes
 
