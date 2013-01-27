@@ -38,7 +38,7 @@ Heart::~Heart()
 
 void Heart::generateHeart()
 {
-	m_heartID = (rand() % MAX_HEARTS) + 1;
+	m_heartID = (rand() % MAX_HEARTS);
 	std::cout << "Heart Generated for the player! : " << m_heartID << std::endl;
 }
 

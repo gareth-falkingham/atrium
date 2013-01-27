@@ -76,9 +76,12 @@ bool TheRakMan::Initialise()
 	bool bSuccess = false;
 
 	m_pRakInterface = RakNet::RakPeerInterface::GetInstance();
-	RakNet::StartupResult startRes = m_pRakInterface->Startup(1, &RakNet::SocketDescriptor(), 1 );
+	RakNet::SocketDescriptor* pSockDesc = new RakNet::SocketDescriptor;
+	RakNet::StartupResult startRes = m_pRakInterface->Startup(1, pSockDesc, 1 );
 	if( startRes == RakNet::RAKNET_STARTED )
 	{
+		delete pSockDesc;
+
 		bSuccess = true;
 		RakNet::ConnectionAttemptResult conRes = m_pRakInterface->Connect(m_hostAddress->ToString(false), m_hostAddress->GetPort(), "MiniTaurus", strlen("MiniTaurus") );
 
@@ -217,7 +220,7 @@ void TheRakMan::Update( const float _kfdt )
 				if( iter != m_mapPPlayers.end() )
 				{
 					iter->second->ReceiveHeartPacket( heartPacket );
-					printf("Received a player heart message for player: %i\n", heartPacket.playerID);
+					printf("Received a player heart message for player: %i, heart is: %i \n", heartPacket.playerID, heartPacket.heartID);
 				}
 				else
 				{
