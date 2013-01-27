@@ -93,7 +93,7 @@ void World::update(float p_delta)
 
 void World::updateInteraction( float p_deltaTime )
 {
-	if( m_pPlayer->GetInteractionTime() > Const::PLAYER_MIN_INTERACTION_TIME )
+	if( m_pPlayer->GetInteractionTime() > Const::PLAYER_MIN_INTERACTION_TIME && m_bWon == false)
 	{
 		for( unsigned int i = 0 ; i < m_entities.size() ; ++i)
 		{
@@ -104,7 +104,7 @@ void World::updateInteraction( float p_deltaTime )
 				{
 					if( Heart::IsHeartMatch( m_pPlayer->GetHeartID(), m_entities[i]->GetHeartID() ) )
 					{
-						//YOU HAVE INTERACTED. CONGRATULATION, YOU WIN THE GAME.
+						//YOU HAVE INTERACTED. CONGRATULATIONS, YOU WIN THE GAME.
 						Debug::log(INFO,"updateInteraction", "YOU WON THE FREAKIN GAME" );
 						m_bWon=true;
 
