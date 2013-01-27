@@ -150,7 +150,6 @@ void Player::regenCharacter()
 	m_texture = 0;
 
 	randomiseBody();
-
 }
 
 // ----------------------------------------------------------------------

@@ -44,8 +44,9 @@ void AIPlayer::update(float p_delta)
 
 		if (m_playerData.x <= -20.0f)
 		{
-			m_facing = RIGHT;
+			//m_facing = RIGHT;
 			regenCharacter();
+			moveRight(0.01f);
 		}
 	}
 	else if (m_facing == RIGHT)
@@ -54,8 +55,9 @@ void AIPlayer::update(float p_delta)
 
 		if (m_playerData.x >= 820.0f)
 		{
-			m_facing = LEFT;
+			//m_facing = LEFT;
 			regenCharacter();
+			moveLeft(0.01f);
 		}
 	}
 	else
