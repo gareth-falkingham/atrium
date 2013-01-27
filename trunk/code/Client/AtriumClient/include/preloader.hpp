@@ -17,6 +17,9 @@ class Preloader
 		sf::Texture* m_texture;
 		sf::Sprite* m_sprite;
 		Atrium* m_atrium;
+		sf::Font* m_font;
+		sf::Text* m_loadingText;
+		sf::Text* m_continueText;
 
 	public:
 		
@@ -25,9 +28,8 @@ class Preloader
 
 		void dispose();
 
-		void show();
-
-		void showContinue();
+		void show(sf::RenderWindow* p_window);
+		void showContinue(sf::RenderWindow* p_window);
 };
 
 #endif
