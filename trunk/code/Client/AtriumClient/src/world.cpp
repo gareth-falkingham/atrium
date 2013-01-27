@@ -9,6 +9,7 @@
 World::World(): 
 m_pPlayer(0)
 , m_bWon (false )
+, m_alpha( 0 )
 {
 }
 
@@ -20,6 +21,11 @@ World::~World()
 {
 	delete m_pPlayer;
 	m_pPlayer = 0;
+
+	delete m_pTheEndTex;
+	m_pTheEndTex = 0;
+	delete m_pTheEnd;
+	m_pTheEnd = 0;
 }
 
 // ----------------------------------------------------------------------
@@ -62,6 +68,12 @@ void World::initialize()
 
 		i++;
 	}
+
+	//End texture
+	m_pTheEndTex = new sf::Texture;
+	m_pTheEndTex->loadFromFile( "assets/images/theend.png" );
+	m_pTheEnd = new sf::Sprite;
+	m_pTheEnd->setTexture( *m_pTheEndTex );
 }
 
 void World::Destroy()
@@ -75,6 +87,18 @@ void World::Destroy()
 
 void World::update(float p_delta)
 {
+	if( m_bWon == true )
+	{
+		if( (m_alpha + 255*p_delta) < 255 )
+		{
+			m_alpha += 255*p_delta;
+		}
+		else
+		{
+			m_alpha = 255;
+		}
+	}
+
 	// scroll the background based on player speed
 	float scrollValue = (0.1f*(m_pPlayer->GetPlayerData().x-400.0f));
 
@@ -169,6 +193,12 @@ void World::render(sf::RenderWindow* m_window)
 		m_entities[i]->render(m_window);
 	}
 	m_foreground.render(m_window);
+
+	if( m_bWon == true )
+	{
+		m_pTheEnd->setColor( sf::Color(255,255,255,static_cast<unsigned char>(m_alpha)) );
+		m_window->draw( *m_pTheEnd );
+	}
 }
 
 // ----------------------------------------------------------------------
