@@ -95,6 +95,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\aiplayer.cpp" />
     <ClCompile Include="src\animated_sprite.cpp" />
     <ClCompile Include="src\assets.cpp" />
     <ClCompile Include="src\atrium.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="src\world_entity.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="include\aiplayer.h" />
     <ClInclude Include="include\animated_sprite.h" />
     <ClInclude Include="include\assets.hpp" />
     <ClInclude Include="include\atrium.hpp" />
