@@ -48,7 +48,7 @@ namespace Const
 	static const unsigned int MAX_HEAD_PIECES = 6;
 	static const unsigned int MAX_HAIR_PIECES = 6;
 
-	static const unsigned int COMPLETE_HEARTS = 250;
+	static unsigned int COMPLETE_HEARTS = 0;
 
 	static const sf::Color CLEAR_COLOR = sf::Color(127, 127, 127);
 }

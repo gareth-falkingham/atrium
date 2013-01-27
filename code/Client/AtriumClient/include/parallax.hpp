@@ -24,6 +24,8 @@ class Parallax
 		void update(float p_delta);
 		void render(sf::RenderWindow* p_window);
 
+		void clearLayers();
+
 		void scrollX(float p_value);
 };
 

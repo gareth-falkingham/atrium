@@ -27,25 +27,7 @@ World::~World()
 
 void World::initialize()
 {
-	// initialize the parallax layers
-	//m_background.addLayer(buildParallaxPath("parallax_01", 1), Const::PARALLAX_LAYER_1_DEPTH);
-	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_1_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_01", 2), 0.0f); }
-	//m_background.addLayer(buildParallaxPath("parallax_02", 1), Const::PARALLAX_LAYER_2_DEPTH);
-	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_2_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_02", 2), Const::PARALLAX_LAYER_2_DEPTH); }
-	//m_background.addLayer(buildParallaxPath("parallax_03", 1), Const::PARALLAX_LAYER_3_DEPTH);
-	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_3_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_03", 2), Const::PARALLAX_LAYER_3_DEPTH); }
-	//m_background.addLayer(buildParallaxPath("parallax_04", 1), Const::PARALLAX_LAYER_4_DEPTH);
-	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_4_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_04", 2), Const::PARALLAX_LAYER_4_DEPTH); }
-	//m_background.addLayer(buildParallaxPath("parallax_05", 1), Const::PARALLAX_LAYER_5_DEPTH);
-	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_5_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_05", 2), Const::PARALLAX_LAYER_5_DEPTH); }
-	//m_background.addLayer(buildParallaxPath("parallax_06", 1), Const::PARALLAX_LAYER_6_DEPTH);
-	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_6_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_06", 2), Const::PARALLAX_LAYER_6_DEPTH, 0.0f, -60.0f); }
-
-	// ground
-	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
-
-	// Atrium backgorund
-	m_background.addLayer("assets/images/atrium.png", 1.0f, 0.0f, 0.0f, false);
+	resetParallaxLayers();
 
 	// initialize the atrium building
 	m_foreground.addLayer("assets/images/atrium_front.png", 1.0f, 0.0f, 0.0f, false);
@@ -208,4 +190,51 @@ void World::removeEntity(WorldEntity* _pEntity )
 Player& World::GetPrimaryPlayer()
 {
 	return *m_pPlayer;
+}
+
+// ----------------------------------------------------------------------
+// Increment the Hearts Matched
+// ----------------------------------------------------------------------
+
+void World::incrementHeartsMatched()
+{
+	Const::COMPLETE_HEARTS ++;
+	resetParallaxLayers();
+}
+
+void World::decrementHeartsMatched()
+{
+	Const::COMPLETE_HEARTS --;
+	resetParallaxLayers();
+}
+
+void World::resetParallaxLayers()
+{
+	m_background.clearLayers();
+
+	// initialize the parallax layers
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_1_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_01", 2), 0.0f); }
+	else { m_background.addLayer(buildParallaxPath("parallax_01", 1), Const::PARALLAX_LAYER_1_DEPTH); }
+
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_2_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_02", 2), Const::PARALLAX_LAYER_2_DEPTH); }
+	else { m_background.addLayer(buildParallaxPath("parallax_02", 1), Const::PARALLAX_LAYER_2_DEPTH); }
+	
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_3_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_03", 2), Const::PARALLAX_LAYER_3_DEPTH); }
+	else { m_background.addLayer(buildParallaxPath("parallax_03", 1), Const::PARALLAX_LAYER_3_DEPTH); }
+	
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_4_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_04", 2), Const::PARALLAX_LAYER_4_DEPTH); }
+	else { m_background.addLayer(buildParallaxPath("parallax_04", 1), Const::PARALLAX_LAYER_4_DEPTH); }
+
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_5_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_05", 2), Const::PARALLAX_LAYER_5_DEPTH); }
+	else { m_background.addLayer(buildParallaxPath("parallax_05", 1), Const::PARALLAX_LAYER_5_DEPTH); }
+
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_6_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_06", 2), Const::PARALLAX_LAYER_6_DEPTH, 0.0f, -60.0f); }
+	else { m_background.addLayer(buildParallaxPath("parallax_06", 1), Const::PARALLAX_LAYER_6_DEPTH); }
+
+	// ground
+	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
+
+	// Atrium backgorund
+	m_background.addLayer("assets/images/atrium.png", 1.0f, 0.0f, 0.0f, false);
+
 }

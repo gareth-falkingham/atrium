@@ -39,6 +39,11 @@ class World
 		void addEntity(WorldEntity* p_entity);
 		void removeEntity(WorldEntity* _pEntity );
 
+		void incrementHeartsMatched();
+		void decrementHeartsMatched();
+
+		void resetParallaxLayers();
+
 		void handleKeypress();
 };
 

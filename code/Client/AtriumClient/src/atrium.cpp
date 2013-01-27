@@ -136,6 +136,20 @@ void Atrium::handle_event(const sf::Event &p_event)
 				m_window->capture().saveToFile("screen.png");
 				break;
 			}
+			case sf::Keyboard::F2:
+			{
+				if (Const::COMPLETE_HEARTS == 250){ break; }
+				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Incrementing Hearts Matched: %d", Const::COMPLETE_HEARTS++);
+				m_world->incrementHeartsMatched();
+				break;
+			}
+			case sf::Keyboard::F3:
+			{
+				if (Const::COMPLETE_HEARTS == 0){ break; }
+				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Decrementing Hearts Matched: %d", Const::COMPLETE_HEARTS--);
+				m_world->decrementHeartsMatched();
+				break;
+			}
 			case sf::Keyboard::Space:
 			{
 				if( m_world->GetPrimaryPlayer().GetXPosition() > 330 && 
