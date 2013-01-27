@@ -89,9 +89,9 @@ void World::update(float p_delta)
 {
 	if( m_bWon == true )
 	{
-		if( (m_alpha + 255*p_delta) < 255 )
+		if( (m_alpha + 255 * p_delta) < 255 )
 		{
-			m_alpha += 255*p_delta;
+			m_alpha += static_cast<int>(255 * p_delta);
 		}
 		else
 		{
