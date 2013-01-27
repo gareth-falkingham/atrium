@@ -17,6 +17,7 @@ class World
 		std::vector<WorldEntity*> m_entities;
 		Player* m_pPlayer;
 
+		std::string buildParallaxPath(std::string p_name, int p_upgrade);
 		void handle_event(const sf::Event &p_event);
 		void updateEntities(float p_delta);
 		void renderEntities(sf::RenderWindow* p_window);

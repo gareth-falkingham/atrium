@@ -12,19 +12,15 @@
 #include "world.hpp"
 #include "player.hpp"
 #include "assets.hpp"
+#include "preloader.hpp"
 
 class Atrium
 {
 	private:
 
-		// constants
-		static const sf::Color CLEAR_COLOR;
-
 		// window variables
-		sf::RenderWindow m_window;
-		sf::ContextSettings m_glContext;
-		sf::Texture* m_preloadTex;
-		sf::Sprite* m_preloadSpr;
+		sf::RenderWindow* m_window;
+		sf::ContextSettings* m_glContext;
 
 		// timing stuff
 		sf::Clock m_clock;
@@ -33,6 +29,8 @@ class Atrium
 		World* m_world;
 
 		// initialization functions
+		Preloader* m_preloader;
+
 		void initializeWindow();
 		void initializeWorld();
 
@@ -49,7 +47,8 @@ class Atrium
 		~Atrium();
 
 		// main entry point
-		void run();
+		void run(); // display preloader and initialize
+		void startGame(); // once preloader fires exit start game
 };
 
 #endif
