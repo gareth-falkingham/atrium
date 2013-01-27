@@ -258,6 +258,12 @@ void Player::moveNone(float fDT)
 	}
 }
 
+void Player::ReceiveHeartPacket(TPlayerUpdateHeart& _packet)
+{
+	NetworkPlayer::ReceiveHeartPacket(_packet);
+	m_heart.Initialise(m_playerData.heartID);
+}
+
 // ----------------------------------------------------------------------
 // Update the Player Sprite 
 // ----------------------------------------------------------------------

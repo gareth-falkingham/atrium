@@ -73,7 +73,7 @@ void World::initialize()
 		npc = new AIPlayer();
 		npc->randomiseBody();
 		npc->GetPlayerData().x = static_cast<float>(rand() % 800);
-		std::cout << "NPC spawn at x = " << npc->GetPlayerData().x  << std::endl;
+
 		npc->GetPlayerData().y = (Const::PLAYER_START_Y);
 		addEntity(npc);
 
