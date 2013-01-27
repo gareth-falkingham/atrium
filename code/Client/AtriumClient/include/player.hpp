@@ -49,6 +49,8 @@ class Player : public WorldEntity, public NetworkPlayer{
 		void randomiseBody();
 		void initializeSprite(int p_body, int p_head, int p_hair);
 
+		virtual void ReceiveHeartPacket(TPlayerUpdateHeart& _packet);
+
 		virtual void UpdatePosition();
 		void moveLeft(float fDT);
 		void moveRight(float fDT);
