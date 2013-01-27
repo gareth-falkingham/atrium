@@ -15,11 +15,11 @@ class Preloader
 	private:
 
 		sf::Texture* m_texture;
-		sf::Sprite* m_sprite;
+		sf::Texture* m_loadingTexture;
+		sf::Texture* m_continueTexture;
+		sf::Sprite* m_bgSprite;
+		sf::Sprite* m_infoSprite;
 		Atrium* m_atrium;
-		sf::Font* m_font;
-		sf::Text* m_loadingText;
-		sf::Text* m_continueText;
 
 	public:
 		
