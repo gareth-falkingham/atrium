@@ -267,7 +267,7 @@ void World::resetParallaxLayers()
 	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_5_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_05", 2), Const::PARALLAX_LAYER_5_DEPTH); }
 	else { m_background.addLayer(buildParallaxPath("parallax_05", 1), Const::PARALLAX_LAYER_5_DEPTH); }
 
-	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_6_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_06", 2), Const::PARALLAX_LAYER_6_DEPTH, 0.0f, -60.0f); }
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_6_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_06", 2), Const::PARALLAX_LAYER_6_DEPTH, 0.0f); }
 	else { m_background.addLayer(buildParallaxPath("parallax_06", 1), Const::PARALLAX_LAYER_6_DEPTH); }
 
 	// ground
