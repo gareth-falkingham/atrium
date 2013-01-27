@@ -82,15 +82,31 @@ void Player::initializeSprite(int p_body, int p_head, int p_hair)
 
 	// load the applicable images in
 	if( p_body > Const::MAX_BODY_PIECES )
-		p_body = Const::MAX_BODY_PIECES-1;
+		p_body = Const::MAX_BODY_PIECES;
 	if( p_head > Const::MAX_HEAD_PIECES )
-		p_head = Const::MAX_HEAD_PIECES-1;
+		p_head = Const::MAX_HEAD_PIECES;
 	if( p_hair > Const::MAX_HAIR_PIECES )
-		p_hair = Const::MAX_HAIR_PIECES-1;
+		p_hair = Const::MAX_HAIR_PIECES;
 
-	sf::Image bodyImage = *Assets::getInstance()->getImage(buildAssetPath("body", p_body));
-	sf::Image headImage = *Assets::getInstance()->getImage(buildAssetPath("head", p_head));
-	sf::Image hairImage = *Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
+    const int fw = Const::PLAYER_FRAME_WIDTH;
+    const int fh = Const::PLAYER_FRAME_HEIGHT;
+	sf::Image peopleImage = *Assets::getInstance()->getImage("assets/images/people.png");
+
+//	sf::Image bodyImage = *Assets::getInstance()->getImage(buildAssetPath("body", p_body));
+//	sf::Image headImage = *Assets::getInstance()->getImage(buildAssetPath("head", p_head));
+//	sf::Image hairImage = *Assets::getInstance()->getImage(buildAssetPath("hair", p_hair));
+
+    sf::Image bodyImage;
+    bodyImage.create(fw,fh*Const::PLAYER_FRAME_COUNT);
+    bodyImage.copy(peopleImage,0, 0, sf::IntRect(fw*(p_body-1), 2*fh, (fw*(p_body-1))+fw, (2*fh)+fh ));
+
+    sf::Image headImage;
+    headImage.create(fw,fh);
+    headImage.copy(peopleImage,0, 0, sf::IntRect(fw*(p_head-1), 0, (fw*(p_head-1))+fw, fh ));
+
+    sf::Image hairImage;
+    hairImage.create(fw,fh);
+    hairImage.copy(peopleImage,0, 0, sf::IntRect(fw*(p_hair-1), 1*fh, (fw*(p_hair-1))+fw, (1*fh)+fh ));
 
 	m_playerData.hairID = p_hair;
 	m_playerData.headID = p_head;
