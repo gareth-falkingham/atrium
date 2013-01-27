@@ -15,6 +15,7 @@
 #define __ATRIUM_GJ_HEART_H__
 
 // Library Includes
+#include <SFML/Graphics.hpp>
 
 // Local Includes
 
@@ -38,6 +39,14 @@ public:
 	void generateHeart();
 	int getHeartID();
 
+	bool Initialise(signed int heartID =-1);
+
+	void SetPlayerPosition( const float  _x, const float  _y );
+	static bool IsHeartMatch( const unsigned int _yourHeartID, const unsigned int _otherHeart );
+	void Process( const float _fDT );
+	void Draw( sf::RenderWindow* _window );
+	static sf::Texture* sm_pTexture;
+
 protected:
 
 private:
@@ -48,8 +57,13 @@ public:
 protected:
 
 private:
+
+	
+	sf::Sprite* m_pSprite;
 	int m_heartID;
 
+	float m_fPlayerX;
+	float m_fPlayerY;
 };
 
 #endif // __ATRIUM_GJ_HEART_H__

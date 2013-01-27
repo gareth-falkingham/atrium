@@ -26,6 +26,7 @@ class Player : public WorldEntity, public NetworkPlayer{
 		Direction m_facing;	
 		PlayerState m_playerState;
 		float m_speed;
+		float m_showHeartTimer;
 		//float m_localX;
 		//float m_localY;
 		AnimatedSprite* m_animatedSprite;
@@ -38,7 +39,7 @@ class Player : public WorldEntity, public NetworkPlayer{
 	public:
 	
 		Player();
-		Player(int p_head, int p_hair, int p_body);
+		Player(int p_head, int p_hair, int p_body, int p_heart);
 		virtual ~Player();
 
 		void initializeSprite(int p_body, int p_head, int p_hair);
@@ -48,10 +49,10 @@ class Player : public WorldEntity, public NetworkPlayer{
 		void moveNone(float fDT);
 		void jump();
 		
-		void generateHeart();
+		void generateHeart(int heartID = -1);
 
-		//void localX(float p_value);
-		//void localY(float p_value);
+		virtual float GetXPosition(){ return m_playerData.x; }
+		virtual unsigned int GetHeartID(){ return m_playerData.heartID; }
 
 		float speed();
 

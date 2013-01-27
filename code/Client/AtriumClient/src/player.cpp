@@ -12,17 +12,21 @@ float Player::sm_playerWorldX = 0.0f;
 
 Player::Player() : WorldEntity()
 {
+	m_showHeartTimer = 0.0f;
 	memset(&m_playerData, 0, sizeof(m_playerData));
+	m_heart.Initialise();
 }
 
 // ----------------------------------------------------------------------
 // Overloaded Constructor
 // ----------------------------------------------------------------------
 
-Player::Player(int p_body, int p_head, int p_hair) : WorldEntity()
+Player::Player(int p_body, int p_head, int p_hair, int p_heart) : WorldEntity()
 {
+	m_showHeartTimer = 0.0f;
 	memset(&m_playerData, 0, sizeof(m_playerData));
 	initializeSprite(p_body, p_head, p_hair);
+	m_heart.Initialise( p_heart );
 }
 
 // ----------------------------------------------------------------------
@@ -49,9 +53,10 @@ std::string Player::buildAssetPath(std::string p_type, int p_ext)
 // Randomly generate the heart, find its texture etc
 // ----------------------------------------------------------------------
 
-void Player::generateHeart()
+void Player::generateHeart(int heartID)
 {
-	m_heart.generateHeart();
+	m_showHeartTimer = 2.0f;
+	m_heart.Initialise(heartID);
 	m_playerData.heartID = m_heart.getHeartID();
 }
 
@@ -240,8 +245,23 @@ void Player::moveNone(float fDT)
 void Player::update(float p_delta)
 {
 	//Debug::log(LogLevel::INFO, "Player::Update()", "X: %f, speed:%f", m_playerData.x, m_speed);
+	if( m_playerData.isInteracting )
+	{
+		m_fInteractionTime += p_delta;
+	}
+	else
+	{
+		m_fInteractionTime = 0.0f;
+	}
+
+	m_showHeartTimer -= p_delta;
+	if( m_showHeartTimer < 0.0f )
+	{
+		m_showHeartTimer = 0.0f;
+	}
 
 	m_playerData.x += m_speed*p_delta;
+	m_heart.SetPlayerPosition( m_playerData.x, m_playerData.y );
 
 	m_animatedSprite->update(p_delta);
 	//m_localY += Const::WORLD_GRAVITY;
@@ -276,4 +296,9 @@ void Player::update(float p_delta)
 void Player::render(sf::RenderWindow* p_window)
 {
 	p_window->draw((*m_sprite));
+
+	if( m_playerData.isInteracting == 1 || m_showHeartTimer > 0.0f)
+	{
+		m_heart.Draw( p_window );
+	}
 }

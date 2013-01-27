@@ -52,12 +52,13 @@ void World::initialize()
 	m_pPlayer = new Player(
 		(rand() % Const::MAX_BODY_PIECES) + 1, 
 		(rand() % Const::MAX_HEAD_PIECES) + 1, 
-		(rand() % Const::MAX_HAIR_PIECES) + 1 
-	);
+		(rand() % Const::MAX_HAIR_PIECES) + 1, 
+		-1 );
+
 	m_pPlayer->GetPlayerData().x = 0.0f; // worldX starts at 0
 	m_pPlayer->GetPlayerData().y = Const::PLAYER_START_Y; // worldY starts at normal start y
 
-	m_pPlayer->generateHeart();
+	//m_pPlayer->generateHeart();
 
 	m_pPlayer->GetPlayerData().x = (Const::PLAYER_START_X);
 	m_pPlayer->GetPlayerData().y = (Const::PLAYER_START_Y);
@@ -93,6 +94,33 @@ void World::update(float p_delta)
 	m_foreground.scrollX(scrollValue);
 	m_foreground.update(p_delta);
 
+	updateInteraction( p_delta );
+}
+
+void World::updateInteraction( float p_deltaTime )
+{
+	if( m_pPlayer->GetInteractionTime() > Const::PLAYER_MIN_INTERACTION_TIME )
+	{
+		for( unsigned int i = 0 ; i < m_entities.size() ; ++i)
+		{
+			if( m_entities[i] != m_pPlayer )
+			{
+				if( m_entities[i]->GetInteractionTime() > Const::PLAYER_MIN_INTERACTION_TIME &&
+					abs( m_entities[i]->GetXPosition() - m_pPlayer->GetXPosition() ) < Const::PLAYER_MIN_INTERACTION_DISTANCE )
+				{
+					if( Heart::IsHeartMatch( m_pPlayer->GetHeartID(), m_entities[i]->GetHeartID() ) )
+					{
+						//YOU HAVE INTERACTED. CONGRATULATION, YOU WIN THE GAME.
+						Debug::log(INFO,"updateInteraction", "YOU WON THE FREAKIN GAME" );
+					}
+					else
+					{
+						Debug::log(INFO,"updateInteraction", "Interaction was successful but hearts do not match." );
+					}
+				}
+			}
+		}
+	}
 }
 
 // ----------------------------------------------------------------------
