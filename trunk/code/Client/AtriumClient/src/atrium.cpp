@@ -2,16 +2,12 @@
 #include "therakman.h"
 
 // ----------------------------------------------------------------------
-// Constants
-// ----------------------------------------------------------------------
-
-const sf::Color Atrium::CLEAR_COLOR = sf::Color(127, 127, 127);
-
-// ----------------------------------------------------------------------
 // Constructor
 // ----------------------------------------------------------------------
 
-Atrium::Atrium(){}
+Atrium::Atrium()
+{
+}
 
 // ----------------------------------------------------------------------
 // Deconstructor
@@ -20,6 +16,11 @@ Atrium::Atrium(){}
 Atrium::~Atrium()
 {
 	delete m_world;
+	m_world = 0;
+	delete m_window;
+	m_window = 0;
+	delete m_glContext;
+	m_glContext = 0;
 }
 
 // ----------------------------------------------------------------------
@@ -31,23 +32,18 @@ void Atrium::initializeWindow()
 	Debug::log(LogLevel::INFO, "Atrium.initializeWindow", "Initializing Window");
 
 	// setup the context settings
-	m_glContext.antialiasingLevel = 4;
-	m_glContext.depthBits = 32;
-	m_glContext.majorVersion = 3;
-	m_glContext.minorVersion = 0;
-	m_glContext.stencilBits = 8;
+	m_glContext = new sf::ContextSettings();
+	m_glContext->antialiasingLevel = 4;
+	m_glContext->depthBits = 32;
+	m_glContext->majorVersion = 3;
+	m_glContext->minorVersion = 0;
+	m_glContext->stencilBits = 8;
 
 	// create the window and set some limits
-	m_window.create(sf::VideoMode(800, 480, 32), "Atrium v1.0", sf::Style::Titlebar | sf::Style::Close, m_glContext);
-	m_window.setFramerateLimit(60);
-	m_window.setVerticalSyncEnabled(true);
-
-	// add a loading frame as a preloader
-	m_preloadTex = Assets::getInstance()->getTexture("assets/images/loading.png");
-	m_preloadSpr = new sf::Sprite((*m_preloadTex));
-	m_window.clear(CLEAR_COLOR);
-	m_window.draw((*m_preloadSpr));
-	m_window.display();
+	m_window = new sf::RenderWindow();
+	m_window->create(sf::VideoMode(800, 480, 32), "Atrium v1.0", sf::Style::Titlebar | sf::Style::Close, (*m_glContext));
+	m_window->setFramerateLimit(60);
+	m_window->setVerticalSyncEnabled(true);
 }
 
 // ----------------------------------------------------------------------
@@ -72,21 +68,36 @@ void Atrium::run()
 	// initialize the window
 	initializeWindow();
 
+	// new up the preloader and display it
+	m_preloader = new Preloader(this);
+	//m_preloader->show();
+
 	// initialize the world
 	initializeWorld();
+
+	// loading finished show the continue button
+	//m_preloader->showContinue();
+	startGame();
+}
+
+void Atrium::startGame()
+{
+	//m_preloader->dispose();
+	//delete m_preloader;
+	//m_preloader = 0;
 
 	// keep track of delta time
 	sf::Time clockTime;
 
 	// main loop - continue until window is closed
 	Debug::log(LogLevel::INFO, "Atrium.run", "Entering main loop");
-	while(m_window.isOpen())
+	while(m_window->isOpen())
 	{
 		clockTime = m_clock.restart();
 				
 		// poll the events
 		sf::Event event;
-		while(m_window.pollEvent(event))
+		while(m_window->pollEvent(event))
 		{
 			handle_event(event);
 			if (event.type == sf::Event::Closed){ shutdown(); }
@@ -119,7 +130,7 @@ void Atrium::handle_event(const sf::Event &p_event)
 			case sf::Keyboard::F1:
 			{
 				Debug::log(LogLevel::INFO, "Atrium.handle_event", "Screenshot Taken");
-				m_window.capture().saveToFile("screen.png");
+				m_window->capture().saveToFile("screen.png");
 				break;
 			}
 			case sf::Keyboard::Space:
@@ -167,9 +178,9 @@ void Atrium::update(float p_delta)
 
 void Atrium::render()
 {
-	m_window.clear(CLEAR_COLOR);
-	m_world->render(&m_window);
-	m_window.display();
+	m_window->clear(Const::CLEAR_COLOR);
+	m_world->render(m_window);
+	m_window->display();
 }
 
 // ----------------------------------------------------------------------
@@ -178,5 +189,5 @@ void Atrium::render()
 
 void Atrium::shutdown()
 {
-	m_window.close();
+	m_window->close();
 }

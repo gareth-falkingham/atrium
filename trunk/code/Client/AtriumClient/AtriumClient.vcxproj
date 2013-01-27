@@ -50,7 +50,7 @@
     <LinkIncremental>false</LinkIncremental>
     <OutDir>$(SolutionDir)\Deploy\$(Configuration)\</OutDir>
     <IntDir>$(SolutionDir)\Build\$(Configuration)\</IntDir>
-    <IncludePath>..\..\RakNet\Source\;..\..\Common;$(IncludePath)</IncludePath>
+    <IncludePath>..\..\RakNet\Source\;$(IncludePath)</IncludePath>
     <LibraryPath>..\..\RakNet\Lib\;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
@@ -60,7 +60,7 @@
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFML-2.0\include;$(ProjectDir)\include;..\RakNet\Source;..\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SFML-2.0\include;$(ProjectDir)\include;$(SolutionDir)\..\RakNet\Source;$(SolutionDir)\..\code\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -83,7 +83,7 @@ xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\asset
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <AdditionalIncludeDirectories>$(SolutionDir)\SFML-2.0\include;$(ProjectDir)\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SFML-2.0\include;$(ProjectDir)\include;$(SolutionDir)\..\Common;$(SolutionDir)\..\RakNet\Source</AdditionalIncludeDirectories>
       <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
@@ -109,6 +109,7 @@ xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\asset
     <ClCompile Include="src\parallax.cpp" />
     <ClCompile Include="src\parallax_layer.cpp" />
     <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\preloader.cpp" />
     <ClCompile Include="src\soundmanager.cpp" />
     <ClCompile Include="src\therakman.cpp" />
     <ClCompile Include="src\world.cpp" />
@@ -124,6 +125,7 @@ xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\asset
     <ClInclude Include="include\parallax.hpp" />
     <ClInclude Include="include\parallax_layer.hpp" />
     <ClInclude Include="include\player.hpp" />
+    <ClInclude Include="include\preloader.hpp" />
     <ClInclude Include="include\soundmanager.h" />
     <ClInclude Include="include\world.hpp" />
     <ClInclude Include="include\world_entity.hpp" />

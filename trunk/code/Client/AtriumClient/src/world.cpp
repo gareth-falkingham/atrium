@@ -28,21 +28,23 @@ World::~World()
 void World::initialize()
 {
 	// initialize the parallax layers
-	m_background.addLayer("assets/images/parallax_01.png", 0.3f);
-	m_background.addLayer("assets/images/parallax_02.png", 0.4f);
-	m_background.addLayer("assets/images/parallax_03.png", 0.5f);
-	m_background.addLayer("assets/images/parallax_04.png", 0.6f);
-	m_background.addLayer("assets/images/parallax_05.png", 0.7f);
-	m_background.addLayer("assets/images/parallax_06.png", 0.8f);
-
-	// add in the upgrade layers based on the number of matches
-	m_background.addLayer("assets/images/uparallax_01.png", 0.9f);
-	//m_background.addLayer("assets/images/uparallax_02.png", 0.9);
+	//m_background.addLayer(buildParallaxPath("parallax_01", 1), Const::PARALLAX_LAYER_1_DEPTH);
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_1_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_01", 2), 0.0f); }
+	//m_background.addLayer(buildParallaxPath("parallax_02", 1), Const::PARALLAX_LAYER_2_DEPTH);
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_2_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_02", 2), Const::PARALLAX_LAYER_2_DEPTH); }
+	//m_background.addLayer(buildParallaxPath("parallax_03", 1), Const::PARALLAX_LAYER_3_DEPTH);
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_3_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_03", 2), Const::PARALLAX_LAYER_3_DEPTH); }
+	//m_background.addLayer(buildParallaxPath("parallax_04", 1), Const::PARALLAX_LAYER_4_DEPTH);
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_4_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_04", 2), Const::PARALLAX_LAYER_4_DEPTH); }
+	//m_background.addLayer(buildParallaxPath("parallax_05", 1), Const::PARALLAX_LAYER_5_DEPTH);
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_5_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_05", 2), Const::PARALLAX_LAYER_5_DEPTH); }
+	//m_background.addLayer(buildParallaxPath("parallax_06", 1), Const::PARALLAX_LAYER_6_DEPTH);
+	if (Const::COMPLETE_HEARTS >= Const::PARALLAX_LAYER_6_UPGRADE){ m_background.addLayer(buildParallaxPath("parallax_06", 2), Const::PARALLAX_LAYER_6_DEPTH, 0.0f, -60.0f); }
 
 	// ground
 	m_background.addLayer("assets/images/parallax_07.png", 0.0f, 0.0f, 420.0f);
 
-
+	// Atrium backgorund
 	m_background.addLayer("assets/images/atrium.png", 1.0f, 0.0f, 0.0f, false);
 
 	// initialize the atrium building
@@ -91,6 +93,20 @@ void World::update(float p_delta)
 	m_foreground.scrollX(m_pPlayer->speed());
 	m_foreground.update(p_delta);
 
+}
+
+// ----------------------------------------------------------------------
+// Build an asset path given a type (parallax_01) and integer
+// ----------------------------------------------------------------------
+
+std::string World::buildParallaxPath(std::string p_type, int p_ext)
+{
+	std::ostringstream ss;
+	ss << "assets/images/";
+	ss << p_type << "_";
+	ss << std::setw(2) << std::setfill('0') << p_ext;
+	ss << ".png";
+	return ss.str();
 }
 
 // ----------------------------------------------------------------------
