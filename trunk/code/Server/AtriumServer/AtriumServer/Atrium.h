@@ -21,9 +21,11 @@ private:
 	RakNet::RakPeerInterface* m_pRakPeerInterface;
 	UserMap m_pUserMap;
 	unsigned short m_nextUserID;
+	unsigned short m_numberWins;
 
 	void processPackets();
 
+	void onPlayerWon(RakNet::Packet _packet);
 	void clientDisconnectUser(RakNet::Packet _packet);
 	void disconnectUser(RakNet::Packet _packet);
 	void connectUser(RakNet::Packet _packet);

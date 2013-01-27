@@ -6,7 +6,8 @@ using namespace RakNet;
 
 // Constructor
 Atrium::Atrium()
-	:m_nextUserID(0)
+	:m_nextUserID(1),
+	m_numberWins(0)
 {
 	std::cout << "Please enter a port: ";
 	int port;
@@ -120,6 +121,10 @@ void Atrium::processPackets()
 				playerInteract(*packet);
 				break;
 
+			case PLAYER_WON:
+				onPlayerWon(*packet);
+				break;
+
 			case PLAYER_MOVEMENT:
 				playerMove(*packet);
 				break;
@@ -224,7 +229,7 @@ void Atrium::connectUser(Packet _packet)
 	playerIDPacket.playerID = newUser->playerID;
 
 	// Tell player their ID
-	m_pRakPeerInterface->Send((const char*)&playerIDPacket, sizeof(TPlayerID), PacketPriority::IMMEDIATE_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
+	m_pRakPeerInterface->Send((const char*)&playerIDPacket, sizeof(TPlayerID), PacketPriority::HIGH_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
 
 	// Inform every client that a new player has joined
 	broadcastToClients((const char*)&playerData, sizeof(TPlayerConnect), _packet.systemAddress);
@@ -244,6 +249,12 @@ void Atrium::connectUser(Packet _packet)
 			m_pRakPeerInterface->Send((const char*)&syncData, sizeof(TPlayerConnect), PacketPriority::HIGH_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
 		}
 	}
+
+	// Send current number of wins
+	TPlayerWon convertedPacket;
+	convertedPacket.packetType = PLAYER_WON;
+	convertedPacket.numMatches = m_numberWins;
+	m_pRakPeerInterface->Send((const char*)&convertedPacket, sizeof(TPlayerWon), PacketPriority::HIGH_PRIORITY, PacketReliability::RELIABLE, 0, newUser->clientAddress, false);
 
 	// Clear vars
 	otherUser = 0;
@@ -289,7 +300,18 @@ void Atrium::onPlayerHeart(Packet _packet)
 void Atrium::broadcastToClients(const char* _data, int _size, AddressOrGUID exclude)
 {
 	// Send the packet to all clients
-	m_pRakPeerInterface->Send(_data, _size, PacketPriority::MEDIUM_PRIORITY, PacketReliability::RELIABLE, 0, exclude, true);
+	m_pRakPeerInterface->Send(_data, _size, PacketPriority::HIGH_PRIORITY, PacketReliability::RELIABLE, 0, exclude, true);
+}
+
+void Atrium::onPlayerWon(RakNet::Packet _packet)
+{
+	m_numberWins++;
+
+	TPlayerWon convertedPacket;
+	memcpy_s(&convertedPacket, sizeof(TPlayerWon), _packet.data, sizeof(TPlayerWon));
+	convertedPacket.numMatches = m_numberWins;
+
+	broadcastToClients((const char*)&convertedPacket, sizeof(TPlayerWon), _packet.systemAddress);
 }
 
 User* Atrium::createNewUser(RakNet::Packet _packet)
