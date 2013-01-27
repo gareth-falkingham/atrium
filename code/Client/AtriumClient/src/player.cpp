@@ -1,5 +1,6 @@
 #include "player.hpp"
 #include <cassert>
+#include <cstring>
 #include "const.hpp"
 #include "therakman.h"
 
