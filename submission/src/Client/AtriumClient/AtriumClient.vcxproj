@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{9C38110A-7C34-44C3-A60C-F74E80C02BCB}</ProjectGuid>
+    <Keyword>Win32Proj</Keyword>
+    <RootNamespace>AtriumClient</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>true</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <UseDebugLibraries>false</UseDebugLibraries>
+    <PlatformToolset>v110</PlatformToolset>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <CharacterSet>Unicode</CharacterSet>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Label="PropertySheets" Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <LinkIncremental>true</LinkIncremental>
+    <OutDir>$(SolutionDir)\Deploy\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\Build\$(Configuration)\</IntDir>
+    <IncludePath>..\..\Common;..\..\RakNet\Source\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\RakNet\Lib\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <LinkIncremental>false</LinkIncremental>
+    <OutDir>$(SolutionDir)\Deploy\$(Configuration)\</OutDir>
+    <IntDir>$(SolutionDir)\Build\$(Configuration)\</IntDir>
+    <IncludePath>..\..\RakNet\Source\;$(IncludePath)</IncludePath>
+    <LibraryPath>..\..\RakNet\Lib\;$(LibraryPath)</LibraryPath>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <Optimization>Disabled</Optimization>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SFML-2.0\include;$(ProjectDir)\include;$(SolutionDir)\..\RakNet\Source;$(SolutionDir)\..\code\Common;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreadedDebug</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Console</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SFML-2.0\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-main-d.lib;sfml-audio-d.lib;sfml-graphics-d.lib;sfml-network-d.lib;sfml-system-d.lib;sfml-window-d.lib;RakNet_LibStatic_Debug_Win32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"
+xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\assets\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <WarningLevel>Level3</WarningLevel>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <Optimization>MaxSpeed</Optimization>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>$(SolutionDir)\SFML-2.0\include;$(ProjectDir)\include;$(SolutionDir)\..\Common;$(SolutionDir)\..\RakNet\Source</AdditionalIncludeDirectories>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
+    </ClCompile>
+    <Link>
+      <SubSystem>Windows</SubSystem>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <OptimizeReferences>true</OptimizeReferences>
+      <AdditionalLibraryDirectories>$(SolutionDir)\SFML-2.0\lib</AdditionalLibraryDirectories>
+      <AdditionalDependencies>sfml-main.lib;sfml-audio.lib;sfml-graphics.lib;sfml-network.lib;sfml-system.lib;sfml-window.lib;RakNet_LibStatic_Release_Win32.lib;ws2_32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalOptions>/NODEFAULTLIB:msvcrt.lib %(AdditionalOptions)</AdditionalOptions>
+    </Link>
+    <PostBuildEvent>
+      <Command>xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Build\$(Configuration)\assets\"
+xcopy /y /e "$(ProjectDir)/assets" "$(SolutionDir)\Deploy\$(Configuration)\assets\"</Command>
+    </PostBuildEvent>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="src\aiplayer.cpp" />
+    <ClCompile Include="src\animated_sprite.cpp" />
+    <ClCompile Include="src\assets.cpp" />
+    <ClCompile Include="src\atrium.cpp" />
+    <ClCompile Include="src\debug.cpp" />
+    <ClCompile Include="src\heart.cpp" />
+    <ClCompile Include="src\main.cpp" />
+    <ClCompile Include="src\networkplayer.cpp" />
+    <ClCompile Include="src\parallax.cpp" />
+    <ClCompile Include="src\parallax_layer.cpp" />
+    <ClCompile Include="src\player.cpp" />
+    <ClCompile Include="src\preloader.cpp" />
+    <ClCompile Include="src\therakman.cpp" />
+    <ClCompile Include="src\world.cpp" />
+    <ClCompile Include="src\world_entity.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="include\aiplayer.h" />
+    <ClInclude Include="include\animated_sprite.h" />
+    <ClInclude Include="include\assets.hpp" />
+    <ClInclude Include="include\atrium.hpp" />
+    <ClInclude Include="include\const.hpp" />
+    <ClInclude Include="include\debug.hpp" />
+    <ClInclude Include="include\heart.h" />
+    <ClInclude Include="include\packets.h" />
+    <ClInclude Include="include\parallax.hpp" />
+    <ClInclude Include="include\parallax_layer.hpp" />
+    <ClInclude Include="include\player.hpp" />
+    <ClInclude Include="include\preloader.hpp" />
+    <ClInclude Include="include\world.hpp" />
+    <ClInclude Include="include\world_entity.hpp" />
+    <ClInclude Include="include\networkplayer.h" />
+    <ClInclude Include="include\networkdata.h" />
+    <ClInclude Include="include\therakman.h" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
